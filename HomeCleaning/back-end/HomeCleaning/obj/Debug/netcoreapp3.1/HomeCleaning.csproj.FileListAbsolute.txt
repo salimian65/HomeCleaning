@@ -1,0 +1,10 @@
+D:\Projects\Behcet\HomeCleaning\HomeCleaning\bin\Debug\netcoreapp3.1\appsettings.Development.json
+D:\Projects\Behcet\HomeCleaning\HomeCleaning\bin\Debug\netcoreapp3.1\appsettings.json
+D:\Projects\Behcet\HomeCleaning\HomeCleaning\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
+D:\Projects\Behcet\HomeCleaning\HomeCleaning\bin\Debug\netcoreapp3.1\HomeCleaning.exe
+D:\Projects\Behcet\HomeCleaning\HomeCleaning\obj\Debug\netcoreapp3.1\HomeCleaning.csprojAssemblyReference.cache
+D:\Projects\Behcet\HomeCleaning\HomeCleaning\obj\Debug\netcoreapp3.1\HomeCleaning.AssemblyInfoInputs.cache
+D:\Projects\Behcet\HomeCleaning\HomeCleaning\obj\Debug\netcoreapp3.1\HomeCleaning.AssemblyInfo.cs
+D:\Projects\Behcet\HomeCleaning\HomeCleaning\obj\Debug\netcoreapp3.1\HomeCleaning.RazorTargetAssemblyInfo.cache
+D:\Projects\Behcet\HomeCleaning\HomeCleaning\obj\Debug\netcoreapp3.1\staticwebassets\HomeCleaning.StaticWebAssets.Manifest.cache
+D:\Projects\Behcet\HomeCleaning\HomeCleaning\obj\Debug\netcoreapp3.1\staticwebassets\HomeCleaning.StaticWebAssets.xml

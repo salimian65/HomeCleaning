@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "2vCvRHtZYw7YkVx0G6NGSOEyTJYpSyER7lRdG7+L6UTn9r3O9NjBLKBVwhbThlv+RjhviHgsYr54y8YJ2BKP8w==",
+  "success": true,
+  "projectFilePath": "D:\\Projects\\Behcet\\HomeCleaning\\HomeCleaning\\HomeCleaning.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\m.salimian\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.8\\microsoft.visualstudio.azure.containers.tools.targets.1.10.8.nupkg.sha512"
+  ],
+  "logs": []
+}
