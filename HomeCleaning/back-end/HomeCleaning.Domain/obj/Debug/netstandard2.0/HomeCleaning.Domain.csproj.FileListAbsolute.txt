@@ -1,0 +1,9 @@
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Domain\bin\Debug\netstandard2.0\HomeCleaning.Domain.deps.json
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Domain\bin\Debug\netstandard2.0\HomeCleaning.Domain.dll
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Domain\bin\Debug\netstandard2.0\HomeCleaning.Domain.pdb
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Domain\obj\Debug\netstandard2.0\HomeCleaning.Domain.csprojAssemblyReference.cache
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Domain\obj\Debug\netstandard2.0\HomeCleaning.Domain.AssemblyInfoInputs.cache
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Domain\obj\Debug\netstandard2.0\HomeCleaning.Domain.AssemblyInfo.cs
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Domain\obj\Debug\netstandard2.0\HomeCleaning.Domain.csproj.CoreCompileInputs.cache
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Domain\obj\Debug\netstandard2.0\HomeCleaning.Domain.dll
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Domain\obj\Debug\netstandard2.0\HomeCleaning.Domain.pdb

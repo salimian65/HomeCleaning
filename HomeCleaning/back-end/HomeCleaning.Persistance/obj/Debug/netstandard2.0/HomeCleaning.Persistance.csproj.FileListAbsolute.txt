@@ -1,0 +1,12 @@
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Persistance\obj\Debug\netstandard2.0\HomeCleaning.Persistance.AssemblyInfoInputs.cache
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Persistance\obj\Debug\netstandard2.0\HomeCleaning.Persistance.AssemblyInfo.cs
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Persistance\bin\Debug\netstandard2.0\HomeCleaning.Persistance.deps.json
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Persistance\bin\Debug\netstandard2.0\HomeCleaning.Persistance.dll
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Persistance\bin\Debug\netstandard2.0\HomeCleaning.Persistance.pdb
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Persistance\bin\Debug\netstandard2.0\HomeCleaning.Domain.dll
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Persistance\bin\Debug\netstandard2.0\HomeCleaning.Domain.pdb
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Persistance\obj\Debug\netstandard2.0\HomeCleaning.Persistance.csprojAssemblyReference.cache
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Persistance\obj\Debug\netstandard2.0\HomeCleaning.Persistance.csproj.CoreCompileInputs.cache
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Persistance\obj\Debug\netstandard2.0\HomeCleaning.Persistance.csproj.CopyComplete
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Persistance\obj\Debug\netstandard2.0\HomeCleaning.Persistance.dll
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Persistance\obj\Debug\netstandard2.0\HomeCleaning.Persistance.pdb

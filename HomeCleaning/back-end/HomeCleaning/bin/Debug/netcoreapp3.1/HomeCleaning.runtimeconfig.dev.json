@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\salimian\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\salimian\\.nuget\\packages"
+    ]
+  }
+}
