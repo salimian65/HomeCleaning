@@ -10197,6 +10197,10 @@ a.text-dark:hover {
     line-height: 2rem
 }
 
+.portfolio .portfolio-item span {
+    font-size: 38px;
+}
+
 @media (min-width:992px) {
     .portfolio-modal .portfolio-modal-title {
         font-size: 3rem;
