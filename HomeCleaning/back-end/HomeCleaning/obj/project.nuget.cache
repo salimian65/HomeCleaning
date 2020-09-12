@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Cc5ThRh5IuFTsxpo0JDJzSAI6uqrAEKfinxqZi+RAoWUVSEKskNgoUdgcGagoEx7XOZKxAv+gLMCGdBtnXPV8w==",
+  "dgSpecHash": "1nDXs5Rx8bVmmHfcHupKSSEL583yJPWK3b6mxI5ERwBlobXx9Z2IFS3KcYe5YoUiHnGE0d+1eRRihF9DMzUkcA==",
   "success": true,
   "projectFilePath": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\HomeCleaning\\HomeCleaning.csproj",
   "expectedPackageFiles": [
@@ -173,10 +173,7 @@
     "C:\\Users\\salimian\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\salimian\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\salimian\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\salimian\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
-    "C:\\Users\\salimian\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.3\\microsoft.aspnetcore.app.ref.3.1.3.nupkg.sha512",
-    "C:\\Users\\salimian\\.nuget\\packages\\microsoft.netcore.app.ref\\3.1.0\\microsoft.netcore.app.ref.3.1.0.nupkg.sha512",
-    "C:\\Users\\salimian\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.1.0\\microsoft.windowsdesktop.app.ref.3.1.0.nupkg.sha512"
+    "C:\\Users\\salimian\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
   ],
   "logs": []
 }

@@ -10,5 +10,10 @@ namespace HomeCleaning.Persistance
         }
 
         public DbSet<HomeCleaning.Domain.CleaningCategory> CleaningCategory { get; set; }
+
+        public DbSet<HomeCleaning.Domain.CleaningOption> CleaningOption { get; set; }
+
+        public DbSet<HomeCleaning.Domain.SpaceSize> SpaceSize { get; set; }
+
     }
 }
