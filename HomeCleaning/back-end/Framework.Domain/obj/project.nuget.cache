@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "o4iKhuRhlXTOTS7OXhM9I9VVNSt59+4lU3n8vH24wLvRF3xxKkFYOj7Dtub1c22FVjRcqKs021JbT2ElUtBFTA==",
+  "dgSpecHash": "FrAPE5f4jMr1dmCp3DmEhqMeKHU6EBpva2UaVjb4a0zLmZ2EGVn6IFjcDpTG8HhyiuVHLNfBpwobnnVYbomHCA==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\Framework.Domain\\Framework.Domain.csproj",
+  "projectFilePath": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\Framework.Domain\\Framework.Domain.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\m.salimian\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Users\\m.salimian\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+    "C:\\Users\\salimian\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\salimian\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
   ],
   "logs": []
 }
