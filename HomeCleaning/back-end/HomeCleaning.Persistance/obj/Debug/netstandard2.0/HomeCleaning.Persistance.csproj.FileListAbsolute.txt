@@ -10,3 +10,17 @@ E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Persistance\ob
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Persistance\obj\Debug\netstandard2.0\HomeCleaning.Persistance.csproj.CopyComplete
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Persistance\obj\Debug\netstandard2.0\HomeCleaning.Persistance.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning.Persistance\obj\Debug\netstandard2.0\HomeCleaning.Persistance.pdb
+D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning.Persistance\bin\Debug\netstandard2.0\HomeCleaning.Persistance.deps.json
+D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning.Persistance\bin\Debug\netstandard2.0\HomeCleaning.Persistance.dll
+D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning.Persistance\bin\Debug\netstandard2.0\HomeCleaning.Persistance.pdb
+D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning.Persistance\bin\Debug\netstandard2.0\Framework.Domain.dll
+D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning.Persistance\bin\Debug\netstandard2.0\HomeCleaning.Domain.dll
+D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning.Persistance\bin\Debug\netstandard2.0\HomeCleaning.Domain.pdb
+D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning.Persistance\bin\Debug\netstandard2.0\Framework.Domain.pdb
+D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning.Persistance\obj\Debug\netstandard2.0\HomeCleaning.Persistance.csprojAssemblyReference.cache
+D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning.Persistance\obj\Debug\netstandard2.0\HomeCleaning.Persistance.csproj.CoreCompileInputs.cache
+D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning.Persistance\obj\Debug\netstandard2.0\HomeCleaning.Persistance.AssemblyInfoInputs.cache
+D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning.Persistance\obj\Debug\netstandard2.0\HomeCleaning.Persistance.AssemblyInfo.cs
+D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning.Persistance\obj\Debug\netstandard2.0\HomeCleaning.Persistance.csproj.CopyComplete
+D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning.Persistance\obj\Debug\netstandard2.0\HomeCleaning.Persistance.dll
+D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning.Persistance\obj\Debug\netstandard2.0\HomeCleaning.Persistance.pdb

@@ -1,4 +1,6 @@
-﻿namespace HomeCleaning.Domain
+﻿using Framework.Domain;
+
+namespace HomeCleaning.Domain
 {
     public class SpaceSize : Entity
     {

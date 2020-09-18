@@ -1,4 +1,4 @@
-﻿namespace HomeCleaning.Domain
+﻿namespace Framework.Domain
 {
     public interface IAggregateRoot<T>
     {

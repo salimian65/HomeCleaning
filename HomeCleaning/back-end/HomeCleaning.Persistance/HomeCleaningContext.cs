@@ -9,11 +9,14 @@ namespace HomeCleaning.Persistance
         {
         }
 
-        public DbSet<HomeCleaning.Domain.CleaningCategory> CleaningCategory { get; set; }
+        public DbSet<Domain.CleaningCategory> CleaningCategory { get; set; }
 
-        public DbSet<HomeCleaning.Domain.CleaningOption> CleaningOption { get; set; }
+        public DbSet<Domain.CleaningOption> CleaningOption { get; set; }
 
-        public DbSet<HomeCleaning.Domain.SpaceSize> SpaceSize { get; set; }
+        public DbSet<Domain.SpaceSize> SpaceSize { get; set; }
 
+        public DbSet<Domain.Address> Address { get; set; }
+
+        public DbSet<Domain.Order> Order { get; set; }
     }
 }

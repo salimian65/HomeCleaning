@@ -1,0 +1,9 @@
+D:\Projects\Behcet\HomeCleaning\back-end\Framework.Domain\bin\Debug\netstandard2.0\Framework.Domain.deps.json
+D:\Projects\Behcet\HomeCleaning\back-end\Framework.Domain\bin\Debug\netstandard2.0\Framework.Domain.dll
+D:\Projects\Behcet\HomeCleaning\back-end\Framework.Domain\bin\Debug\netstandard2.0\Framework.Domain.pdb
+D:\Projects\Behcet\HomeCleaning\back-end\Framework.Domain\obj\Debug\netstandard2.0\Framework.Domain.csprojAssemblyReference.cache
+D:\Projects\Behcet\HomeCleaning\back-end\Framework.Domain\obj\Debug\netstandard2.0\Framework.Domain.csproj.CoreCompileInputs.cache
+D:\Projects\Behcet\HomeCleaning\back-end\Framework.Domain\obj\Debug\netstandard2.0\Framework.Domain.AssemblyInfoInputs.cache
+D:\Projects\Behcet\HomeCleaning\back-end\Framework.Domain\obj\Debug\netstandard2.0\Framework.Domain.AssemblyInfo.cs
+D:\Projects\Behcet\HomeCleaning\back-end\Framework.Domain\obj\Debug\netstandard2.0\Framework.Domain.dll
+D:\Projects\Behcet\HomeCleaning\back-end\Framework.Domain\obj\Debug\netstandard2.0\Framework.Domain.pdb

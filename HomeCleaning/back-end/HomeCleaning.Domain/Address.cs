@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
+﻿using Framework.Domain;
 
 namespace HomeCleaning.Domain
 {
@@ -17,7 +15,7 @@ namespace HomeCleaning.Domain
         public string Block { get; set; }
     }
 
-    public class City
+    public class City : Entity
     {
     }
 

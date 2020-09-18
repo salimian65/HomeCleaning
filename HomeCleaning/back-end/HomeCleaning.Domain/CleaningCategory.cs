@@ -1,4 +1,5 @@
 ﻿using System;
+using Framework.Domain;
 
 namespace HomeCleaning.Domain
 {
