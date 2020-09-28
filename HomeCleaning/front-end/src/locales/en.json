@@ -1,0 +1,12 @@
+{
+  "message": "hello i18n !!",
+  "labels": {
+    "email": "Email",
+    "cellphone": "Cellphone",
+    "gln": "GLN",
+    "pharmacyName": "Pharmacy Name",
+    "legalNationalCode": "Legal Person National Code",
+    "pharmacyOwnership":"Ownership",
+    "pharmacyOperation":"Operation"
+  }
+}

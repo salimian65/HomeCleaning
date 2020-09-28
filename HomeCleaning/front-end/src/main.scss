@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "IRANSans";
+  src: url("./assets/fonts/IRANSans.woff") format("woff");
+}
+
+body {
+  font-family: "IRANSans", tahoma, arial, sans-serif !important;
+}
+
+.v-application {
+  font-family: "IRANSans", sans-serif !important;
+  /* .title {
+    // To pin point specific classes of some components
+    font-family: $title-font, sans-serif !important;
+  } */
+}
+
+.dashboardMainContent {
+  width: 100% !important;
+}
