@@ -330,3 +330,5 @@ D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning\obj\Debug\netcoreapp3.1\st
 D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning\obj\Debug\netcoreapp3.1\HomeCleaning.dll
 D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning\obj\Debug\netcoreapp3.1\HomeCleaning.pdb
 D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning\obj\Debug\netcoreapp3.1\HomeCleaning.genruntimeconfig.cache
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Framework.Domain.dll
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Framework.Domain.pdb

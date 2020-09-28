@@ -180,23 +180,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\m.salimian\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\salimian\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\Framework.Domain\\Framework.Domain.csproj",
+      "projectUniqueName": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\Framework.Domain\\Framework.Domain.csproj",
       "projectName": "Framework.Domain",
-      "projectPath": "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\Framework.Domain\\Framework.Domain.csproj",
-      "packagesPath": "C:\\Users\\m.salimian\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\Framework.Domain\\obj\\",
+      "projectPath": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\Framework.Domain\\Framework.Domain.csproj",
+      "packagesPath": "C:\\Users\\salimian\\.nuget\\packages\\",
+      "outputPath": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\Framework.Domain\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\m.salimian\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\salimian\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -240,7 +236,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
       }
     }
   }
