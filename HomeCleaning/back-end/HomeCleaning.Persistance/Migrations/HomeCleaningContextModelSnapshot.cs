@@ -73,6 +73,33 @@ namespace HomeCleaning.Persistance.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CleaningCategory");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Home Cleaning"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Empty Home Cleaning"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Cleaning after construction"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Villa Cleaning"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Office Cleaning"
+                        });
                 });
 
             modelBuilder.Entity("HomeCleaning.Domain.CleaningOption", b =>
@@ -140,7 +167,7 @@ namespace HomeCleaning.Persistance.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CleaningCategoryId")
+                    b.Property<int>("CleaningCategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -151,6 +178,32 @@ namespace HomeCleaning.Persistance.Migrations
                     b.HasIndex("CleaningCategoryId");
 
                     b.ToTable("SpaceSize");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CleaningCategoryId = 1,
+                            Name = "1 + 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CleaningCategoryId = 1,
+                            Name = "2 + 1"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CleaningCategoryId = 1,
+                            Name = "3 + 1"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CleaningCategoryId = 1,
+                            Name = "4 + 1"
+                        });
                 });
 
             modelBuilder.Entity("HomeCleaning.Domain.Address", b =>
@@ -178,7 +231,9 @@ namespace HomeCleaning.Persistance.Migrations
                 {
                     b.HasOne("HomeCleaning.Domain.CleaningCategory", "CleaningCategory")
                         .WithMany()
-                        .HasForeignKey("CleaningCategoryId");
+                        .HasForeignKey("CleaningCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

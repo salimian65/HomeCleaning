@@ -6,6 +6,8 @@ namespace HomeCleaning.Domain
     {
         public string Name { get; set; }
 
+        public int CleaningCategoryId { get; set; }
+
         public CleaningCategory CleaningCategory { get; set; }
     }
 }
