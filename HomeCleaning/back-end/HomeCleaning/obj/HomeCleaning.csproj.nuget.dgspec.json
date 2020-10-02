@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\HomeCleaning\\HomeCleaning.csproj": {}
+    "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\HomeCleaning\\HomeCleaning.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\Framework.Domain\\Framework.Domain.csproj": {
+    "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\Framework.Domain\\Framework.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\Framework.Domain\\Framework.Domain.csproj",
+        "projectUniqueName": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\Framework.Domain\\Framework.Domain.csproj",
         "projectName": "Framework.Domain",
-        "projectPath": "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\Framework.Domain\\Framework.Domain.csproj",
-        "packagesPath": "C:\\Users\\m.salimian\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\Framework.Domain\\obj\\",
+        "projectPath": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\Framework.Domain\\Framework.Domain.csproj",
+        "packagesPath": "C:\\Users\\salimian\\.nuget\\packages\\",
+        "outputPath": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\Framework.Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\m.salimian\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\salimian\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -49,6 +46,10 @@
               "target": "Package",
               "version": "[2.0.3, )",
               "autoReferenced": true
+            },
+            "System.ComponentModel.Annotations": {
+              "target": "Package",
+              "version": "[4.3.0, )"
             }
           },
           "imports": [
@@ -61,24 +62,21 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\HomeCleaning.Domain\\HomeCleaning.Domain.csproj": {
+    "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\HomeCleaning.Domain\\HomeCleaning.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\HomeCleaning.Domain\\HomeCleaning.Domain.csproj",
+        "projectUniqueName": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\HomeCleaning.Domain\\HomeCleaning.Domain.csproj",
         "projectName": "HomeCleaning.Domain",
-        "projectPath": "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\HomeCleaning.Domain\\HomeCleaning.Domain.csproj",
-        "packagesPath": "C:\\Users\\m.salimian\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\HomeCleaning.Domain\\obj\\",
+        "projectPath": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\HomeCleaning.Domain\\HomeCleaning.Domain.csproj",
+        "packagesPath": "C:\\Users\\salimian\\.nuget\\packages\\",
+        "outputPath": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\HomeCleaning.Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\m.salimian\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\salimian\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -94,8 +92,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\Framework.Domain\\Framework.Domain.csproj": {
-                "projectPath": "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\Framework.Domain\\Framework.Domain.csproj"
+              "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\Framework.Domain\\Framework.Domain.csproj": {
+                "projectPath": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\Framework.Domain\\Framework.Domain.csproj"
               }
             }
           }
@@ -114,6 +112,10 @@
               "target": "Package",
               "version": "[2.0.3, )",
               "autoReferenced": true
+            },
+            "System.ComponentModel.Annotations": {
+              "target": "Package",
+              "version": "[4.3.0, )"
             }
           },
           "imports": [
@@ -126,24 +128,21 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\HomeCleaning.Persistance\\HomeCleaning.Persistance.csproj": {
+    "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\HomeCleaning.Persistance\\HomeCleaning.Persistance.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\HomeCleaning.Persistance\\HomeCleaning.Persistance.csproj",
+        "projectUniqueName": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\HomeCleaning.Persistance\\HomeCleaning.Persistance.csproj",
         "projectName": "HomeCleaning.Persistance",
-        "projectPath": "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\HomeCleaning.Persistance\\HomeCleaning.Persistance.csproj",
-        "packagesPath": "C:\\Users\\m.salimian\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\HomeCleaning.Persistance\\obj\\",
+        "projectPath": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\HomeCleaning.Persistance\\HomeCleaning.Persistance.csproj",
+        "packagesPath": "C:\\Users\\salimian\\.nuget\\packages\\",
+        "outputPath": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\HomeCleaning.Persistance\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\m.salimian\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\salimian\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -159,8 +158,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\HomeCleaning.Domain\\HomeCleaning.Domain.csproj": {
-                "projectPath": "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\HomeCleaning.Domain\\HomeCleaning.Domain.csproj"
+              "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\HomeCleaning.Domain\\HomeCleaning.Domain.csproj": {
+                "projectPath": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\HomeCleaning.Domain\\HomeCleaning.Domain.csproj"
               }
             }
           }
@@ -203,24 +202,21 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\HomeCleaning\\HomeCleaning.csproj": {
+    "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\HomeCleaning\\HomeCleaning.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\HomeCleaning\\HomeCleaning.csproj",
+        "projectUniqueName": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\HomeCleaning\\HomeCleaning.csproj",
         "projectName": "HomeCleaning",
-        "projectPath": "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\HomeCleaning\\HomeCleaning.csproj",
-        "packagesPath": "C:\\Users\\m.salimian\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\HomeCleaning\\obj\\",
+        "projectPath": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\HomeCleaning\\HomeCleaning.csproj",
+        "packagesPath": "C:\\Users\\salimian\\.nuget\\packages\\",
+        "outputPath": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\HomeCleaning\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\m.salimian\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\salimian\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -236,11 +232,11 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\HomeCleaning.Domain\\HomeCleaning.Domain.csproj": {
-                "projectPath": "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\HomeCleaning.Domain\\HomeCleaning.Domain.csproj"
+              "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\HomeCleaning.Domain\\HomeCleaning.Domain.csproj": {
+                "projectPath": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\HomeCleaning.Domain\\HomeCleaning.Domain.csproj"
               },
-              "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\HomeCleaning.Persistance\\HomeCleaning.Persistance.csproj": {
-                "projectPath": "D:\\Projects\\Behcet\\HomeCleaning\\back-end\\HomeCleaning.Persistance\\HomeCleaning.Persistance.csproj"
+              "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\HomeCleaning.Persistance\\HomeCleaning.Persistance.csproj": {
+                "projectPath": "E:\\Project\\Behcet\\HomeCleaning\\HomeCleaning\\back-end\\HomeCleaning.Persistance\\HomeCleaning.Persistance.csproj"
               }
             }
           }
@@ -268,13 +264,41 @@
               "target": "Package",
               "version": "[3.1.8, )"
             },
-            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
+            "Microsoft.Extensions.Logging.abstractions": {
               "target": "Package",
-              "version": "[1.10.8, )"
+              "version": "[3.1.8, )"
             },
-            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+            "Serilog.AspNetCore": {
               "target": "Package",
-              "version": "[3.1.4, )"
+              "version": "[2.1.1, )"
+            },
+            "Serilog.Settings.Configuration": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "prometheus-net.AspNetCore": {
+              "target": "Package",
+              "version": "[3.6.0, )"
+            },
+            "prometheus-net.AspNetCore.HealthChecks": {
+              "target": "Package",
+              "version": "[3.6.0, )"
+            },
+            "serilog.Extensions.hosting": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "serilog.sinks.Elasticsearch": {
+              "target": "Package",
+              "version": "[8.2.0, )"
+            },
+            "serilog.sinks.console": {
+              "target": "Package",
+              "version": "[3.1.1, )"
             }
           },
           "imports": [
@@ -295,7 +319,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

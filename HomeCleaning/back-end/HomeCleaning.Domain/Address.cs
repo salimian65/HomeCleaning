@@ -2,9 +2,9 @@
 
 namespace HomeCleaning.Domain
 {
-    public class Address : Entity
+    public class Address 
     {
-        public City City { get; set; }
+       // public City City { get; set; }
 
         public string Street { get; set; }
 
@@ -15,16 +15,7 @@ namespace HomeCleaning.Domain
         public string Block { get; set; }
     }
 
-    public class City : Entity
-    {
-    }
-
-    public enum OrderStatus
-    {
-        Starting = 1,
-        Confirmation = 2,
-        Approved = 3,
-        InProcessed = 4,
-        Ended = 5
-    }
+    //public class City : Entity
+    //{
+    //}
 }

@@ -15,4 +15,3 @@ E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\Framework.Domain\obj\Debug\
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\Framework.Domain\obj\Debug\netstandard2.0\Framework.Domain.csproj.CoreCompileInputs.cache
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\Framework.Domain\obj\Debug\netstandard2.0\Framework.Domain.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\Framework.Domain\obj\Debug\netstandard2.0\Framework.Domain.pdb
-E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\Framework.Domain\obj\Debug\netstandard2.0\Framework.Domain.csprojAssemblyReference.cache
