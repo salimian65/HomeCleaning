@@ -2,4 +2,11 @@ HomeCleaning/back-end/.vs/HomeCleaning/DesignTimeBuild/.dtbcache.v2
 HomeCleaning/back-end/.vs/HomeCleaning/v16/.suo
 ~$plication.docx
 HomeCleaning.rar
+node_modules/
+*.suo
+*.user
+_ReSharper.*
+bin
+obj
+packages
 

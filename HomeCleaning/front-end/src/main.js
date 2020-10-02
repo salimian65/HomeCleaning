@@ -6,7 +6,7 @@ import vuetify from "./plugins/vuetify";
 import i18n from "./i18n";
 import "./main.scss";
 import Vuelidate from "vuelidate";
-import vuelidateErrorExtractor, { templates } from "vuelidate-error-extractor";
+import vuelidateErrorExtractor from "vuelidate-error-extractor";
 import VuelidateErrorTemplate from "./VuelidateErrorTemplate";
 
 import axios from "axios";
@@ -23,6 +23,9 @@ let dashboardLayouts = {
     fa: "dashboard",
     ar: "dashboard",
 };
+
+Vue.component("dashboard-layout", Dashboard);
+Vue.component("default-layout", DefaultLayout);
 
 new Vue({
     router,
@@ -80,7 +83,7 @@ new Vue({
         },
     },
     created() {
-        var self = this;
+        //  var self = this;
 
         this.setCurrentLanguage();
 
@@ -114,7 +117,7 @@ keycloak
     })
     .success((auth) => {
         if (!auth) {
-            window.location.reload();
+            // window.location.reload();
         } else {
             console.log("Authenticated");
         }
@@ -140,9 +143,6 @@ keycloak
         // router.beforEach((to, from, next) => {
         //
         // });
-
-        Vue.component("dashboard-layout", Dashboard);
-        Vue.component("default-layout", DefaultLayout);
 
         localStorage.setItem("vue-token", keycloak.token);
         localStorage.setItem("vue-refresh-token", keycloak.refreshToken);
