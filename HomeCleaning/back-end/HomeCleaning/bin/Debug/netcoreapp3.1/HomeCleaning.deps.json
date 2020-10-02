@@ -1979,6 +1979,9 @@
         }
       },
       "Framework.Domain/1.0.0": {
+        "dependencies": {
+          "System.ComponentModel.Annotations": "4.7.0"
+        },
         "runtime": {
           "Framework.Domain.dll": {}
         },
@@ -1988,7 +1991,8 @@
       },
       "HomeCleaning.Domain/1.0.0": {
         "dependencies": {
-          "Framework.Domain": "1.0.0"
+          "Framework.Domain": "1.0.0",
+          "System.ComponentModel.Annotations": "4.7.0"
         },
         "runtime": {
           "HomeCleaning.Domain.dll": {}

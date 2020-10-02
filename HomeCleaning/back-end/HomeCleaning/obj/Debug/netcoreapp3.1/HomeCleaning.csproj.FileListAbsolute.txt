@@ -170,6 +170,12 @@ D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning\obj\Debug\netcoreapp3.1\st
 D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning\obj\Debug\netcoreapp3.1\HomeCleaning.dll
 D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning\obj\Debug\netcoreapp3.1\HomeCleaning.pdb
 D:\Projects\Behcet\HomeCleaning\back-end\HomeCleaning\obj\Debug\netcoreapp3.1\HomeCleaning.genruntimeconfig.cache
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Sqlite.dll
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyModel.dll
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.Identity.Client.dll
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\System.Text.Json.dll
+E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\runtimes\linux-x86\native\libe_sqlite3.so
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\appsettings.Development.json
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\appsettings.json
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
@@ -191,7 +197,6 @@ E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netc
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Abstractions.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Relational.dll
-E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Sqlite.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.SqlServer.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Abstractions.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Memory.dll
@@ -200,12 +205,10 @@ E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netc
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Binder.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
-E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyModel.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
-E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.Identity.Client.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
@@ -238,10 +241,8 @@ E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netc
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
-E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\System.Runtime.Caching.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
-E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\System.Text.Json.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\Microsoft.Data.SqlClient.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\Microsoft.Data.SqlClient.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\sni.dll
@@ -253,7 +254,6 @@ E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netc
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\runtimes\linux-armel\native\libe_sqlite3.so
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\runtimes\linux-musl-x64\native\libe_sqlite3.so
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\runtimes\linux-x64\native\libe_sqlite3.so
-E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\runtimes\linux-x86\native\libe_sqlite3.so
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\runtimes\osx-x64\native\libe_sqlite3.dylib
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\runtimes\win-arm\native\e_sqlite3.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\e_sqlite3.dll
@@ -272,7 +272,6 @@ E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\obj\Debug\netc
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\obj\Debug\netcoreapp3.1\HomeCleaning.AssemblyInfoInputs.cache
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\obj\Debug\netcoreapp3.1\HomeCleaning.AssemblyInfo.cs
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\obj\Debug\netcoreapp3.1\HomeCleaning.csproj.CoreCompileInputs.cache
-E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\obj\Debug\netcoreapp3.1\HomeCleaning.MvcApplicationPartsAssemblyInfo.cs
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\obj\Debug\netcoreapp3.1\HomeCleaning.MvcApplicationPartsAssemblyInfo.cache
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\obj\Debug\netcoreapp3.1\HomeCleaning.RazorTargetAssemblyInfo.cache
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\HomeCleaning\obj\Debug\netcoreapp3.1\HomeCleaning.csproj.CopyComplete

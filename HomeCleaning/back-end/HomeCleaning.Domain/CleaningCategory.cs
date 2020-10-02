@@ -6,5 +6,7 @@ namespace HomeCleaning.Domain
     public class CleaningCategory : Entity, IAggregateRoot<CleaningCategory>
     {
         public string Name { get; set; }
+
+        public string Description { get; set; }
     }
 }

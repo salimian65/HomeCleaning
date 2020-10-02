@@ -10,7 +10,6 @@ D:\Projects\Behcet\HomeCleaning\back-end\Framework.Domain\obj\Debug\netstandard2
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\Framework.Domain\bin\Debug\netstandard2.0\Framework.Domain.deps.json
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\Framework.Domain\bin\Debug\netstandard2.0\Framework.Domain.dll
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\Framework.Domain\bin\Debug\netstandard2.0\Framework.Domain.pdb
-E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\Framework.Domain\obj\Debug\netstandard2.0\Framework.Domain.csprojAssemblyReference.cache
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\Framework.Domain\obj\Debug\netstandard2.0\Framework.Domain.AssemblyInfoInputs.cache
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\Framework.Domain\obj\Debug\netstandard2.0\Framework.Domain.AssemblyInfo.cs
 E:\Project\Behcet\HomeCleaning\HomeCleaning\back-end\Framework.Domain\obj\Debug\netstandard2.0\Framework.Domain.csproj.CoreCompileInputs.cache

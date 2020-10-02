@@ -4,14 +4,16 @@ using HomeCleaning.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HomeCleaning.Persistance.Migrations
 {
     [DbContext(typeof(HomeCleaningContext))]
-    partial class HomeCleaningContextModelSnapshot : ModelSnapshot
+    [Migration("20201001150714_OrderAddCleaningPackageId")]
+    partial class OrderAddCleaningPackageId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,8 +233,6 @@ namespace HomeCleaning.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CleaningExtraOptionId");
-
                     b.HasIndex("CleaningPackageId");
 
                     b.HasIndex("SpaceSizeId");
@@ -411,12 +411,6 @@ namespace HomeCleaning.Persistance.Migrations
 
             modelBuilder.Entity("HomeCleaning.Domain.Order", b =>
                 {
-                    b.HasOne("HomeCleaning.Domain.CleaningExtraOption", "CleaningExtraOption")
-                        .WithMany()
-                        .HasForeignKey("CleaningExtraOptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("HomeCleaning.Domain.CleaningPackage", "CleaningPackage")
                         .WithMany()
                         .HasForeignKey("CleaningPackageId")
