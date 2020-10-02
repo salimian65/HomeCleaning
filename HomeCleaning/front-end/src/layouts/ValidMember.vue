@@ -16,46 +16,49 @@
         </ul>
       </div>
     </v-system-bar>
+
     <v-app-bar app fixed1 elevate-on-scroll class="app-bar1 app-bar-bg">
-      <v-app-bar-nav-icon @click="drawer=!drawer" v-if="!drawer"></v-app-bar-nav-icon>
-      <v-toolbar dark flat color="#0d3f5d" class="header-toolbar">
-        <!-- <v-toolbar-title>Title</v-toolbar-title> -->
-        <v-menu offset-y flat v-model="showMenu">
-          <template v-slot:activator="{ on }">
-            <v-card v-on="on" dark color="#0d3f5d" class="user-menu">
-              <v-icon>mdi-chevron-down</v-icon>
-              <v-avatar>
-                <img src="https://randomuser.me/api/portraits/women/81.jpg" alt="novin"/>
-              </v-avatar>
+      <v-app-bar-nav-icon class="app-bar-btn" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
-              <span>سرمایه گذاری نوین دارو</span>
-            </v-card>
-          </template>
-          <v-list class="user-menu-list">
-            <v-list-item v-for="(item, index) in menuitems" :key="index">
-              <v-list-item-title>
-                <router-link :to="item.url" class @click="handleLogout()">
-                  <v-icon>{{ item.icon }}</v-icon>
-                  {{ item.title }}
-                </router-link>
-              </v-list-item-title>
-            </v-list-item>
-            <v-list-item>
-              <v-icon>mdi-logout</v-icon>
-              <a href="#" @click="handleLogout()">خروج از سیستم</a>
-            </v-list-item>
-          </v-list>
-        </v-menu>
+      <!--      <v-toolbar-title class="logo-area">-->
+      <!--        <a href="#"><img src="../assets/logo.png" alt=""></a>-->
+      <!--      </v-toolbar-title>-->
 
-        <v-spacer></v-spacer>
-      </v-toolbar>
+      <v-menu offset-y flat v-model="showMenu">
+        <template v-slot:activator="{ on }">
+          <v-card v-on="on" dark color="#0d3f5d" class="user-menu">
+            <v-icon>mdi-chevron-down</v-icon>
+            <v-avatar>
+              <img src="https://randomuser.me/api/portraits/women/81.jpg" alt="novin"/>
+            </v-avatar>
+
+            <span>سرمایه گذاری نوین دارو</span>
+          </v-card>
+        </template>
+
+        <v-list class="user-menu-list">
+          <v-list-item v-for="(item, index) in menuitems" :key="index">
+            <v-list-item-title>
+              <router-link :to="item.url" class @click="handleLogout()">
+                <v-icon>{{ item.icon }}</v-icon>
+                {{ item.title }}
+              </router-link>
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-icon>mdi-logout</v-icon>
+            <a href="#" @click="handleLogout()">خروج از سیستم</a>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
 
     <!-- --------sidebar---------------- -->
     <v-navigation-drawer
       class="sidebar"
       v-model="drawer"
-      app
+      fixed
+      temporary
       :src="bg"
       right
       dark
@@ -80,16 +83,20 @@
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title>سرمایه گذاری نوین دارو</v-list-item-title>
-            <v-list-item-subtitle>حساب کاربری</v-list-item-subtitle>
+            <v-list-item-title>شرکت داروپخش نوین</v-list-item-title>
+            <v-list-item-subtitle>
+              <small>تنظیمات حساب کاربری</small>
+            </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </router-link>
 
+      <!-- ------------------------ -->
+
       <v-divider></v-divider>
 
       <v-list dense>
-        <v-list-item v-for="item in dashitems" :key="item.title" :href="item.url">
+        <v-list-item v-for="item in dashitems" :key="item.title" :to="item.url">
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -99,17 +106,6 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-
-      <v-card-text>
-        <v-treeview :items="treeitems">
-          <template v-slot:prepend="{ item }">
-            <v-icon
-              v-if="item.children"
-              v-text="`mdi-${item.id === 1 ? 'mdi-file-tree' : 'mdi-chevron-left'}`"
-            ></v-icon>
-          </template>
-        </v-treeview>
-      </v-card-text>
     </v-navigation-drawer>
 
     <!-- --------end sidebar---------------- -->
@@ -194,11 +190,10 @@
       source: String
     },
     data: () => ({
-      showMenu: false,
       sidebarOpen: true,
       show: false,
       dialog: false,
-      drawer: true,
+      drawer: false,
       icons: [
         "fab fa-facebook",
         "fab fa-twitter",
@@ -214,68 +209,32 @@
         }
         //{title: 'خروج از سیستم', icon: 'mdi-logout', url: '/logout'},
       ],
-
       items: [
         {icon: "contacts", text: "ثبت نام", path: "/register"},
         {icon: "history", text: "Frequently contacted"},
         {icon: "content_copy", text: "Duplicates"}
       ],
       dashitems: [
-        {title: "داشبورد", icon: "mdi-home-city", url: "/dashboard"},
-        {title: "حساب من", icon: "mdi-account", url: "/account"},
-        {title: "لیست تست", icon: "mdi-account-group-outline", url: "/invoices"}
-      ],
-
-      treeitems: [
+        {title: "داشبورد", icon: "mdi-home-city", url: "dashboard"},
+        {title: "حساب من", icon: "mdi-account", url: "account"},
         {
-          id: 1,
-          name: "دسترسی درختی",
-          children: [
-            {
-              id: 2,
-              name: "شاخه یکم",
-              children: [
-                {
-                  id: 201,
-                  name: "برگ یکم"
-                }
-              ]
-            },
-            {
-              id: 3,
-              name: "مدیران",
-              children: [
-                {
-                  id: 301,
-                  name: "رعناسیستم"
-                }
-              ]
-            },
-            {
-              id: 4,
-              name: "شرکا",
-              children: [
-                {
-                  id: 401,
-                  name: "برند یکم"
-                },
-                {
-                  id: 402,
-                  name: "برند دوم"
-                },
-                {
-                  id: 403,
-                  name: "برند سوم"
-                }
-              ]
-            }
-          ]
-        }
+          title: "داشبورد 2",
+          icon: "mdi-account-group-outline",
+          url: "dashboardrightsidebar"
+        },
+        {
+          title: "ثبت نام داروخانه",
+          icon: "mdi-bottle-tonic-plus-outline",
+          url: "register/retailer"
+        },
+        {title: "لیست تست", icon: "mdi-account-group-outline", url: "invoices"}
       ]
     }),
     computed: {
       bg() {
-        return "https://randomuser.me/api/portraits/women/81.jpg";
+        return this.background
+          ? "https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
+          : undefined;
       }
 
       //   sidebarOpenFns() {
@@ -293,6 +252,8 @@
     methods: {
       handleLogout: function () {
         this.$keycloak.logout();
+      },
+      showMenu() {
       }
     }
   };
@@ -318,8 +279,9 @@
 
   .logo-area {
     margin-top: 25px !important;
-    margin-right: 35px;
+    margin-right: 0 !important;
     min-width: 250px;
+    padding-right: 15px !important;
   }
 
   .menu-bar {
@@ -360,27 +322,9 @@
     }
   }
 
-  .v-navigation-drawer__image {
-    opacity: 0.1;
-  }
-
   .v-list-item__subtitle {
     font-size: 0.775rem;
     margin-top: 5px;
-  }
-
-  .header-toolbar {
-    margin-right: 15px;
-  }
-
-  .sidebar-header {
-    padding: 7px 30px;
-    text-align: left;
-  }
-
-  .theme--light.v-btn.v-btn--icon {
-    color: rgb(255, 255, 255);
-    margin: 0 10px;
   }
 
   .content-bg {
@@ -417,24 +361,22 @@
     background-size: cover;
   }
 
-  .user-menu {
-    &.v-card {
-      background: transparent;
-      border: none;
-      transition: none;
-      box-shadow: none;
-      padding: 5px 10px;
+  .sidebar {
+    .v-list-item__title {
+      -ms-flex-item-align: center;
+      align-self: center;
+      font-size: 0.8rem;
     }
   }
 
-  .user-menu-list a {
-    color: #469a92 !important;
-    font-size: 14px;
+  .sidebar-header {
+    padding: 28px;
   }
 
   .form-card {
     padding: 10px;
     margin: 10px 0;
+    min-height: 100%;
 
     .headline {
       font-family: "IRANSans", sans-serif !important;

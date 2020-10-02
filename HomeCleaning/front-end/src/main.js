@@ -10,7 +10,7 @@ import vuelidateErrorExtractor from "vuelidate-error-extractor";
 import VuelidateErrorTemplate from "./VuelidateErrorTemplate";
 
 import axios from "axios";
-import Dashboard from "./layouts/Dashboard";
+import ValidMember from "./layouts/ValidMember";
 import DefaultLayout from "./layouts/Default";
 import * as Keycloak from "keycloak-js";
 import AlertDialog from "./components/AlertDialog";
@@ -18,13 +18,28 @@ import vueAwesomeCountdown from "vue-awesome-countdown";
 
 Vue.config.productionTip = false
 
-let dashboardLayouts = {
-    en: "dashboardleftsidebar",
-    fa: "dashboard",
-    ar: "dashboard",
-};
+let ValidMemberLayouts = {
+    en: "ValidMember",
+    tr: "ValidMember",
 
-Vue.component("dashboard-layout", Dashboard);
+};
+Vue.use(Vuelidate);
+Vue.use(vuelidateErrorExtractor, {
+    /**
+     * Optionally provide the template in the configuration.
+     * or register like so Vue.component("FormField", templates.singleErrorExtractor.foundation6)
+     */
+    template: VuelidateErrorTemplate, //templates.singleErrorExtractor.foundation6, // you can also pass your own custom template
+    i18n: "validation",
+});
+
+Vue.use(vueAwesomeCountdown, "vac");
+
+Vue.prototype.$baseUrl = "http://localhost:6001";
+Vue.prototype.$baseApiUrl = "http://localhost:6001/api";
+axios.defaults.baseURL = "http://localhost:6001/api";
+
+Vue.component("ValidMember-layout", ValidMember);
 Vue.component("default-layout", DefaultLayout);
 
 new Vue({
@@ -70,8 +85,8 @@ new Vue({
         },
         getSuitableLayout: function(key) {
             switch (key) {
-                case "dashboard":
-                    return dashboardLayouts[i18n.locale];
+                case "validMember":
+                    return ValidMemberLayouts[i18n.locale];
                 case "default":
                     return "default";
                 default:
@@ -113,31 +128,15 @@ let keycloak = Keycloak(initOptions);
 
 keycloak
     .init({
-        onLoad: initOptions.onLoad,
+        //onLoad: initOptions.onLoad,
     })
     .success((auth) => {
         if (!auth) {
-            // window.location.reload();
+            //  window.location.reload();
         } else {
             console.log("Authenticated");
         }
 
-        Vue.use(Vuelidate);
-
-        Vue.use(vuelidateErrorExtractor, {
-            /**
-             * Optionally provide the template in the configuration.
-             * or register like so Vue.component("FormField", templates.singleErrorExtractor.foundation6)
-             */
-            template: VuelidateErrorTemplate, //templates.singleErrorExtractor.foundation6, // you can also pass your own custom template
-            i18n: "validation",
-        });
-
-        Vue.use(vueAwesomeCountdown, "vac");
-
-        Vue.prototype.$baseUrl = "http://localhost:6001";
-        Vue.prototype.$baseApiUrl = "http://localhost:6001/api";
-        axios.defaults.baseURL = "http://localhost:6001/api";
         Vue.prototype.$keycloak = keycloak;
 
         // router.beforEach((to, from, next) => {
