@@ -42,6 +42,13 @@ namespace HomeCleaning.Controllers
             return spaceSize;
         }
 
+        [HttpGet("GetSpaceSizesByCategoryId")]
+        public async Task<ActionResult<IEnumerable<SpaceSize>>> GetSpaceSizesByCategoryId(int categoryId)
+        {
+            var spaceSize = await _context.SpaceSize.Where(a => a.CleaningCategoryId == categoryId).ToListAsync();
+            return spaceSize;
+        }
+        
         // PUT: api/SpaceSizes/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

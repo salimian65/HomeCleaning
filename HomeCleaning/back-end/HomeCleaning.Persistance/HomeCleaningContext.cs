@@ -18,11 +18,7 @@ namespace HomeCleaning.Persistance
 
         public DbSet<CleaningExtraOption> CleaningExtraOption { get; set; }
 
-        //public DbSet<Address> Address { get; set; }
-
         public DbSet<Order> Order { get; set; }
-
-        //  public DbSet<Customer> BlogPostCounts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

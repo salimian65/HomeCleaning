@@ -1,28 +1,29 @@
 <template>
-  <div id="app">
-    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+  <div>
+    <component :is="layout">
+      <router-view/>
+    </component>
+    <alert-dialog ref="alertDialog"></alert-dialog>
+    <confirmation-dialog ref="confirmationDialog"></confirmation-dialog>
+    <toast ref="toast"></toast>
   </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
+import AlertDialog from "./components/AlertDialog";
+import ConfirmationDialog from "./components/ConfirmationDialog";
+import Toast from "./components/Toast";
 
+const defaultLayout = "default";
 export default {
-  name: 'App',
-  components: {
-   // HelloWorld
+  components: { AlertDialog, ConfirmationDialog, Toast },
+  data: function () {
+    return {};
+  },
+  computed: {
+    layout () {
+      return (this.$route.meta.layout || defaultLayout) + "-layout";
+    }
   }
-}
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
