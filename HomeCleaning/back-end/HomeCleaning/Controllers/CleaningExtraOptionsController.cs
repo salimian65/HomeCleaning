@@ -12,41 +12,49 @@ namespace HomeCleaning.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CleaningOptionsController : ControllerBase
+    public class CleaningExtraOptionsController : ControllerBase
     {
         private readonly HomeCleaningContext _context;
 
-        public CleaningOptionsController(HomeCleaningContext context)
+        public CleaningExtraOptionsController(HomeCleaningContext context)
         {
             _context = context;
         }
 
-        // GET: api/CleaningOptions
+        // GET: api/CleaningExtraOptions
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CleaningExtraOption>>> GetCleaningOption()
+        public async Task<ActionResult<IEnumerable<CleaningExtraOption>>> GetCleaningExtraOption()
         {
             return await _context.CleaningExtraOption.ToListAsync();
         }
 
-        // GET: api/CleaningOptions/5
+        // GET: api/CleaningExtraOptions/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CleaningExtraOption>> GetCleaningOption(int id)
+        public async Task<ActionResult<CleaningExtraOption>> GetCleaningExtraOption(int id)
         {
-            var cleaningOption = await _context.CleaningExtraOption.FindAsync(id);
+            var cleaningExtraOption = await _context.CleaningExtraOption.FindAsync(id);
 
-            if (cleaningOption == null)
+            if (cleaningExtraOption == null)
             {
                 return NotFound();
             }
 
-            return cleaningOption;
+            return cleaningExtraOption;
         }
 
-        // PUT: api/CleaningOptions/5
+        [HttpGet("GetCleaningExtraOptionsByCategoryId")]
+        public async Task<ActionResult<IEnumerable<CleaningExtraOption>>> GetCleaningExtraOptionsByCategoryId(int categoryId)
+        {
+            var cleaningExtraOption = await _context.CleaningExtraOption.Where(a => a.CleaningCategoryId == categoryId).ToListAsync();
+            return cleaningExtraOption;
+        }
+
+
+        // PUT: api/CleaningExtraOptions/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCleaningOption(int id, CleaningExtraOption cleaningExtraOption)
+        public async Task<IActionResult> PutCleaningExtraOption(int id, CleaningExtraOption cleaningExtraOption)
         {
             if (id != cleaningExtraOption.Id)
             {
@@ -61,7 +69,7 @@ namespace HomeCleaning.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CleaningOptionExists(id))
+                if (!CleaningExtraOptionExists(id))
                 {
                     return NotFound();
                 }
@@ -74,35 +82,35 @@ namespace HomeCleaning.Controllers
             return NoContent();
         }
 
-        // POST: api/CleaningOptions
+        // POST: api/CleaningExtraOptions
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<CleaningExtraOption>> PostCleaningOption(CleaningExtraOption cleaningExtraOption)
+        public async Task<ActionResult<CleaningExtraOption>> PostCleaningExtraOption(CleaningExtraOption cleaningExtraOption)
         {
             _context.CleaningExtraOption.Add(cleaningExtraOption);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCleaningOption", new { id = cleaningExtraOption.Id }, cleaningExtraOption);
+            return CreatedAtAction("GetCleaningExtraOption", new { id = cleaningExtraOption.Id }, cleaningExtraOption);
         }
 
-        // DELETE: api/CleaningOptions/5
+        // DELETE: api/CleaningExtraOptions/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<CleaningExtraOption>> DeleteCleaningOption(int id)
+        public async Task<ActionResult<CleaningExtraOption>> DeleteCleaningExtraOption(int id)
         {
-            var cleaningOption = await _context.CleaningExtraOption.FindAsync(id);
-            if (cleaningOption == null)
+            var cleaningExtraOption = await _context.CleaningExtraOption.FindAsync(id);
+            if (cleaningExtraOption == null)
             {
                 return NotFound();
             }
 
-            _context.CleaningExtraOption.Remove(cleaningOption);
+            _context.CleaningExtraOption.Remove(cleaningExtraOption);
             await _context.SaveChangesAsync();
 
-            return cleaningOption;
+            return cleaningExtraOption;
         }
 
-        private bool CleaningOptionExists(int id)
+        private bool CleaningExtraOptionExists(int id)
         {
             return _context.CleaningExtraOption.Any(e => e.Id == id);
         }

@@ -23,8 +23,10 @@ namespace HomeCleaning
         }
 
         public IConfiguration Configuration { get; }
-
+     
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         // This method gets called by the runtime. Use this method to add services to the container.
+      
         public void ConfigureServices(IServiceCollection services)
         {
             var serilogLogger = new LoggerConfiguration()
@@ -44,6 +46,15 @@ namespace HomeCleaning
                // services.AddControllers();
                 services.AddDbContext<HomeCleaningContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("HomeCleaningContext")));
+
+                services.AddCors(options =>
+                {
+                    options.AddPolicy(name: MyAllowSpecificOrigins,
+                        builder =>
+                        {
+                            builder.WithOrigins("*","http://localhost:8080");
+                        });
+                });
 
                 new Bootstrap(services, Configuration).WireUp();
             }
@@ -66,6 +77,7 @@ namespace HomeCleaning
 
                 app.UseHealthChecks("/health");
                 app.UseRouting();
+                app.UseCors(MyAllowSpecificOrigins);
                 app.UseHttpMetrics();
                 app.UseAuthentication();
                 app.UseSwagger();
@@ -74,7 +86,7 @@ namespace HomeCleaning
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "TseCam Web API");
                 });
 
-                 app.UseHttpsRedirection();
+                 //app.UseHttpsRedirection();
                 //app.UseResultExceptionHandler();
 
                 app.UseEndpoints(endpoints =>

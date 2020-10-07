@@ -1,45 +1,26 @@
 <template>
 <div>
-    <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
-        <div class="container"><a class="navbar-brand js-scroll-trigger" href="#page-top">ANASAYFA</a>
-            <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">Services</a>
-                    </li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">ABOUT</a>
-                    </li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">CONTACT</a>
-                    </li>
-                </ul>
-            </div>
+        <header class="masthead bg-primary text-white text-center">
+      <div class="container d-flex align-items-center flex-column">
+        <!-- Masthead Avatar Image-->
+        <!-- <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt=""> -->
+        <!-- Masthead Heading-->
+        <h1 class="masthead-heading mb-0">Home Cleaning</h1>
+        <!-- Icon Divider-->
+        <div class="divider-custom divider-light">
+          <div class="divider-custom-line"></div>
+          <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+          <div class="divider-custom-line"></div>
         </div>
-    </nav>
-    <header class="masthead bg-primary text-white text-center">
-        <div class="container d-flex align-items-center flex-column">
-            <!-- Masthead Avatar Image-->
-            <!-- <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt=""> -->
-            <!-- Masthead Heading-->
-            <h1 class="masthead-heading mb-0">Home Cleaning</h1>
-            <!-- Icon Divider-->
-            <div class="divider-custom divider-light">
-                <div class="divider-custom-line"></div>
-                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                <div class="divider-custom-line"></div>
-            </div>
-            <!-- Masthead Subheading-->
-            <p class="pre-wrap masthead-subheading font-weight-light mb-0">The Most Reliable Name in Home Cleaning</p>
-        </div>
+        <!-- Masthead Subheading-->
+        <p class="pre-wrap masthead-subheading font-weight-light mb-0">
+          The Most Reliable Name in Home Cleaning
+        </p>
+      </div>
     </header>
     <section class="page-section portfolio" id="portfolio">
         <div class="container">
             <!-- Portfolio Section Heading-->
-            <noscript>
-                <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript
-                    enabled.
-                    Please enable it to continue.</strong>
-            </noscript>
-            <div id="app"></div>
             <div class="text-center">
                 <h2 class="page-section-heading text-secondary mb-0 d-inline-block">Services</h2>
             </div>
@@ -54,57 +35,50 @@
                 <!-- Portfolio Items-->
                 <div class="col-md-6 col-lg-4 mb-5">
                     <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal0">
-                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                        <!-- <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                             <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                        </div>
-                        <span class="span1">Home Cleaning</span>
+                        </div> -->
+                            <router-link :to="`package/1`">
+                              <span class="span1">Home Cleaning</span>
+                            </router-link>
                         <!-- <img class="img-fluid" src="assets/img/portfolio/cabin.png" alt="Log Cabin" /> -->
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4 mb-5">
                     <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal1">
-                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                        </div>
-                        <!-- <img class="img-fluid" src="assets/img/portfolio/cake.png" alt="Tasty Cake" /> -->
-                        <span class="span1">Empty Home Cleaning</span>
+                       <router-link :to="`package/2`">
+                             <span class="span1">Empty Home Cleaning</span>
+                            </router-link>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4 mb-5">
                     <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal2">
-                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                        </div>
-                        <!-- <img class="img-fluid" src="assets/img/portfolio/circus.png" alt="Circus Tent" /> -->
-                        <span class="span1">Cleaning after construction</span>
+                        <router-link :to="`package/3`">
+                             <span class="span1">Cleaning after construction</span>
+                            </router-link>
+                      
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4 mb-5">
                     <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal3">
-                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                        </div>
-                        <span class="span1">Villa Cleaning</span>
-                        <!-- <img class="img-fluid" src="assets/img/portfolio/game.png" alt="Controller" /> -->
+                          <router-link :to="`package/4`">
+                               <span class="span1">Villa Cleaning</span>
+                            </router-link>
+                       
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4 mb-5">
                     <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal4">
-                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                        </div>
-                        <span class="span1">Office Cleaning</span>
-                        <!-- <img class="img-fluid" src="assets/img/portfolio/safe.png" alt="Locked Safe" /> -->
+                       <router-link :to="`package/5`">
+                                <span class="span1">Office Cleaning</span>
+                            </router-link>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4 mb-5">
                     <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal5">
-                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-                        </div>
-                        <span class="span1">Empty Home Cleaning</span>
-                        <!-- <img class="img-fluid" src="assets/img/portfolio/submarine.png" alt="Submarine" /> -->
-
+                       <router-link :to="`package/6`">
+                               <span class="span1">Empty Home Cleaning</span>
+                            </router-link>
                     </div>
                 </div>
             </div>
@@ -197,60 +171,31 @@
             </div>
         </div>
     </section>
-    <footer class="footer text-center">
-        <div class="container">
-            <div class="row">
-                <!-- Footer Location-->
-                <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h4 class="mb-4">LOCATION</h4>
-                    <p class="pre-wrap lead mb-0">İkitelli OSB Mh. Ytü Teknopark Sk. Ytü Technopark Apt. No: 1 / 1B23 Basaksehir / Istanbul</p>
-                </div>
-                <!-- Footer Social Icons-->
-                <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h4 class="mb-4">AROUND THE WEB</h4><a class="btn btn-outline-light btn-social mx-1" href="https://www.facebook.com/TechnorobYazilim/"><i class="fab fa-fw fa-facebook-f"></i></a>
-                    <a class="btn btn-outline-light btn-social mx-1" href="https://www.youtube.com/channel/UCi-7zG2ii15gjoan_MzFS9w"><i
-                            class="fab fa-fw fa-youtube"></i></a>
-                    <a class="btn btn-outline-light btn-social mx-1" href="https://tr.linkedin.com/company/technorob"><i
-                            class="fab fa-fw fa-linkedin-in"></i></a>
-
-                </div>
-                <!-- Footer About Text-->
-                <div class="col-lg-4">
-                    <h4 class="mb-4">ABOUT FREELANCER</h4>
-                    <p class="pre-wrap lead mb-0">With the support of Yıldız Technical University, we want to increase and continue our struggle to be beneficial to both the commercial sector and our country in many projects.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Copyright Section-->
-    <section class="copyright py-4 text-center text-white">
-        <div class="container"><small class="pre-wrap">Copyright © 2019 TechnoRob Yazılım Bilişim Sistemleri Ltd. Şti.
-                All Rights Reserved</small></div>
-    </section>
-    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
-    <div class="scroll-to-top d-lg-none position-fixed"><a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
-      <i                class="fa fa-chevron-up"></i></a></div>
+  
 </div>
 </template>
 
 <script>
-
+import cleaningCategory from "../api/cleaningCategory";
 export default {
    data: () => ({
-           show: false,
-            dialog: false,
-            drawer: null,
-          
+             items: []          
         }),
 
   methods: {
-    handleLogout: function () {
-      this.$keycloak.logout();
+    async getAllCleaningCategory() {
+      this.loading = true;
+      var response = await cleaningCategory.getAll();
+      this.items = response.data.result;
+      this.loading = false;
     }
   },
   components: {
 
+  },
+  async mounted() {
+    await this.getAllCleaningCategory();
   }
+
 };
 </script>

@@ -27,7 +27,7 @@ export default new Router({
             }
         },
         {
-            path: "/package",
+            path: "/package/:categoryId",
             name: "package",
             component: Package,
             meta: {
