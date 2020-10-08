@@ -176,7 +176,7 @@
 </template>
 
 <script>
-import cleaningCategory from "../api/cleaningCategory";
+import cleaningCategory from "../api/cleaningCategoryApi";
 export default {
    data: () => ({
              items: []          

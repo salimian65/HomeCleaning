@@ -67,7 +67,9 @@
       </v-row>
       <v-row>
         <v-col cols="6">
-          <v-btn  color="primary" v-if="isNotEditable" @click="submit();">{{$t('buttons.submit')}}</v-btn>
+          <v-btn color="primary" v-if="isNotEditable" @click="submit()">{{
+            $t("buttons.submit")
+          }}</v-btn>
         </v-col>
       </v-row>
     </div>
@@ -75,10 +77,12 @@
 </template>
 
 <script>
-import cleaningCategory from "../api/cleaningCategory";
-import spaceSize from "../api/spaceSize";
-import cleaningPackage from "../api/cleaningPackage";
-import cleaningExtraOption from "../api/cleaningExtraOption";
+import cleaningCategoryApi from "../api/cleaningCategoryApi";
+import spaceSizeApi from "../api/spaceSizeApi";
+import cleaningPackageApi from "../api/cleaningPackageApi";
+import cleaningExtraOptionApi from "../api/cleaningExtraOptionApi";
+import orderApi from "../api/orderApi";
+import order from "../model/order";
 export default {
   props: {
     cartable: Number,
@@ -94,42 +98,47 @@ export default {
       cleaningCategoryChecked: [],
       spaceSizePicked: "",
       cleaningPackagePicked: "",
-      cleaningExtraOptionChecked: []
+      cleaningExtraOptionChecked: [],
     };
   },
   methods: {
     async getAllCleaningCategory() {
       this.loading = true;
-      var response = await cleaningCategory.getAll();
-      this.cleaningCategories = response.data.filter((a) => a.id == this.categoryId);
+      var response = await cleaningCategoryApi.getAll();
+      this.cleaningCategories = response.data.filter(
+        (a) => a.id == this.categoryId
+      );
       this.loading = false;
     },
 
     async getSpaceSizesByCategoryId() {
       this.loading = true;
-      var response = await spaceSize.getByCategoryId(this.categoryId);
+      var response = await spaceSizeApi.getByCategoryId(this.categoryId);
       this.spaceSizes = response.data;
       this.loading = false;
     },
 
     async getCleaningPackagesByCategoryId() {
       this.loading = true;
-      var response = await cleaningPackage.getByCategoryId(this.categoryId);
+      var response = await cleaningPackageApi.getByCategoryId(this.categoryId);
       this.cleaningPackages = response.data;
       this.loading = false;
     },
 
     async getCleaningExtraOptionByCategoryId() {
       this.loading = true;
-      var response = await cleaningExtraOption.getByCategoryId(this.categoryId);
+      var response = await cleaningExtraOptionApi.getByCategoryId(
+        this.categoryId
+      );
       this.cleaningExtraOptions = response.data;
       this.loading = false;
     },
- 
-  async submit() {
-    
+
+    async submit() {
+      const orderInstance=new order();
+      var dd = await orderApi.add(orderInstance);
     },
- },
+  },
 
   async mounted() {
     await this.getAllCleaningCategory();
