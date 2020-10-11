@@ -1,79 +1,102 @@
 <template>
-  <v-container>
-    <div class="cartableDetail" style="padding: 150px">
-      <h1>Make Your Request</h1>
-      <v-row>
-        <v-col cols="6">
-          <h3>Cleaning Category</h3>
-          <ul id="example-1">
-            <li v-for="item in cleaningCategories" :key="item.id">
-              {{ item.name }}
-            </li>
-          </ul>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="6">
-          <h3>Space Size</h3>
-          <ul id="example-1">
-            <li v-for="item in spaceSizes" :key="item.id">
-              <input
-                type="radio"
-                :id="`spaceSize` + item.id"
-                :value="item"
-                name="spaceSize"
-                v-model="spaceSizePicked"
-              />
-              <label :for="`spaceSize` + item.id"> {{ item.name }}</label>
-            </li>
-          </ul>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="6">
-          <h3>Cleaning Package</h3>
-          <ul id="example-1">
-            <li v-for="item in cleaningPackages" :key="item.id">
-              <input
-                type="radio"
-                :id="`cleaningPackage` + item.id"
-                :value="item"
-                name="cleaningPackage"
-                v-model="cleaningPackagePicked"
-              />
-              <label :for="`cleaningPackage` + item.id"> {{ item.name }}</label>
-            </li>
-          </ul>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="6">
-          <h3>Extra Options</h3>
-          <ul id="example-1">
-            <li v-for="item in cleaningExtraOptions" :key="item.id">
-              <input
-                type="checkbox"
-                :id="`cleaningExtraOption` + item.id"
-                :value="item"
-                name="cleaningExtraOption"
-                v-model="cleaningExtraOptionChecked"
-              />
-              <label :for="`cleaningExtraOption` + item.id">
-                {{ item.name }}</label
-              >
-            </li>
-          </ul>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="6">
-          <v-btn color="primary" v-if="isNotEditable" @click="submit()">{{
-            $t("buttons.submit")
-          }}</v-btn>
-        </v-col>
-      </v-row>
-    </div>
-  </v-container>
+  <div class="cartableDetail" style="padding: 150px">
+    <h1>Make Your Request</h1>
+    <v-row>
+      <v-col cols="6">
+        <h3>Cleaning Category</h3>
+        <ul id="example-1">
+          <li v-for="item in cleaningCategories" :key="item.id">
+            {{ item.name }}
+          </li>
+        </ul>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="6">
+        <h3>Space Size</h3>
+        <ul id="example-1">
+          <li v-for="item in spaceSizes" :key="item.id">
+            <input
+              type="radio"
+              :id="`spaceSize` + item.id"
+              :value="item"
+              name="spaceSize"
+              v-model="spaceSizeSelected"
+            />
+            <label :for="`spaceSize` + item.id"> {{ item.name }}</label>
+          </li>
+        </ul>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="6">
+        <h3>Cleaning Package</h3>
+        <ul id="example-1">
+          <li v-for="item in cleaningPackages" :key="item.id">
+            <input
+              type="radio"
+              :id="`cleaningPackage` + item.id"
+              :value="item"
+              name="cleaningPackage"
+              v-model="cleaningPackageSelected"
+            />
+            <label :for="`cleaningPackage` + item.id"> {{ item.name }}</label>
+          </li>
+        </ul>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="6">
+        <h3>Extra Options</h3>
+        <ul id="example-1">
+          <li v-for="item in cleaningExtraOptions" :key="item.id">
+            <input
+              type="checkbox"
+              :id="`cleaningExtraOption` + item.id"
+              :value="item"
+              name="cleaningExtraOption"
+              v-model="cleaningExtraOptionSelected"
+            />
+            <label :for="`cleaningExtraOption` + item.id">
+              {{ item.name }}</label
+            >
+          </li>
+        </ul>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-dialog v-model="dialog" width="500">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            color="primary"
+            v-if="isNotEditable"
+            @click="submit()"
+            v-bind="attrs"
+            v-on="on"
+            >{{ $t("buttons.submit") }}</v-btn
+          >
+        </template>
+        <v-card>
+          <v-card-title class="headline grey lighten-2">
+            Privacy Policy
+          </v-card-title>
+
+          <v-card-text>
+            <login-modal> </login-modal>
+          </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" text @click="dialog = false">
+              I accept
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-row>
+  </div>
 </template>
 
 <script>
@@ -82,12 +105,16 @@ import spaceSizeApi from "../api/spaceSizeApi";
 import cleaningPackageApi from "../api/cleaningPackageApi";
 import cleaningExtraOptionApi from "../api/cleaningExtraOptionApi";
 import orderApi from "../api/orderApi";
-import order from "../model/order";
+import orderModel from "../models/orderModel";
+import loginModal from "../views/Login";
+
 export default {
   props: {
     cartable: Number,
   },
-  components: {},
+  components: {
+    loginModal,
+  },
   data: function () {
     return {
       categoryId: this.$route.params["categoryId"],
@@ -95,10 +122,11 @@ export default {
       spaceSizes: [],
       cleaningPackages: [],
       cleaningExtraOptions: [],
-      cleaningCategoryChecked: [],
-      spaceSizePicked: "",
-      cleaningPackagePicked: "",
-      cleaningExtraOptionChecked: [],
+      spaceSizeSelected: "",
+      cleaningPackageSelected: "",
+      cleaningExtraOptionSelected: [],
+      isNotEditable: true,
+      dialog: false,
     };
   },
   methods: {
@@ -134,9 +162,21 @@ export default {
       this.loading = false;
     },
 
-    async submit() {
-      const orderInstance=new order();
-      var dd = await orderApi.add(orderInstance);
+    submit() {
+      const orderInstance = new orderModel.order(
+        this.spaceSizeSelected,
+        this.cleaningPackageSelected,
+        this.cleaningExtraOptionSelected
+      );
+      this.showModal();
+      this.$router.push({ name: 'orderRequest' , params: { order: orderInstance }})
+      //  await orderApi.add(orderInstance);
+    },
+
+    showModal() {
+      //let element = this.$refs.modal.$el
+      // $(element).modal('show')
+      // this.$root.$emit("bv::show::modal", "ssss");
     },
   },
 

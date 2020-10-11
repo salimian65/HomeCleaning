@@ -11,13 +11,13 @@ namespace HomeCleaning.Domain
         public int SpaceSizeId { get; set; }
 
         [ForeignKey("SpaceSizeId")]
-        public SpaceSize SpaceSize { get; set; }
-
-        public int CleaningPackageId { get; set; }
-
-        [ForeignKey("CleaningPackageId")]
-        public CleaningPackage CleaningPackage { get; set; }
-
+       public SpaceSize SpaceSize { get; set; }
+      
+       public int CleaningPackageId { get; set; }
+      
+       [ForeignKey("CleaningPackageId")]
+       public CleaningPackage CleaningPackage { get; set; }
+      
         public int CleaningExtraOptionId { get; set; }
 
         [ForeignKey("CleaningExtraOptionId")]

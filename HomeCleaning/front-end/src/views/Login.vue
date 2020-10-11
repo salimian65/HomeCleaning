@@ -1,82 +1,46 @@
 <template>
- <div>
-
-<v-card
-    class=" login-bg"
-   height="100%"
-   width="100%"
-  >
-
-  <v-card
-    class=" login-wrapper"
-   
-  >
-    <form style="width: 100%;">
-   
+  <form style="width: 100%">
     <form-group :name="$t('labels.userName')">
-        <v-text-field
-          :label="$t('labels.userName')"
-         
-          outlined
-        ></v-text-field>
-       
-      </form-group>
-      <form-group
-        :name="$t('labels.password')"
-      >
-        <v-text-field 
-          :label="$t('labels.password')"
-          required
-          outlined
-        ></v-text-field>
-      </form-group>
+      <v-text-field :label="$t('labels.userName')" outlined></v-text-field>
+    </form-group>
+    <form-group :name="$t('labels.password')">
+      <v-text-field
+        :label="$t('labels.password')"
+        required
+        outlined
+      ></v-text-field>
+    </form-group>
 
-      <form-group class="text-left">
-
-        <v-btn class="login-btn" large dark="" color="pink darken-3">{{$t('labels.loginBtn')}}</v-btn>
-       
-      </form-group>
-   
+    <form-group class="text-left">
+      <v-btn class="login-btn" large dark="" color="pink darken-3">{{
+        $t("labels.loginBtn")
+      }}</v-btn>
+    </form-group>
   </form>
-
-  </v-card>
-   
-</v-card>
-    
-  </div>
 </template>
 
 <script>
-import router from "../router";
-
-
+//import router from "../router";
 
 export default {
-   data: () => ({
-           
-          
-        }),
+  data: () => ({}),
 
-  methods: {
-   
-  },
-  components: {
-
-  }
+  methods: {},
+  components: {},
 };
 </script>
 
 <style lang="scss" >
 .login-bg {
-    position: relative;
-     position: absolute;
-    display: inline-block;
-    left: 0;
-    right: 0;
-    top: 0;
+  position: relative;
+  position: absolute;
+  display: inline-block;
+  left: 0;
+  right: 0;
+  top: 0;
 
-    &::after{
-       background-image: url(/img/drugstore.5e55cc76.jpg);
+  &::after {
+    background-image: url(/img/drugstore.5e55cc76.jpg);
     background-size: cover;
     width: 100%;
     min-width: 100%;
@@ -88,20 +52,16 @@ export default {
     right: 0;
     top: 0;
     background-position: center;
-
-
-    }
+  }
 }
 
 .login-wrapper {
-    background-color: #ffffffeb;
-    position: absolute;
-    right: 10%;
-    top: 10%;
-    min-width: 350px;
-    padding: 15px;
-    min-height: 400px;
+  background-color: #ffffffeb;
+  position: absolute;
+  right: 10%;
+  top: 10%;
+  min-width: 350px;
+  padding: 15px;
+  min-height: 400px;
 }
-
-   
 </style>

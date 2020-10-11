@@ -3,7 +3,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Package from "./views/Package.vue";
-import ServiceOrder from "./views/ServiceOrder.vue";
+import OrderRequest from "./views/OrderRequest.vue";
 import Login from "./views/Login.vue";
 Vue.use(Router);
 
@@ -35,11 +35,12 @@ export default new Router({
             }
         },
         {
-            path: "/serviceOrder",
-            name: "serviceOrder",
-            component: ServiceOrder,
+            path: "/orderRequest",
+            name: "orderRequest",
+            component: OrderRequest,
             meta: {
-                layout: "validMember"
+                layout: "authorizedCustomer",
+                requiresAuth: true
             }
         },
         {

@@ -1,4 +1,4 @@
-import serviceCallApi from "../framework/serviceCallApi";
+import serviceCallApi from "../frameworks/serviceCallApi";
 
 let orderApi = {
     urls: {

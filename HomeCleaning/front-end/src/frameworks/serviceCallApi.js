@@ -15,7 +15,9 @@ const parseError = data => {
 
     try {
         data = JSON.parse(data.responseText)
-    } catch (o_O) {}
+    } catch (o_O) {
+        // continue regardless of error
+    }
 
     return data
 }

@@ -25,9 +25,9 @@ export default {
   },
   mounted: function () {
     let initOptions = {
-      url: "http://31.47.53.46:8597/auth",
-      realm: "moneymaker",
-      clientId: "moneymaker",
+      url: "http://localhost:8080/auth",
+      realm: "homecleaning",
+      clientId: "homecleaning",
       onLoad: "login-required",
     };
 
@@ -35,11 +35,11 @@ export default {
 
     keycloak
       .init({
-        //onLoad: initOptions.onLoad,
+        onLoad: initOptions.onLoad,
       })
       .success((auth) => {
         if (!auth) {
-          //  window.location.reload();
+            window.location.reload();
         } else {
           console.log("Authenticated");
         }

@@ -9,7 +9,7 @@ import vuelidateErrorExtractor from "vuelidate-error-extractor";
 import VuelidateErrorTemplate from "./VuelidateErrorTemplate";
 import axios from "axios";
 
-import ValidMember from "./layouts/ValidMember";
+import AuthorizedCustomer from "./layouts/AuthorizedCustomer";
 import DefaultLayout from "./layouts/Default";
 import AlertDialog from "./components/AlertDialog";
 import vueAwesomeCountdown from "vue-awesome-countdown";
@@ -32,7 +32,7 @@ Vue.prototype.$baseUrl = "http://localhost:6003/";
 Vue.prototype.$baseApiUrl = "http://localhost:6003/api";
 axios.defaults.baseURL = "http://localhost:6003/api";
 
-Vue.component("ValidMember-layout", ValidMember);
+Vue.component("authorizedCustomer-layout", AuthorizedCustomer);
 Vue.component("default-layout", DefaultLayout);
 
 new Vue({
