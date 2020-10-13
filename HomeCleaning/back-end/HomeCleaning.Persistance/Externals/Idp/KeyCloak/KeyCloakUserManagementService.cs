@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Domain.Model.Security;
 using Framework.Domain.Exceptions;
-using HomeCleaning.Service;
+using HomeCleaning.Domain;
 using Infrastructures.DataAccess.Externals.Idp.KeyCloak;
 using RestSharp;
 
-namespace Infrastructures.Externals.Idp.KeyCloak
+namespace HomeCleaning.Persistance.Externals.Idp.KeyCloak
 {
     public class KeyCloakUserManagementService : RestCaller, IIdpUserManagementService
     {
@@ -47,8 +46,8 @@ namespace Infrastructures.Externals.Idp.KeyCloak
             request.AddQueryParameter("first", first.ToString());
             request.AddQueryParameter("max", count.ToString());
             request.AddQueryParameter("briefRepresentation", "false");
-            List<UserDto> users = await Execute<List<UserDto>>(request);
-            return users.Select(u => new User(u.Id, u.Username, 0)).ToList();
+            List<AuthUserDto> users = await Execute<List<AuthUserDto>>(request);
+            return users.Select(u => new User(u.Id, u.Username)).ToList();
         }
 
         public async Task<User> GetUserByUsername(string username)
@@ -56,8 +55,8 @@ namespace Infrastructures.Externals.Idp.KeyCloak
             var request = new RestRequest(Method.GET);
             request.AddHeader("Content-Type", "application/json");
             request.AddQueryParameter("username", username);
-            List<UserDto> idpUser = await Execute<List<UserDto>>(request);
-            return new User(idpUser[0].Id, idpUser[0].Username, 0);
+            List<AuthUserDto> idpUser = await Execute<List<AuthUserDto>>(request);
+            return new User(idpUser[0].Id, idpUser[0].Username);
         }
 
         public async Task<User> GetUserById(Guid id)
@@ -65,8 +64,8 @@ namespace Infrastructures.Externals.Idp.KeyCloak
             var request = new RestRequest(Method.GET);
             request.AddHeader("Content-Type", "application/json");
             request.AddQueryParameter("id", id.ToString());
-            List<UserDto> idpUser = await Execute<List<UserDto>>(request);
-            return new User(idpUser[0].Id, idpUser[0].Username, 0);
+            List<AuthUserDto> idpUser = await Execute<List<AuthUserDto>>(request);
+            return new User(idpUser[0].Id, idpUser[0].Username);
         }
 
         public async Task EnableUser(Guid id)

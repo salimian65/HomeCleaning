@@ -1,13 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using Localization.Resources;
+using HomeCleaning.Localization.Resources;
+using HomeCleaning.Service;
+using HomeCleaning.Service.Contract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using Services;
-using Services.Dto.Recipients;
-using Services.Dto.Security;
 
-namespace Api.Controllers
+namespace HomeCleaning.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -15,15 +14,15 @@ namespace Api.Controllers
     {
         private readonly UserService userService;
 
-        public UserController(UserService userService, IStringLocalizer<SharedResources> localizer) : base(localizer)
+        public UserController(UserService userService, IStringLocalizer<SharedResources> localizer) 
         {
             this.userService = userService;
         }
 
         [HttpPost("Create")]
-        public async Task<ActionResult<object>> Create(UserManipulationDto userManipulationDto)
+        public async Task<ActionResult<object>> Create(UserDto dto)
         {
-            await userService.Create(userManipulationDto);
+            await userService.Create(dto);
             return new ActionResult<bool>(true);
         }
 
@@ -47,9 +46,9 @@ namespace Api.Controllers
         }
 
         [HttpGet("GetByPersonId")]
-        public ActionResult<object> GetByPersonId(int id)
+        public ActionResult<object> GetByUserName(string username)
         {
-            throw new Exception();
+            return userService.GetUser(username);
         }
 
         [HttpPost("Enable")]

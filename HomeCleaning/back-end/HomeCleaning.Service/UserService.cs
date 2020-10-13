@@ -1,7 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Framework.Domain;
+using Framework.Domain.Exceptions;
+using HomeCleaning.Domain;
+using HomeCleaning.Domain.Repository;
+using HomeCleaning.Persistance.DataAccess;
+using HomeCleaning.Persistance.Externals.Idp;
+using HomeCleaning.Service.Contract;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+
 
 namespace HomeCleaning.Service
 {
@@ -12,47 +20,56 @@ namespace HomeCleaning.Service
         private readonly IUserRepository userRepository;
         private readonly IIdpUserManagementService idpUserManagement;
         private readonly IUnitOfWork unitOfWork;
-        private readonly NaturalPersonService naturalPersonService;
 
-        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository,
-            IIdpUserManagementService idpUserManagement, NaturalPersonService naturalPersonService,
-            ILogger<UserService> logger,
-            IUserContext userContext) : base( userContext)
+
+        public UserService(IUnitOfWork unitOfWork, 
+                           IUserRepository userRepository,
+                           IIdpUserManagementService idpUserManagement,
+                           ILogger<UserService> logger,
+                           IUserContext userContext) : base(userContext)
         {
             this.logger = logger;
             this.unitOfWork = unitOfWork;
             this.idpUserManagement = idpUserManagement;
             this.userRepository = userRepository;
-            this.naturalPersonService = naturalPersonService;
+
         }
 
-        public async Task Create(UserManipulationDto userManipulationDto)
+        public async Task Create(UserDto userDto)
         {
-            NaturalPerson person = await naturalPersonService.GetPersonById(userManipulationDto.PersonId);
-            if (person == null)
+            RegisteringUserDto registeringUserDto = new RegisteringUserDto
             {
-                throw new NotFoundException("person not found!");
-            }
+                Id = Guid.NewGuid(),
+                Username = userDto.Username,
+                FirstName = userDto.FirstName,
+                LastName = userDto.LastName,
+                Email = userDto.Email,
+                Attributes = new AttributesDto("OrganizationName", "OrganizationId"),
+                Credentials = new[] { new CredentialDto(userDto.Password) }
+            };
 
-            RegisteringUserDto registeringUserDto = new RegisteringUserDto(Guid.NewGuid(), userManipulationDto.Username,
-                person.FirstName, person.Surname,
-                person.Email, "OrganizationName", "OrganizationId", userManipulationDto.Password);
             User user = await idpUserManagement.CreateUser(registeringUserDto);
-            person.AddNewUser(user);
+            user.FirstNameSetter(userDto.FirstName);
+            user.LastnameSetter(userDto.LastName);
+            user.NationalCodeSetter(userDto.NationalCode);
+            user.CellphoneSetter(userDto.Cellphone);
+            user.EmailSetter(userDto.Email);
+            await userRepository.Add(user);
             await unitOfWork.CommitAsync();
         }
 
-        public async Task<UserDto> GetUser(string username)
+        public async Task<AuthUserDto> GetUser(string username)
         {
+            var authUserDto = new AuthUserDto();
             var user = await idpUserManagement.GetUserByUsername(username);
-            return UserDto.FromEntity(user);
+            return authUserDto.FromEntity(user);
         }
 
-        public async Task<UserDto> GetUserById(Guid userId)
+        public async Task<AuthUserDto> GetUserById(Guid userId)
         {
-            var user = await userRepository.Get().Include(u => u.Person)
-                .Include(u => u.Organization).FirstOrDefaultAsync();
-            return UserDto.FromEntity(user);
+            var authUserDto = new AuthUserDto();
+            var user = await userRepository.Get().FirstOrDefaultAsync();
+            return authUserDto.FromEntity(user);
         }
 
         public async Task Remove(Guid id)

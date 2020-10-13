@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using HomeCleaning.Domain;
 
-namespace HomeCleaning.Service
+namespace HomeCleaning.Persistance.Externals.Idp
 {
     public interface IIdpUserManagementService
     {

@@ -1,10 +1,12 @@
 using System;
+using System.Net;
 using System.Threading.Tasks;
-using HomeCleaning.Service;
+using HomeCleaning.Persistance.Externals.Idp;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Authenticators;
 using RestSharp.Serialization;
+
 namespace Infrastructures.DataAccess.Externals.Idp.KeyCloak
 {
     public class RestCaller
@@ -20,7 +22,7 @@ namespace Infrastructures.DataAccess.Externals.Idp.KeyCloak
 
         private static async Task<TokenDto> GetToken()
         {
-            var client = new RestSharp.RestClient("http://development.avan:8080/auth/realms/moneymaker/protocol/openid-connect/token");
+            var client = new RestClient("http://development.avan:8080/auth/realms/moneymaker/protocol/openid-connect/token");
             var request = new RestRequest( Method.POST);
             
             request.AddHeader("cache-control", "no-cache");
@@ -31,7 +33,7 @@ namespace Infrastructures.DataAccess.Externals.Idp.KeyCloak
 
         protected async Task<T> Execute<T>(RestRequest request) where T : new()
         {
-            var client = new RestSharp.RestClient(serverUrl)
+            var client = new RestClient(serverUrl)
                 .UseSerializer(() => new JsonNetSerializer());
             if (authenticationScheme == AuthenticationScheme.Jwt)
                 client.Authenticator = new JwtAuthenticator((await GetToken()).AccessToken);
@@ -47,7 +49,7 @@ namespace Infrastructures.DataAccess.Externals.Idp.KeyCloak
 
         protected async Task<IRestResponse> Execute(RestRequest request)
         {
-            var client = new RestSharp.RestClient(serverUrl)
+            var client = new RestClient(serverUrl)
                 .UseSerializer(() => new JsonNetSerializer());
             client.Authenticator = new JwtAuthenticator((await GetToken()).AccessToken);
             IRestResponse response = await client.ExecuteTaskAsync(request);
@@ -67,9 +69,6 @@ namespace Infrastructures.DataAccess.Externals.Idp.KeyCloak
                 var v = JsonConvert.SerializeObject(obj);
                 return v;
             }
-
-            public T Deserialize<T>(string text) =>
-                JsonConvert.DeserializeObject<T>(text);
 
             public string Serialize(Parameter parameter) =>
                 JsonConvert.SerializeObject(parameter.Value);
@@ -97,4 +96,24 @@ namespace Infrastructures.DataAccess.Externals.Idp.KeyCloak
 
 namespace RestSharp
 {
+    public static class RestClientExtensions
+    {
+        public static Task<IRestResponse> ExecuteTaskAsync(this RestClient @this, RestRequest request)
+        {
+            if (@this == null)
+                throw new NullReferenceException();
+
+            var tcs = new TaskCompletionSource<IRestResponse>();
+
+            @this.ExecuteAsync(request, (response) =>
+            {
+                if (response.ErrorException != null)
+                    tcs.TrySetException(response.ErrorException);
+                else
+                    tcs.TrySetResult(response);
+            });
+
+            return tcs.Task;
+        }
+    }
 }

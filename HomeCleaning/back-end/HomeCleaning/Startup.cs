@@ -1,14 +1,21 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using HomeCleaning.Persistance;
+using HomeCleaning.Persistance.DataAccess;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.OpenApi.Models;
 using Prometheus;
 using Serilog;
@@ -37,6 +44,8 @@ namespace HomeCleaning
                 services.AddSingleton(new LoggerFactory().AddSerilog(serilogLogger).CreateLogger("TseCamWebApi"));
                 services.AddHealthChecks(); 
                 services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+                services.AddOptions();
+                // services.AddControllers();
                 services.AddSwaggerGen(c =>
                 {
                     c.SwaggerDoc("v1", new OpenApiInfo { Title = "TseCam Web API", Version = "v1" });
@@ -56,6 +65,31 @@ namespace HomeCleaning
                         });
                 });
 
+
+
+                services.AddLocalization();
+                services.Configure<RequestLocalizationOptions>(o =>
+                {
+                    var supportedCultures = new[]
+                    { 
+                        new CultureInfo("en"),
+                        new CultureInfo("tr"),
+                        new CultureInfo("ar")
+                    };
+
+                    o.DefaultRequestCulture = new RequestCulture("en", "en");
+                    o.SupportedCultures = supportedCultures;
+                    o.SupportedUICultures = supportedCultures;
+
+                    o.RequestCultureProviders.Insert(0, new AcceptLanguageHeaderRequestCultureProvider());
+                });
+
+          
+                ConfigureAuthentication(services);
+#if DEBUG
+                IdentityModelEventSource.ShowPII = true;
+#endif
+
                 new Bootstrap(services, Configuration).WireUp();
             }
             catch (Exception e)
@@ -70,6 +104,9 @@ namespace HomeCleaning
         {
             try
             {
+                var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+                app.UseRequestLocalization(locOptions.Value);
+
                 if (env.IsDevelopment())
                 {
                     app.UseDeveloperExceptionPage();
@@ -101,6 +138,47 @@ namespace HomeCleaning
                 throw;
             }
 
+        }
+
+        private void ConfigureAuthentication(IServiceCollection services)
+        {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+            {
+                o.RequireHttpsMetadata = false;
+                o.Authority = Configuration["Jwt:Authority"];
+                o.Audience = Configuration["Jwt:Audience"];
+
+                o.Events = new JwtBearerEvents()
+                {
+                    // OnTokenValidated = async ctx =>
+                    // {
+                    // 	//Add claim if they are
+                    // 	var claims = new List<Claim>
+                    // 	{
+                    // 		new Claim(ClaimTypes.Role, "superadmin")
+                    // 	};
+                    // 	var appIdentity = new ClaimsIdentity(claims);
+                    // 	ctx.Principal.AddIdentity(appIdentity);
+                    // },
+                    OnAuthenticationFailed = c =>
+                    {
+                        c.NoResult();
+
+                        c.Response.StatusCode = 500;
+                        c.Response.ContentType = "text/plain";
+                        //                        if (Environment.IsDevelopment())
+                        //                        {
+                        return c.Response.WriteAsync(c.Exception.ToString());
+                        //                        }
+                        //
+                        //                        return c.Response.WriteAsync("An error occured processing your authentication.");
+                    }
+                };
+            });
         }
     }
 }

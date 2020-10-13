@@ -1,59 +1,43 @@
 using System;
 using System.Collections.Generic;
+using HomeCleaning.Domain;
 using Newtonsoft.Json;
 using RestSharp.Serializers;
 
-namespace HomeCleaning.Service
+namespace HomeCleaning.Persistance.Externals.Idp
 {
     public class RegisteringUserDto
     {
-        private RegisteringUserDto(Guid id, string username, string firstName, string lastName, string email, bool emailVerified, AttributesDto attributes, CredentialDto[] credentials)
-        {
-            Username = username;
-            FirstName = firstName;
-            LastName = lastName;
-            Email = email;
-            EmailVerified = emailVerified;
-            Attributes = attributes;
-            Credentials = credentials;
-            Id = id;
-        }
-
-        public RegisteringUserDto(Guid id, string username, string firstName, string lastName, string email, string organizationName, string organizationId, string password)
-            : this(id, username, firstName, lastName, email, false, new AttributesDto(organizationName, organizationId), new[] {new CredentialDto(password)})
-        {
-        }
-
         [JsonProperty("id")]
-        public Guid Id { get; private set; }
+        public Guid Id { get;  set; }
             
         [JsonProperty("username")]
         [SerializeAs(Name = "username")]
-        public string Username { get; private set; }
+        public string Username { get;  set; }
 
         [JsonProperty("firstName")]
         [SerializeAs(Name = "firstName")]
-        public string FirstName { get; private set; }
+        public string FirstName { get;  set; }
 
         [JsonProperty("lastName")]
         [SerializeAs(Name = "lastName")]
-        public string LastName { get; private set; }
+        public string LastName { get;  set; }
 
         [JsonProperty("email")]
         [SerializeAs(Name = "email")]
-        public string Email { get; private set; }
+        public string Email { get;  set; }
 
         [JsonProperty("emailVerified")]
         [SerializeAs(Name = "emailVerified")]
-        public bool EmailVerified { get; private set; }
+        public bool EmailVerified { get;  set; }
 
         [JsonProperty("attributes")]
         [SerializeAs(Name = "attributes")]
-        public AttributesDto Attributes { get; private set; }
+        public AttributesDto Attributes { get;  set; }
 
         [JsonProperty("credentials")]
         [SerializeAs(Name = "credentials")]
-        public CredentialDto[] Credentials { get; private set; }
+        public CredentialDto[] Credentials { get;  set; }
     }
 
     public class AttributesDto
@@ -99,7 +83,34 @@ namespace HomeCleaning.Service
         public string Value { get; private set; }
     }
 
-    public class UserDto
+    public class TokenDto
+    {
+        [JsonProperty("access_token")]
+        public string AccessToken { get; private set; }
+
+        [JsonProperty("expires_in")]
+        public long ExpiresIn { get; private set; }
+
+        [JsonProperty("refresh_expires_in")]
+        public long RefreshExpiresIn { get; private set; }
+
+        [JsonProperty("refresh_token")]
+        public string RefreshToken { get; private set; }
+
+        [JsonProperty("token_type")]
+        public string TokenType { get; private set; }
+
+        [JsonProperty("not-before-policy")]
+        public long NotBeforePolicy { get; private set; }
+
+        [JsonProperty("session_state")]
+        public Guid SessionState { get; private set; }
+
+        [JsonProperty("scope")]
+        public string Scope { get; private set; }
+    }
+
+    public class AuthUserDto
     {
         [JsonProperty("id")]
         public Guid Id { get; private set; }
@@ -148,5 +159,30 @@ namespace HomeCleaning.Service
                 }
             }
         }
+
+        public AuthUserDto FromEntity(User user)
+        {
+            Id = user.Id;
+            Username = user.Username;
+            return this;
+        }
+    }
+
+    public class AccessDto
+    {
+        [JsonProperty("manageGroupMembership")]
+        public bool ManageGroupMembership { get; private set; }
+
+        [JsonProperty("view")]
+        public bool View { get; private set; }
+
+        [JsonProperty("mapRoles")]
+        public bool MapRoles { get; private set; }
+
+        [JsonProperty("impersonate")]
+        public bool Impersonate { get; private set; }
+
+        [JsonProperty("manage")]
+        public bool Manage { get; private set; }
     }
 }

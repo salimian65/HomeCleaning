@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HomeCleaning.Domain;
 using HomeCleaning.Persistance;
+using HomeCleaning.Persistance.DataAccess;
 
 namespace HomeCleaning.Controllers
 {

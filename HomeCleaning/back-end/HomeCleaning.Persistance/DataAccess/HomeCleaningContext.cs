@@ -1,7 +1,7 @@
 ﻿using HomeCleaning.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace HomeCleaning.Persistance
+namespace HomeCleaning.Persistance.DataAccess
 {
     public class HomeCleaningContext : DbContext
     {
@@ -18,6 +18,8 @@ namespace HomeCleaning.Persistance
 
         public DbSet<CleaningExtraOption> CleaningExtraOption { get; set; }
 
+        public DbSet<User> User { get; set; }
+
         public DbSet<Order> Order { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,7 +31,7 @@ namespace HomeCleaning.Persistance
             //modelBuilder.Entity<Order>().HasOne(p => p.CleaningExtraOption).WithOne().HasForeignKey<CleaningExtraOption>(a => a.Id);
             //  modelBuilder.Entity<Order>().HasOne(p => p.);
 
-            modelBuilder.Entity<Order>().OwnsOne(p => p.Customer);
+            // modelBuilder.Entity<Order>().OwnsOne(p => p.Customer);
             modelBuilder.Entity<Order>().OwnsOne(p => p.Address);
             //  modelBuilder.Entity<Customer>(eb =>{eb.HasNoKey();});
 

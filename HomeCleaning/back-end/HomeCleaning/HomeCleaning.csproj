@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">
@@ -29,7 +30,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HomeCleaning.Domain\HomeCleaning.Domain.csproj" />
+    <ProjectReference Include="..\HomeCleaning.Localization\HomeCleaning.Localization.csproj" />
     <ProjectReference Include="..\HomeCleaning.Persistance\HomeCleaning.Persistance.csproj" />
+    <ProjectReference Include="..\HomeCleaning.Service\HomeCleaning.Service.csproj" />
   </ItemGroup>
 
 
