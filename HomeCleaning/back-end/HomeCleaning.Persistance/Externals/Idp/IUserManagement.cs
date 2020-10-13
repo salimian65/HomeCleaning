@@ -9,35 +9,35 @@ namespace HomeCleaning.Persistance.Externals.Idp
     public class RegisteringUserDto
     {
         [JsonProperty("id")]
-        public Guid Id { get;  set; }
-            
+        public Guid Id { get; set; }
+
         [JsonProperty("username")]
         [SerializeAs(Name = "username")]
-        public string Username { get;  set; }
+        public string Username { get; set; }
 
         [JsonProperty("firstName")]
         [SerializeAs(Name = "firstName")]
-        public string FirstName { get;  set; }
+        public string FirstName { get; set; }
 
         [JsonProperty("lastName")]
         [SerializeAs(Name = "lastName")]
-        public string LastName { get;  set; }
+        public string LastName { get; set; }
 
         [JsonProperty("email")]
         [SerializeAs(Name = "email")]
-        public string Email { get;  set; }
+        public string Email { get; set; }
 
         [JsonProperty("emailVerified")]
         [SerializeAs(Name = "emailVerified")]
-        public bool EmailVerified { get;  set; }
+        public bool EmailVerified { get; set; }
 
         [JsonProperty("attributes")]
         [SerializeAs(Name = "attributes")]
-        public AttributesDto Attributes { get;  set; }
+        public AttributesDto Attributes { get; set; }
 
         [JsonProperty("credentials")]
         [SerializeAs(Name = "credentials")]
-        public CredentialDto[] Credentials { get;  set; }
+        public CredentialDto[] Credentials { get; set; }
     }
 
     public class AttributesDto
@@ -49,14 +49,14 @@ namespace HomeCleaning.Persistance.Externals.Idp
         }
 
         public AttributesDto(string organizationName, string organizationId)
-            : this(new[] {organizationName}, new[] {organizationId})
+            : this(new[] { organizationName }, new[] { organizationId })
         {
         }
 
         [JsonProperty("organizationName")]
         [SerializeAs(Name = "organizationName")]
         public string[] OrganizationName { get; private set; }
-      
+
         [JsonProperty("organizationId")]
         [SerializeAs(Name = "organizationId")]
         public string[] OrganizationId { get; private set; }
@@ -80,67 +80,67 @@ namespace HomeCleaning.Persistance.Externals.Idp
 
         [JsonProperty("value")]
         [SerializeAs(Name = "value")]
-        public string Value { get; private set; }
+        public string Value { get;  set; }
     }
 
     public class TokenDto
     {
         [JsonProperty("access_token")]
-        public string AccessToken { get; private set; }
+        public string AccessToken { get; set; }
 
         [JsonProperty("expires_in")]
-        public long ExpiresIn { get; private set; }
+        public long ExpiresIn { get; set; }
 
         [JsonProperty("refresh_expires_in")]
-        public long RefreshExpiresIn { get; private set; }
+        public long RefreshExpiresIn { get; set; }
 
         [JsonProperty("refresh_token")]
-        public string RefreshToken { get; private set; }
+        public string RefreshToken { get; set; }
 
         [JsonProperty("token_type")]
-        public string TokenType { get; private set; }
+        public string TokenType { get; set; }
 
         [JsonProperty("not-before-policy")]
-        public long NotBeforePolicy { get; private set; }
+        public long NotBeforePolicy { get; set; }
 
         [JsonProperty("session_state")]
-        public Guid SessionState { get; private set; }
+        public Guid SessionState { get; set; }
 
         [JsonProperty("scope")]
-        public string Scope { get; private set; }
+        public string Scope { get; set; }
     }
 
     public class AuthUserDto
     {
         [JsonProperty("id")]
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
         [JsonProperty("createdTimestamp")]
-        public long CreatedTimestamp { get; private set; }
+        public long CreatedTimestamp { get; set; }
 
         [JsonProperty("username")]
-        public string Username { get; private set; }
+        public string Username { get; set; }
 
         [JsonProperty("enabled")]
-        public bool Enabled { get; private set; }
+        public bool Enabled { get; set; }
 
         [JsonProperty("totp")]
-        public bool Totp { get; private set; }
+        public bool Totp { get; set; }
 
         [JsonProperty("emailVerified")]
-        public bool EmailVerified { get; private set; }
+        public bool EmailVerified { get; set; }
 
         [JsonProperty("disableableCredentialTypes")]
-        public List<string> DisableableCredentialTypes { get; private set; }
+        public List<string> DisableableCredentialTypes { get; set; }
 
         [JsonProperty("requiredActions")]
-        public List<string> RequiredActions { get; private set; }
+        public List<string> RequiredActions { get; set; }
 
         [JsonProperty("notBefore")]
-        public long NotBefore { get; private set; }
+        public long NotBefore { get; set; }
 
         [JsonProperty("access")]
-        public AccessDto Access { get; private set; }
+        public AccessDto Access { get; set; }
 
         [JsonIgnore]
         public DateTime Time
@@ -153,36 +153,36 @@ namespace HomeCleaning.Persistance.Externals.Idp
                     dtDateTime = dtDateTime.AddMilliseconds(CreatedTimestamp).ToLocalTime();
                     return dtDateTime;
                 }
-                catch 
+                catch
                 {
-                    return  DateTime.Now;
+                    return DateTime.Now;
                 }
             }
         }
 
-        public AuthUserDto FromEntity(User user)
-        {
-            Id = user.Id;
-            Username = user.Username;
-            return this;
-        }
+        //public AuthUserDto FromEntity(User user)
+        //{
+        //    Id = user.Id;
+        //    Username = user.Username;
+        //    return this;
+        //}
     }
 
     public class AccessDto
     {
         [JsonProperty("manageGroupMembership")]
-        public bool ManageGroupMembership { get; private set; }
+        public bool ManageGroupMembership { get;  set; }
 
         [JsonProperty("view")]
-        public bool View { get; private set; }
+        public bool View { get;  set; }
 
         [JsonProperty("mapRoles")]
-        public bool MapRoles { get; private set; }
+        public bool MapRoles { get;  set; }
 
         [JsonProperty("impersonate")]
-        public bool Impersonate { get; private set; }
+        public bool Impersonate { get;  set; }
 
         [JsonProperty("manage")]
-        public bool Manage { get; private set; }
+        public bool Manage { get;  set; }
     }
 }

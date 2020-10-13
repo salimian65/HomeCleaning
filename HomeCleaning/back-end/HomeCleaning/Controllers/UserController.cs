@@ -45,7 +45,7 @@ namespace HomeCleaning.Controllers
             throw new Exception();
         }
 
-        [HttpGet("GetByPersonId")]
+        [HttpGet("GetByUserName")]
         public ActionResult<object> GetByUserName(string username)
         {
             return userService.GetUser(username);

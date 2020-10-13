@@ -22,7 +22,7 @@ namespace HomeCleaning.Service
         private readonly IUnitOfWork unitOfWork;
 
 
-        public UserService(IUnitOfWork unitOfWork, 
+        public UserService(IUnitOfWork unitOfWork,
                            IUserRepository userRepository,
                            IIdpUserManagementService idpUserManagement,
                            ILogger<UserService> logger,
@@ -62,14 +62,23 @@ namespace HomeCleaning.Service
         {
             var authUserDto = new AuthUserDto();
             var user = await idpUserManagement.GetUserByUsername(username);
-            return authUserDto.FromEntity(user);
+            return new AuthUserDto
+            {
+                Id = user.Id,
+                Username = user.Username
+            };
         }
 
         public async Task<AuthUserDto> GetUserById(Guid userId)
         {
             var authUserDto = new AuthUserDto();
             var user = await userRepository.Get().FirstOrDefaultAsync();
-            return authUserDto.FromEntity(user);
+            //  return authUserDto.FromEntity(user);
+            return new AuthUserDto
+            {
+                Id = user.Id,
+                Username = user.Username
+            };
         }
 
         public async Task Remove(Guid id)

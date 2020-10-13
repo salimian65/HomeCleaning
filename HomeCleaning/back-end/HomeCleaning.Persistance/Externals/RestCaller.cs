@@ -22,22 +22,26 @@ namespace Infrastructures.DataAccess.Externals.Idp.KeyCloak
 
         private static async Task<TokenDto> GetToken()
         {
-            var client = new RestClient("http://development.avan:8080/auth/realms/moneymaker/protocol/openid-connect/token");
-            var request = new RestRequest( Method.POST);
-            
+            var client = new RestClient("http://localhost:8080/auth/realms/homecleaning/protocol/openid-connect/token");
+            var request = new RestRequest(Method.POST);
+
             request.AddHeader("cache-control", "no-cache");
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-            request.AddParameter("undefined", "client_id=admin-cli&grant_type=client_credentials&client_secret=24e7c645-1636-4310-80e6-999d3da40126&undefined=", ParameterType.RequestBody);
-            return (await client.ExecuteAsync<TokenDto>(request)).Data;
+            request.AddParameter("undefined", "client_id=homecleaning&grant_type=client_credentials&client_secret=bf97b1a4-5dda-441c-9d85-3de3b40d1da5&undefined=", ParameterType.RequestBody);
+            var ddd = (await client.ExecuteAsync<TokenDto>(request));
+
+            return ddd.Data;
         }
 
         protected async Task<T> Execute<T>(RestRequest request) where T : new()
         {
-            var client = new RestClient(serverUrl)
-                .UseSerializer(() => new JsonNetSerializer());
+            var client = new RestClient(serverUrl).UseSerializer(() => new JsonNetSerializer());
             if (authenticationScheme == AuthenticationScheme.Jwt)
+            {
                 client.Authenticator = new JwtAuthenticator((await GetToken()).AccessToken);
-            var response = await client.ExecuteAsync<T>(request);
+            }
+
+            var response = await client.ExecuteTaskAsync<T>(request);
             if (response.ErrorException != null)
             {
                 const string message = "Error retrieving response.  Check inner details for more info.";
@@ -49,8 +53,7 @@ namespace Infrastructures.DataAccess.Externals.Idp.KeyCloak
 
         protected async Task<IRestResponse> Execute(RestRequest request)
         {
-            var client = new RestClient(serverUrl)
-                .UseSerializer(() => new JsonNetSerializer());
+            var client = new RestClient(serverUrl).UseSerializer(() => new JsonNetSerializer());
             client.Authenticator = new JwtAuthenticator((await GetToken()).AccessToken);
             IRestResponse response = await client.ExecuteTaskAsync(request);
             if (response.ErrorException != null)
@@ -73,8 +76,11 @@ namespace Infrastructures.DataAccess.Externals.Idp.KeyCloak
             public string Serialize(Parameter parameter) =>
                 JsonConvert.SerializeObject(parameter.Value);
 
-            public T Deserialize<T>(IRestResponse response) =>
-                JsonConvert.DeserializeObject<T>(response.Content);
+            public T Deserialize<T>(IRestResponse response)
+            {
+                return JsonConvert.DeserializeObject<T>(response.Content);
+            }
+              
 
             public string[] SupportedContentTypes { get; } =
             {

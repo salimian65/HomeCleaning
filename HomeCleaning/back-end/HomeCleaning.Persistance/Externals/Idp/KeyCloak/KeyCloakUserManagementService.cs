@@ -12,7 +12,7 @@ namespace HomeCleaning.Persistance.Externals.Idp.KeyCloak
 {
     public class KeyCloakUserManagementService : RestCaller, IIdpUserManagementService
     {
-        public KeyCloakUserManagementService(string serverUrl = "http://development.avan:8080/auth/admin/realms/moneymaker/users")
+        public KeyCloakUserManagementService(string serverUrl = "http://localhost:8080/auth/admin/realms/homecleaning/users")
             : base(serverUrl)
         {
         }

@@ -44,8 +44,11 @@ namespace HomeCleaning
                 services.AddSingleton(new LoggerFactory().AddSerilog(serilogLogger).CreateLogger("TseCamWebApi"));
                 services.AddHealthChecks(); 
                 services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-                services.AddOptions();
-                // services.AddControllers();
+                services.AddOptions(); 
+                services.AddControllers().AddNewtonsoftJson(options =>
+                        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    );
+
                 services.AddSwaggerGen(c =>
                 {
                     c.SwaggerDoc("v1", new OpenApiInfo { Title = "TseCam Web API", Version = "v1" });
