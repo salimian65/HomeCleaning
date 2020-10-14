@@ -24,122 +24,117 @@ namespace HomeCleaning
 {
     public class Startup
     {
+        private const string CorsAllowUIApp = "corsAllowUIApp";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
-     
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+        // readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         // This method gets called by the runtime. Use this method to add services to the container.
-      
+
         public void ConfigureServices(IServiceCollection services)
         {
             var serilogLogger = new LoggerConfiguration()
                 .ReadFrom.Configuration(Configuration)
                 .CreateLogger();
-            try
+
+            services.AddSingleton(new LoggerFactory().AddSerilog(serilogLogger).CreateLogger("TseCamWebApi"));
+
+            services.AddLocalization();
+            services.Configure<RequestLocalizationOptions>(o =>
             {
-                services.AddSingleton(new LoggerFactory().AddSerilog(serilogLogger).CreateLogger("TseCamWebApi"));
-                services.AddHealthChecks(); 
-                services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-                services.AddOptions(); 
-                services.AddControllers().AddNewtonsoftJson(options =>
-                        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-                    );
-
-                services.AddSwaggerGen(c =>
+                var supportedCultures = new[]
                 {
-                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "TseCam Web API", Version = "v1" });
-                    c.ResolveConflictingActions(d => d.First()); // until aspnetcore supports action resolver
-                });
+                    new CultureInfo("en"),
+                    new CultureInfo("tr"),
+                    new CultureInfo("ar")
+                };
 
-               // services.AddControllers();
-                services.AddDbContext<HomeCleaningContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("HomeCleaningContext")));
+                o.DefaultRequestCulture = new RequestCulture("en", "en");
+                o.SupportedCultures = supportedCultures;
+                o.SupportedUICultures = supportedCultures;
 
-                services.AddCors(options =>
-                {
-                    options.AddPolicy(name: MyAllowSpecificOrigins,
-                        builder =>
-                        {
-                            builder.WithOrigins("*","http://localhost:8081");
-                        });
-                });
+                o.RequestCultureProviders.Insert(0, new AcceptLanguageHeaderRequestCultureProvider());
+            });
 
 
+            //  services.AddHealthChecks();
 
-                services.AddLocalization();
-                services.Configure<RequestLocalizationOptions>(o =>
-                {
-                    var supportedCultures = new[]
-                    { 
-                        new CultureInfo("en"),
-                        new CultureInfo("tr"),
-                        new CultureInfo("ar")
-                    };
+            services.AddOptions();
+            services.AddControllers().AddControllersAsServices().AddNewtonsoftJson();
+            services.AddControllersWithViews()
+                .AddControllersAsServices();
 
-                    o.DefaultRequestCulture = new RequestCulture("en", "en");
-                    o.SupportedCultures = supportedCultures;
-                    o.SupportedUICultures = supportedCultures;
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "TseCam Web API", Version = "v1" });
+            //    c.ResolveConflictingActions(d => d.First()); // until aspnetcore supports action resolver
+            //});
 
-                    o.RequestCultureProviders.Insert(0, new AcceptLanguageHeaderRequestCultureProvider());
-                });
 
-          
-                ConfigureAuthentication(services);
+            services.AddDbContext<HomeCleaningContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("HomeCleaningContext")));
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(CorsAllowUIApp,
+                    policyBuilder =>
+                    {
+                        policyBuilder.WithOrigins("http://localhost:8081").AllowAnyMethod().AllowAnyHeader();
+                        policyBuilder.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader();
+                    });
+            });
+
+            ConfigureAuthentication(services);
 #if DEBUG
-                IdentityModelEventSource.ShowPII = true;
+            IdentityModelEventSource.ShowPII = true;
 #endif
+            new Bootstrap(services, Configuration).WireUp();
 
-                new Bootstrap(services, Configuration).WireUp();
-            }
-            catch (Exception e)
-            {
-                Log.Error($"This error occured in startup in  ConfigureServices {e.Message}");
-                throw;
-            }
+            services.AddMvc(options => { options.Filters.Add<UnhandledExceptionFilterAttribute>(); })
+                .AddControllersAsServices();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            try
+
+            var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(locOptions.Value);
+
+            if (env.IsDevelopment())
             {
-                var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
-                app.UseRequestLocalization(locOptions.Value);
-
-                if (env.IsDevelopment())
-                {
-                    app.UseDeveloperExceptionPage();
-                }
-
-                app.UseHealthChecks("/health");
-                app.UseRouting();
-                app.UseCors(MyAllowSpecificOrigins);
-                app.UseHttpMetrics();
-                app.UseAuthentication();
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "TseCam Web API");
-                });
-
-                 //app.UseHttpsRedirection();
-                //app.UseResultExceptionHandler();
-
-                app.UseEndpoints(endpoints =>
-                {
-                    endpoints.MapControllers();
-                    endpoints.MapMetrics();
-                });
+                app.UseDeveloperExceptionPage();
             }
-            catch (Exception e)
+
+            // app.UseHealthChecks("/health");
+            app.UseStaticFiles();
+            app.UseRouting();
+            // app.UseHttpMetrics();
+            app.UseCors(CorsAllowUIApp);
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+            //app.UseSwagger();
+            //app.UseSwaggerUI(c =>
+            //{
+            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "TseCam Web API");
+            //});
+
+            //app.UseHttpsRedirection();
+            //app.UseResultExceptionHandler();
+
+            app.UseEndpoints(endpoints =>
             {
-                Log.Error($"This error occured in startup in  ConfigureServices {e.Message}");
-                throw;
-            }
+                endpoints.MapControllers();
+                endpoints.MapDefaultControllerRoute();
+                //  endpoints.MapMetrics();
+            });
+
 
         }
 
@@ -155,32 +150,32 @@ namespace HomeCleaning
                 o.Authority = Configuration["Jwt:Authority"];
                 o.Audience = Configuration["Jwt:Audience"];
 
-                o.Events = new JwtBearerEvents()
-                {
-                    // OnTokenValidated = async ctx =>
-                    // {
-                    // 	//Add claim if they are
-                    // 	var claims = new List<Claim>
-                    // 	{
-                    // 		new Claim(ClaimTypes.Role, "superadmin")
-                    // 	};
-                    // 	var appIdentity = new ClaimsIdentity(claims);
-                    // 	ctx.Principal.AddIdentity(appIdentity);
-                    // },
-                    OnAuthenticationFailed = c =>
-                    {
-                        c.NoResult();
+                //o.Events = new JwtBearerEvents()
+                //{
+                //    // OnTokenValidated = async ctx =>
+                //    // {
+                //    // 	//Add claim if they are
+                //    // 	var claims = new List<Claim>
+                //    // 	{
+                //    // 		new Claim(ClaimTypes.Role, "superadmin")
+                //    // 	};
+                //    // 	var appIdentity = new ClaimsIdentity(claims);
+                //    // 	ctx.Principal.AddIdentity(appIdentity);
+                //    // },
+                //    OnAuthenticationFailed = c =>
+                //    {
+                //        c.NoResult();
 
-                        c.Response.StatusCode = 500;
-                        c.Response.ContentType = "text/plain";
-                        //                        if (Environment.IsDevelopment())
-                        //                        {
-                        return c.Response.WriteAsync(c.Exception.ToString());
-                        //                        }
-                        //
-                        //                        return c.Response.WriteAsync("An error occured processing your authentication.");
-                    }
-                };
+                //        c.Response.StatusCode = 500;
+                //        c.Response.ContentType = "text/plain";
+                //        //                        if (Environment.IsDevelopment())
+                //        //                        {
+                //        return c.Response.WriteAsync(c.Exception.ToString());
+                //        //                        }
+                //        //
+                //        //                        return c.Response.WriteAsync("An error occured processing your authentication.");
+                //    }
+                //};
             });
         }
     }

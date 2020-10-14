@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using HomeCleaning.Domain;
 using HomeCleaning.Persistance;
 using HomeCleaning.Persistance.DataAccess;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HomeCleaning.Controllers
 {
@@ -24,6 +25,7 @@ namespace HomeCleaning.Controllers
 
         // GET: api/CleaningCategories
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<CleaningCategory>>> GetCleaningCategory()
         {
             return await _context.CleaningCategory.ToListAsync();
