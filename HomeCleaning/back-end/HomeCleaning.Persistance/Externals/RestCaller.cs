@@ -27,7 +27,7 @@ namespace Infrastructures.DataAccess.Externals.Idp.KeyCloak
 
             request.AddHeader("cache-control", "no-cache");
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-            request.AddParameter("undefined", "client_id=homecleaning&grant_type=client_credentials&client_secret=bf97b1a4-5dda-441c-9d85-3de3b40d1da5&undefined=", ParameterType.RequestBody);
+            request.AddParameter("undefined", "client_id=homecleaningclient&grant_type=client_credentials&client_secret=46648d99-5e9c-4200-9d62-06751bf9c68e&undefined=", ParameterType.RequestBody);
             var ddd = (await client.ExecuteAsync<TokenDto>(request));
 
             return ddd.Data;
