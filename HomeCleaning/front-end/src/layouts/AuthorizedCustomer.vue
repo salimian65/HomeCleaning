@@ -1,15 +1,17 @@
 <template>
-  <div></div>
+  <div>  
+    <slot />
+  </div>
 </template>
 
 <script>
 import Vue from "vue";
 import axios from "axios";
-import * as Keycloak from "keycloak-js";
+
 
 export default {
   props: {
-    source: String,
+   // source: String,
   },
   data: () => ({
     sidebarOpen: true,

@@ -12,7 +12,7 @@
     </form-group>
 
     <form-group class="text-left">
-      <v-btn class="login-btn" large dark="" color="pink darken-3">{{
+      <v-btn class="login-btn" large dark="" @click="submit()" color="pink darken-3">{{
         $t("labels.loginBtn")
       }}</v-btn>
     </form-group>
@@ -25,7 +25,14 @@
 export default {
   data: () => ({}),
 
-  methods: {},
+  methods: {
+submit(){
+    this.$router.push({
+        name: "orderRequest",
+       // params: { order: orderInstance },
+      });
+}
+  },
   components: {},
 };
 </script>

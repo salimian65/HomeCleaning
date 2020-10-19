@@ -1,9 +1,11 @@
 using System;
 using System.Globalization;
 using System.Linq;
+using HomeCleaning.Authorization;
 using HomeCleaning.Persistance;
 using HomeCleaning.Persistance.DataAccess;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -59,15 +61,8 @@ namespace HomeCleaning
 
                 o.RequestCultureProviders.Insert(0, new AcceptLanguageHeaderRequestCultureProvider());
             });
-
-
+            
             //  services.AddHealthChecks();
-
-            services.AddOptions();
-            services.AddControllers().AddControllersAsServices().AddNewtonsoftJson();
-            services.AddControllersWithViews()
-                .AddControllersAsServices();
-
             //services.AddSwaggerGen(c =>
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "TseCam Web API", Version = "v1" });
@@ -88,10 +83,20 @@ namespace HomeCleaning
                     });
             });
 
-            ConfigureAuthentication(services);
-#if DEBUG
-            IdentityModelEventSource.ShowPII = true;
-#endif
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options => {
+                    options.Authority = "http://localhost:5000";
+                    options.RequireHttpsMetadata = false;
+
+                    options.Audience = "backend";
+                });
+
+            services.AddAuthorization(options => {
+                options.AddPolicy("ProductOwner", policy => policy.Requirements.Add(new OrderOwnerAuthorizationRequirement()));
+            });
+
+            services.AddSingleton<IAuthorizationHandler, OrderOwnerAuthorizationHandler>();
+
             new Bootstrap(services, Configuration).WireUp();
 
             services.AddMvc(options => { options.Filters.Add<UnhandledExceptionFilterAttribute>(); })
@@ -131,8 +136,6 @@ namespace HomeCleaning
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapDefaultControllerRoute();
-                //  endpoints.MapMetrics();
             });
 
 

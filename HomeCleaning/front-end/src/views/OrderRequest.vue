@@ -1,7 +1,19 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <div class="mehrdad" style="padding: 150px">
+  <v-row>
+    <v-col  cols="6">
+      <v-btn
+        style="padding: 200px 0 0 0"
+        color="primary"
+      
+        @click="submit()"
+      
+        >{{ $t("buttons.submit") }}</v-btn
+      >
+    {{order}}  
+    </v-col>
+  </v-row>
+    </div>
 </template>
 <script>
 import cleaningCategoryApi from "../api/cleaningCategoryApi";
@@ -15,9 +27,7 @@ export default {
   props: {
     order: {},
   },
-  components: {
- 
-  },
+  components: {},
   data: function () {
     return {
       categoryId: this.$route.params["categoryId"],
@@ -71,15 +81,9 @@ export default {
         this.cleaningPackageSelected,
         this.cleaningExtraOptionSelected
       );
-      this.showModal();
-      this.$router.push({ name: 'routename' , params: { order: orderInstance }})
-      //  await orderApi.add(orderInstance);
-    },
 
-    showModal() {
-      //let element = this.$refs.modal.$el
-      // $(element).modal('show')
-      // this.$root.$emit("bv::show::modal", "ssss");
+      var order = this.order;
+      //  await orderApi.add(orderInstance);
     },
   },
 
@@ -88,6 +92,7 @@ export default {
     await this.getSpaceSizesByCategoryId();
     await this.getCleaningPackagesByCategoryId();
     await this.getCleaningExtraOptionByCategoryId();
+    var order = this.order;
   },
 };
 </script>

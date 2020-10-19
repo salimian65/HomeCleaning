@@ -25,7 +25,7 @@ namespace HomeCleaning.Controllers
 
         // GET: api/CleaningCategories
         [HttpGet]
-        [Authorize]
+        //  [Authorize]
         public async Task<ActionResult<IEnumerable<CleaningCategory>>> GetCleaningCategory()
         {
             return await _context.CleaningCategory.ToListAsync();

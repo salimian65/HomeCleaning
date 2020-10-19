@@ -16,6 +16,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
+             <li class="nav-item mx-0 mx-lg-1">
+              <a
+                class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                href="#portfolio"
+                >Services</a
+              >
+            </li>
             <li class="nav-item mx-0 mx-lg-1">
               <a
                 class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
@@ -31,11 +38,7 @@
               >
             </li>
             <li class="nav-item mx-0 mx-lg-1">
-              <a
-                class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                href="#contact"
-                >CONTACT</a
-              >
+             <login/>
             </li>
           </ul>
         </div>
@@ -118,10 +121,10 @@
 import AlertDialog from "./components/AlertDialog";
 import ConfirmationDialog from "./components/ConfirmationDialog";
 import Toast from "./components/Toast";
-
+import Login from "@/components/Login.vue"
 const defaultLayout = "default";
 export default {
-  components: { AlertDialog, ConfirmationDialog, Toast },
+  components: { AlertDialog, ConfirmationDialog, Toast,Login },
   data: function () {
     return {};
   },

@@ -40,6 +40,8 @@ namespace HomeCleaning.Domain
 
         public decimal Tax { get; set; }
 
+        public string UserName { get; set; }
+
         public OrderStatus OrderStatus { get; set; }
     }
 }

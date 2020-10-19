@@ -5,25 +5,28 @@ import Home from "./views/Home.vue";
 import Package from "./views/Package.vue";
 import OrderRequest from "./views/OrderRequest.vue";
 import Login from "./views/Login.vue";
+import CallBack from './views/LoginCallBack.vue'
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
     mode: "history",
     base: process.env.BASE_URL,
-    routes: [{
-            path: "/login",
-            name: "login",
-            component: Login,
-            meta: {
-                layout: "default"
-            }
-        },
+    routes: [
+        // {
+        //     path: "/login",
+        //     name: "login",
+        //     component: Login,
+        //     meta: {
+        //         layout: "default"
+        //     }
+        // },
         {
             path: "/",
             name: "home",
             component: Home,
             meta: {
-                layout: "default"
+                layout: "default",
+                requiresAuth: false
             }
         },
         {
@@ -31,13 +34,17 @@ export default new Router({
             name: "package",
             component: Package,
             meta: {
-                layout: "default"
+                layout: "default",
+                requiresAuth: true
             }
         },
         {
             path: "/orderRequest",
             name: "orderRequest",
             component: OrderRequest,
+            props: (route) => ({
+                ...route.params
+            }),
             meta: {
                 layout: "authorizedCustomer",
                 requiresAuth: true
@@ -52,5 +59,29 @@ export default new Router({
             component: () =>
                 import ( /* webpackChunkName: "about" */ "./views/About.vue")
         },
-    ]
+        {
+            path: '/callback',
+            name: 'callback',
+            component: CallBack
+        },
+    ],
 });
+
+router.beforeEach(async(to, from, next) => {
+    let app = router.app.$data || { isAuthenticated: false };
+    if (app.isAuthenticated) {
+        //already signed in, we can navigate anywhere
+        next()
+    } else if (to.matched.some(record => record.meta.requiresAuth)) {
+        //authentication is required. Trigger the sign in process, including the return URI
+        router.app.authenticate(to.path).then(() => {
+            console.log('authenticating a protected url:' + to.path);
+            next();
+        });
+    } else {
+        //No auth required. We can navigate
+        next()
+    }
+});
+
+export default router;

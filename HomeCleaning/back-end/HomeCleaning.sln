@@ -21,9 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Framework.Domain", "Framewo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCleaning.Service", "HomeCleaning.Service\HomeCleaning.Service.csproj", "{A201E830-7AE1-4E27-B7CB-F9DA6B50AF85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeCleaning.Localization", "HomeCleaning.Localization\HomeCleaning.Localization.csproj", "{415693AF-A164-4B78-8D88-7EB4753931D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCleaning.Localization", "HomeCleaning.Localization\HomeCleaning.Localization.csproj", "{415693AF-A164-4B78-8D88-7EB4753931D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeCleaning.Service.Contract", "HomeCleaning.Service.Contract\HomeCleaning.Service.Contract.csproj", "{87CDF70B-073F-4B0A-8472-D8C2BC28DD22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCleaning.Service.Contract", "HomeCleaning.Service.Contract\HomeCleaning.Service.Contract.csproj", "{87CDF70B-073F-4B0A-8472-D8C2BC28DD22}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityProvider", "..\IdentityProvider\IdentityProvider.csproj", "{8C34DA12-B049-49ED-B178-0B182EF670D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{87CDF70B-073F-4B0A-8472-D8C2BC28DD22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87CDF70B-073F-4B0A-8472-D8C2BC28DD22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87CDF70B-073F-4B0A-8472-D8C2BC28DD22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C34DA12-B049-49ED-B178-0B182EF670D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C34DA12-B049-49ED-B178-0B182EF670D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C34DA12-B049-49ED-B178-0B182EF670D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C34DA12-B049-49ED-B178-0B182EF670D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{3C49E01E-9809-4B55-A819-154A26ABC89F} = {E846400B-4386-407A-B6BA-DFDD63752C50}
 		{CCEF598D-71DD-4C0F-A584-287000C0781C} = {4F09AB7F-459B-462B-B58D-CBF162A259FC}
 		{A201E830-7AE1-4E27-B7CB-F9DA6B50AF85} = {BA89E169-90F4-4B23-B923-70777CE8AB5B}
+		{415693AF-A164-4B78-8D88-7EB4753931D7} = {4F09AB7F-459B-462B-B58D-CBF162A259FC}
 		{87CDF70B-073F-4B0A-8472-D8C2BC28DD22} = {BA89E169-90F4-4B23-B923-70777CE8AB5B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
