@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Framework.Domain\Framework.Domain.csproj" />
+    <ProjectReference Include="..\HomeCleaning.Framework.Domain\HomeCleaning.Framework.Domain.csproj" />
   </ItemGroup>
 
 </Project>

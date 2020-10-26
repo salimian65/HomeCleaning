@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using HomeCleaning.Domain;
+using HomeCleaning.Persistance.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using HomeCleaning.Domain;
-using HomeCleaning.Persistance;
-using HomeCleaning.Persistance.DataAccess;
-using Microsoft.AspNetCore.Authorization;
 
-namespace HomeCleaning.Controllers
+namespace HomeCleaning.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

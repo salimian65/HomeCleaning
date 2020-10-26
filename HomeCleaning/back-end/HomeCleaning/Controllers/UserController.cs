@@ -6,7 +6,7 @@ using HomeCleaning.Service.Contract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 
-namespace HomeCleaning.Controllers
+namespace HomeCleaning.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

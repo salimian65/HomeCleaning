@@ -1,18 +1,16 @@
-using System;
-using Domain.Repository;
 using Framework.Domain;
+using HomeCleaning.Api.Contexts;
 using HomeCleaning.Domain.Repository;
 using HomeCleaning.Persistance.DataAccess;
 using HomeCleaning.Persistance.DataAccess.Repository;
 using HomeCleaning.Persistance.Externals.Idp;
 using HomeCleaning.Persistance.Externals.Idp.KeyCloak;
-using HomeCleaning.Persistance.Helper;
 using HomeCleaning.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace HomeCleaning
+namespace HomeCleaning.Api
 {
     public class Bootstrap
     {

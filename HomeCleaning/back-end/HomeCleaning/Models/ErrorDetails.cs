@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace HomeCleaning.Models
+namespace HomeCleaning.Api.Models
 {
     public class ErrorDetails
     {

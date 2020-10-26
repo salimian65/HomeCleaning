@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Framework.Domain;
 
+
 namespace HomeCleaning.Domain
 {
     public class User : IEntity<Guid>

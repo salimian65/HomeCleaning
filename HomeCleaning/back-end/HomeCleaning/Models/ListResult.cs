@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HomeCleaning.Models
+namespace HomeCleaning.Api.Models
 {
     public class ListResult<T>
     {

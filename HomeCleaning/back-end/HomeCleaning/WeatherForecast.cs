@@ -1,6 +1,6 @@
 using System;
 
-namespace HomeCleaning
+namespace HomeCleaning.Api
 {
     public class WeatherForecast
     {

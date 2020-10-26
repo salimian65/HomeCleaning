@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace HomeCleaning.Authorization {
+namespace HomeCleaning.Api.Authorization {
     public class OrderOwnerAuthorizationRequirement : IAuthorizationRequirement {
     }
 }

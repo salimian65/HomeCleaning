@@ -2,14 +2,14 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using Framework.Domain.Exceptions;
-using HomeCleaning.Models;
+using HomeCleaning.Api.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace HomeCleaning
+namespace HomeCleaning.Api
 {
     // ReSharper disable once ClassNeverInstantiated.Global
     public class UnhandledExceptionFilterAttribute : ExceptionFilterAttribute

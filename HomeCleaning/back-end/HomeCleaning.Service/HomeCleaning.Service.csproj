@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Framework.Domain\Framework.Domain.csproj" />
     <ProjectReference Include="..\HomeCleaning.Domain\HomeCleaning.Domain.csproj" />
     <ProjectReference Include="..\HomeCleaning.Persistance\HomeCleaning.Persistance.csproj" />
     <ProjectReference Include="..\HomeCleaning.Service.Contract\HomeCleaning.Service.Contract.csproj" />
