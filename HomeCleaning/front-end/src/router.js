@@ -4,8 +4,7 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Package from "./views/Package.vue";
 import OrderRequest from "./views/OrderRequest.vue";
-import Login from "./views/Login.vue";
-import CallBack from './views/LoginCallBack.vue'
+import CallBack from './views/CallBack.vue'
 Vue.use(Router);
 
 const router = new Router({
@@ -35,18 +34,18 @@ const router = new Router({
             component: Package,
             meta: {
                 layout: "default",
-                requiresAuth: true
+                requiresAuth: false
             }
         },
         {
             path: "/orderRequest",
             name: "orderRequest",
             component: OrderRequest,
-            props: (route) => ({
-                ...route.params
-            }),
+            // props: (route) => ({
+            //     ...route.params
+            // }),
             meta: {
-                layout: "authorizedCustomer",
+                layout: "default",
                 requiresAuth: true
             }
         },

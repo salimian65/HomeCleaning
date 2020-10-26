@@ -18,7 +18,7 @@
         </p>
       </div>
     </header>
-    <section class="page-section portfolio" id="portfolio">
+    <section class="page-section portfolio" id="service">
         <div class="container">
             <!-- Portfolio Section Heading-->
             <div class="text-center">

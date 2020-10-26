@@ -5,12 +5,21 @@
 using IdentityModel;
 using IdentityServer4.Models;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
 namespace IdentityProvider
 {
-    public static class Config
+    public class Config
     {
-        public static IEnumerable<IdentityResource> GetIdentityResources()
+        private IConfiguration Configuration { get; }
+
+
+        public Config(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IEnumerable<IdentityResource> GetIdentityResources()
         {
             return new IdentityResource[]
             {
@@ -19,24 +28,25 @@ namespace IdentityProvider
             };
         }
 
-        public static IEnumerable<ApiResource> GetApis()
+        public IEnumerable<ApiResource> GetApis()
         {
             return new ApiResource[]
             {
-                new ApiResource("backend", "MarketPlace REST API"){ UserClaims = { JwtClaimTypes.Name } }
+                new ApiResource("backend", "Home Cleaning REST API"){ UserClaims = { JwtClaimTypes.Name } }
             };
         }
 
-        public static IEnumerable<Client> GetClients()
+        public IEnumerable<Client> GetClients()
         {
+            var webClient = Configuration["partner:webClient"];
             return new[]
             {
                 // SPA client using code flow + pkce
                 new Client
                 {
                     ClientId = "frontend",
-                    ClientName = "MarketPlace JavaScript Client",
-                    ClientUri = "http://localhost:8081",
+                    ClientName = "Home Cleaning JavaScript Client",
+                    ClientUri =Configuration["partner:client"],
 
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
@@ -44,14 +54,14 @@ namespace IdentityProvider
 
                     RedirectUris =
                     {
-                        "http://localhost:8081",
-                        "http://localhost:8081/callback",
-                        "http://localhost:8081/silent",
-                        "http://localhost:8081/popup",
+                      webClient,
+                      webClient + "/callback",
+                      webClient + "/silent",
+                      webClient + "/popup",
                     },
 
-                    PostLogoutRedirectUris = { "http://localhost:8081" },
-                    AllowedCorsOrigins = { "http://localhost:8081" },
+                    PostLogoutRedirectUris = { webClient },
+                    AllowedCorsOrigins = {     webClient },
 
                     AllowedScopes = { "openid", "profile", "backend" }
                 }

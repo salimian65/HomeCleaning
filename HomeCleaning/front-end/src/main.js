@@ -18,14 +18,6 @@ import vueAwesomeCountdown from "vue-awesome-countdown";
 import mgr from './security.js'
 Vue.config.productionTip = false
 
-let initOptions = {
-    url: "http://localhost:8080/auth",
-    realm: "homecleaning",
-    clientId: "homecleaningclient",
-    onLoad: "login-required",
-};
-
-
 Vue.use(Vuelidate);
 
 Vue.use(vuelidateErrorExtractor, {
@@ -39,9 +31,9 @@ Vue.use(vuelidateErrorExtractor, {
 
 Vue.use(vueAwesomeCountdown, "vac");
 
-Vue.prototype.$baseUrl = "http://localhost:6003/";
-Vue.prototype.$baseApiUrl = "http://localhost:6003/api";
-axios.defaults.baseURL = "http://localhost:6003/api";
+Vue.prototype.$baseUrl = "http://192.168.168.172:8087/";
+Vue.prototype.$baseApiUrl = "http://192.168.168.172:8087/api";
+axios.defaults.baseURL = "http://192.168.168.172:8087/api";
 
 
 Vue.component("authorizedCustomer-layout", AuthorizedCustomerLayout);
@@ -53,7 +45,7 @@ const globalData = {
     mgr: mgr
 };
 
-new Vue({
+let v = new Vue({
     router,
     vuetify,
     i18n,
@@ -85,6 +77,9 @@ new Vue({
             returnPath ? this.mgr.signinRedirect({ state: returnPath }) :
                 this.mgr.signinRedirect();
         },
+        async signout() {
+            return this.mgr.signoutRedirect()
+        },
         alert: function(message, title, onOk) {
             this.$children[0].$refs.alertDialog.show(message, title, onOk);
         },
@@ -115,11 +110,14 @@ new Vue({
             self.showErrorToast(message);
             return Promise.reject(error);
         });
+    },
+    mounted() {
+        this.getUser();
     }
 }).$mount("#app");
 
 axios.interceptors.request.use((config) => {
-        const user = Vue.$root.user;
+        const user = v.$root.user;
         if (user) {
             const authToken = user.access_token;
             if (authToken) {

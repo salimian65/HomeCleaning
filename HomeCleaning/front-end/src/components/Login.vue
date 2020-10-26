@@ -1,37 +1,51 @@
 <template>
-    <v-btn icon @click="login" v-if="!user.isAuthenticated">
-      <v-icon>mdi-account</v-icon>
-    </v-btn>
-    <v-btn text @click="logout" v-else>
-        {{ user.name }}
-      <v-icon>mdi-account-off</v-icon>
-    </v-btn>
+  <v-btn  icon @click="signIn" v-if="!$root.isAuthenticated" depressed>
+    <v-icon>mdi-account</v-icon>
+    {{ $t("labels.loginBtn") }}
+  </v-btn>
+  <v-btn text @click="signout" v-else depressed>
+    <v-icon color="white">mdi-account-off</v-icon>
+    {{ $root.user.name }}
+  </v-btn>
 </template>
 
 <script>
-import checkSecMixin from "../checksec"
-import applicationUserManager from '../applicationusermanager'
 export default {
-  mixins:[checkSecMixin],
+  data() {
+    return {
+      // user: this.$root.user,
+    };
+  },
   methods: {
-    async login () {
+    async signIn() {
       try {
-        await applicationUserManager.login()
+        await this.$root.signIn();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     },
-    async logout () {
+    async signout() {
       try {
-        await applicationUserManager.logout()
+        await this.$root.signout();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
-  }
-}
+    },
+  },
+  // computed: {
+  //   user: function () {
+  //     return this.$root.user;
+  //   },
+  // },
+};
 </script>
-
 <style>
+.theme--light.v-btn.v-btn--icon {
+    color: #fff;
+    padding: 25px 30px;
+}
 
+.theme--light.v-btn {
+    color: white;
+}
 </style>

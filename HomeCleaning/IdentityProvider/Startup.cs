@@ -12,6 +12,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using IdentityProvider.Services;
+using IdentityServer4.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace IdentityProvider
 {
@@ -40,9 +45,13 @@ namespace IdentityProvider
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
+            //    .AddRoleManager<RoleManager<IdentityRole>>()
+                .AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-            
+
+            var config = new Config(Configuration);
+
             var builder = services.AddIdentityServer(options =>
                 {
                     options.Events.RaiseErrorEvents = true;
@@ -50,19 +59,37 @@ namespace IdentityProvider
                     options.Events.RaiseFailureEvents = true;
                     options.Events.RaiseSuccessEvents = true;
                 })
-                .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                .AddInMemoryApiResources(Config.GetApis())
-                .AddInMemoryClients(Config.GetClients())
+                .AddInMemoryIdentityResources(config.GetIdentityResources())
+                .AddInMemoryApiResources(config.GetApis())
+                .AddInMemoryClients(config.GetClients())
                 .AddAspNetIdentity<ApplicationUser>();
 
-            if (Environment.IsDevelopment())
+
+            services.AddScoped<IProfileService, ProfileService>();
+         
+            builder.Services.ConfigureExternalCookie(options =>
             {
-                builder.AddDeveloperSigningCredential();
-            }
-            else
+                options.Cookie.IsEssential = true;
+                options.Cookie.SameSite = (SameSiteMode)(-1); //SameSiteMode.Unspecified in .NET Core 3.1
+            });
+
+            builder.Services.ConfigureApplicationCookie(options =>
             {
-                throw new Exception("need to configure key material");
-            }
+                options.Cookie.IsEssential = true;
+                options.Cookie.SameSite = (SameSiteMode)(-1); //SameSiteMode.Unspecified in .NET Core 3.1
+            });
+
+            //var rsa = new RsaKeyService(Environment, TimeSpan.FromDays(30));
+            //services.AddSingleton<RsaKeyService>(provider => rsa);
+            //if (Environment.IsDevelopment())
+            //{
+            builder.AddDeveloperSigningCredential();
+            //}
+            //else
+            //{
+            //    builder.AddSigningCredential(rsa.GetKey());
+            //   // throw new Exception("need to configure key material");
+            //}
 
             services.AddAuthentication()
                 .AddGoogle(options =>
@@ -73,9 +100,11 @@ namespace IdentityProvider
                     options.ClientId = "copy client ID from Google here";
                     options.ClientSecret = "copy client secret from Google here";
                 });
+
+
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IServiceProvider serviceProvider)
         {
             if (Environment.IsDevelopment())
             {
@@ -92,6 +121,7 @@ namespace IdentityProvider
             {
                 endpoints.MapDefaultControllerRoute();
             });
+
         }
     }
 }

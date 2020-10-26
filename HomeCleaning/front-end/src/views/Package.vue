@@ -1,5 +1,5 @@
 <template>
-  <div class="cartableDetail" style="padding: 150px">
+  <div class="packageVue" style="padding: 150px">
     <h1>Make Your Request</h1>
     <v-row>
       <v-col cols="6">
@@ -146,13 +146,16 @@
     <v-row>
       <v-col cols="6">
         <h3>Extra Options</h3>
-        <customer-information v-bind:customer.sync="order.customer" />
+        <customer-information v-bind:customer.sync="order.customer" 
+         :disabled="false"/>
       </v-col>
     </v-row>
     <v-row>
+      <v-btn large color="primary" v-if="isNotEditable" @click="submit()">{{
+        $t("buttons.submit")
+      }}</v-btn>
 
-      
-      <v-dialog v-model="dialog" width="500">
+      <!-- <v-dialog v-model="dialog" width="500">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             color="primary"
@@ -181,7 +184,7 @@
             </v-btn>
           </v-card-actions>
         </v-card>
-      </v-dialog>
+      </v-dialog> -->
     </v-row>
   </div>
 </template>
@@ -200,7 +203,7 @@ import cleaningPackageApi from "../api/cleaningPackageApi";
 import cleaningExtraOptionApi from "../api/cleaningExtraOptionApi";
 import orderApi from "../api/orderApi";
 import orderModel from "../models/orderModel";
-import loginModal from "../views/Login";
+// import loginModal from "../views/Login";
 import CustomerInformation from "./CustomerInformation";
 
 export default {
@@ -208,7 +211,7 @@ export default {
     cartable: Number,
   },
   components: {
-    loginModal,
+    // loginModal,
     CustomerInformation,
   },
   data: function () {
@@ -229,6 +232,7 @@ export default {
           email: "",
           cellphone: "",
         },
+        cleaningCategorySelected:"",
         spaceSizeSelected: "",
         cleaningPackageSelected: "",
         cleaningExtraOptionSelected: [],
@@ -273,25 +277,14 @@ export default {
     },
 
     submit() {
-      // const orderInstance = new orderModel.order(
-      //   this.spaceSizeSelected,
-      //   this.cleaningPackageSelected,
-      //   this.cleaningExtraOptionSelected
-      // );
-
-      localStorage.setItem("order",JSON.stringify(this.order));
+      this.order.cleaningCategorySelected=this.categoryId;
+      localStorage.setItem("order", JSON.stringify(this.order));
       this.$router.push({
         name: "orderRequest",
         params: { order: this.order },
       });
 
       //  await orderApi.add(orderInstance);
-    },
-
-    showModal() {
-      //let element = this.$refs.modal.$el
-      // $(element).modal('show')
-      // this.$root.$emit("bv::show::modal", "ssss");
     },
 
     register: function () {},

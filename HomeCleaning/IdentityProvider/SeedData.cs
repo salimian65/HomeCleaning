@@ -36,40 +36,62 @@ namespace IdentityProvider
                     var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
                     context.Database.Migrate();
 
-                    var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-
                     var roleMgr = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                   // var result2 = roleMgr.CreateAsync(new IdentityRole {Id="1", Name = "Admin" }).Result;
-                   // var result3 = roleMgr.CreateAsync(new IdentityRole { Id = "2", Name = "User" }).Result;
+                    var customer = roleMgr.FindByNameAsync("customer").Result;
+                    if (customer == null)
+                    {
+                        customer = new IdentityRole
+                        {
+                            Name = "customer"
+                        };
+                        _ = roleMgr.CreateAsync(customer).Result;
+                    }
 
+                    var admin = roleMgr.FindByNameAsync("admin").Result;
+                    if (admin == null)
+                    {
+                        admin = new IdentityRole
+                        {
+                            Name = "admin"
+                        };
+                        _ = roleMgr.CreateAsync(admin).Result;
+                    }
+
+                    var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                     var alice = userMgr.FindByNameAsync("alice").Result;
                     if (alice == null)
                     {
                         alice = new ApplicationUser
                         {
-                            UserName = "alice"
+                            UserName = "alice",
+                            Email = "AliceSmith@email.com",
+                            EmailConfirmed = true,
                         };
                         var result = userMgr.CreateAsync(alice, "Pass123$").Result;
-                        //var result1 = userMgr.AddToRoleAsync(alice, "User" ).Result;
-                     
+                      
+                        if (!result.Succeeded)
+                        {
+                            throw new Exception(result.Errors.First().Description);
+                        }
+                        //alice = userMgr.FindByNameAsync("alice").Result;
+                    
+                        result = userMgr.AddClaimsAsync(alice, new Claim[]{
+                            new Claim(JwtClaimTypes.Name, "Alice Smith"),
+                            new Claim(JwtClaimTypes.GivenName, "Alice"),
+                            new Claim(JwtClaimTypes.FamilyName, "Smith"),
+                            new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
+                        }).Result;
+
                         if (!result.Succeeded)
                         {
                             throw new Exception(result.Errors.First().Description);
                         }
 
-                        result = userMgr.AddClaimsAsync(alice, new Claim[]{
-                        new Claim(JwtClaimTypes.Name, "Alice Smith"),
-                        new Claim(JwtClaimTypes.GivenName, "Alice"),
-                        new Claim(JwtClaimTypes.FamilyName, "Smith"),
-                        new Claim(JwtClaimTypes.Email, "AliceSmith@email.com"),
-                        new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
-                        new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
-                        new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'One Hacker Way', 'locality': 'Heidelberg', 'postal_code': 69118, 'country': 'Germany' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json)
-                    }).Result;
-                        if (!result.Succeeded)
+                        if (!userMgr.IsInRoleAsync(alice, customer.Name).Result)
                         {
-                            throw new Exception(result.Errors.First().Description);
+                            _ = userMgr.AddToRoleAsync(alice, customer.Name).Result;
                         }
+
                         Log.Debug("alice created");
                     }
                     else
@@ -82,30 +104,36 @@ namespace IdentityProvider
                     {
                         bob = new ApplicationUser
                         {
-                            UserName = "bob"
+                            UserName = "bob",
+                            Email = "BobSmith@email.com",
+                            EmailConfirmed = true,
                         };
+
                         var result = userMgr.CreateAsync(bob, "Pass123$").Result;
-                        //var result1 = userMgr.AddToRoleAsync(bob, "User").Result;
-                      
+                     
+                        if (!result.Succeeded)
+                        {
+                            throw new Exception(result.Errors.First().Description);
+                        }
+                       
+                        //bob = userMgr.FindByNameAsync("bob").Result;
+                        result = userMgr.AddClaimsAsync(bob, new Claim[]{
+                            new Claim(JwtClaimTypes.Name, "Bob Smith"),
+                            new Claim(JwtClaimTypes.GivenName, "Bob"),
+                            new Claim(JwtClaimTypes.FamilyName, "Smith"),
+                            new Claim(JwtClaimTypes.WebSite, "http://bob.com"),
+                            new Claim("location", "somewhere")
+                        }).Result;
                         if (!result.Succeeded)
                         {
                             throw new Exception(result.Errors.First().Description);
                         }
 
-                        result = userMgr.AddClaimsAsync(bob, new Claim[]{
-                        new Claim(JwtClaimTypes.Name, "Bob Smith"),
-                        new Claim(JwtClaimTypes.GivenName, "Bob"),
-                        new Claim(JwtClaimTypes.FamilyName, "Smith"),
-                        new Claim(JwtClaimTypes.Email, "BobSmith@email.com"),
-                        new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
-                        new Claim(JwtClaimTypes.WebSite, "http://bob.com"),
-                        new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'One Hacker Way', 'locality': 'Heidelberg', 'postal_code': 69118, 'country': 'Germany' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json),
-                        new Claim("location", "somewhere")
-                    }).Result;
-                        if (!result.Succeeded)
+                        if (!userMgr.IsInRoleAsync(bob, admin.Name).Result)
                         {
-                            throw new Exception(result.Errors.First().Description);
+                            _ = userMgr.AddToRoleAsync(bob, admin.Name).Result;
                         }
+
                         Log.Debug("bob created");
                     }
                     else
@@ -117,3 +145,26 @@ namespace IdentityProvider
         }
     }
 }
+
+
+//var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+//var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+//IdentityResult roleResult;
+////Adding Admin Role
+//var roleCheck = RoleManager.RoleExistsAsync("Admin").Result;
+//if (!roleCheck)
+//{
+
+//IdentityRole adminRole = new IdentityRole("Admin");
+////create the roles and seed them to the database
+//roleResult = RoleManager.CreateAsync(adminRole).Result;
+
+//RoleManager.AddClaimAsync(adminRole, new Claim(ClaimTypes.AuthorizationDecision, "edit.post")).Wait();
+//RoleManager.AddClaimAsync(adminRole, new Claim(ClaimTypes.AuthorizationDecision, "delete.post")).Wait();
+
+//ApplicationUser user = new ApplicationUser { UserName = "v-nany@hotmail.com", Email = "v-nany@hotmail.com" };
+//UserManager.CreateAsync(user, "Pass123$").Wait();
+
+//_ = UserManager.AddToRoleAsync(user, adminRole.Name).Result;
+//}

@@ -8,6 +8,7 @@
         :label="$t('labels.firstName')"
         required
         outlined
+        :disabled="disabled"
       ></v-text-field>
     </form-group>
     <form-group :name="$t('labels.surname')">
@@ -18,6 +19,7 @@
         outlined
         :label="$t('labels.surname')"
         required
+        :disabled="disabled"
       ></v-text-field>
     </form-group>
     <form-group :name="$t('labels.cellphone')">
@@ -28,6 +30,7 @@
         :label="$t('labels.cellphone')"
         required
         outlined
+        :disabled="disabled"
       ></v-text-field>
     </form-group>
     <form-group :name="$t('labels.address')">
@@ -38,6 +41,7 @@
         v-model.trim="localstate.address"
         :label="$t('labels.address')"
         required
+        :disabled="disabled"
       ></v-text-field>
     </form-group>
     <form-group :name="$t('labels.email')">
@@ -49,6 +53,7 @@
         v-bind="attrs"
         outlined
         required
+        :disabled="disabled"
       ></v-text-field>
     </form-group>
   </v-container>
@@ -73,6 +78,7 @@ export default {
   components: {},
   props: {
     customer: { type: Object, required },
+    disabled: { type: Boolean },
   },
   data: function () {
     return {

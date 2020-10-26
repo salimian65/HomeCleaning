@@ -27,14 +27,14 @@ namespace HomeCleaning
     public class Startup
     {
         private const string CorsAllowUIApp = "corsAllowUIApp";
+
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
-        // readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         // This method gets called by the runtime. Use this method to add services to the container.
 
         public void ConfigureServices(IServiceCollection services)
@@ -61,13 +61,13 @@ namespace HomeCleaning
 
                 o.RequestCultureProviders.Insert(0, new AcceptLanguageHeaderRequestCultureProvider());
             });
-            
-            //  services.AddHealthChecks();
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "TseCam Web API", Version = "v1" });
-            //    c.ResolveConflictingActions(d => d.First()); // until aspnetcore supports action resolver
-            //});
+
+            services.AddHealthChecks();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Home Cleaning Web API", Version = "v1" });
+                c.ResolveConflictingActions(d => d.First()); // until aspnetcore supports action resolver
+            });
 
 
             services.AddDbContext<HomeCleaningContext>(options =>
@@ -78,14 +78,13 @@ namespace HomeCleaning
                 options.AddPolicy(CorsAllowUIApp,
                     policyBuilder =>
                     {
-                        policyBuilder.WithOrigins("http://localhost:8081").AllowAnyMethod().AllowAnyHeader();
-                        policyBuilder.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader();
+                       policyBuilder.WithOrigins(Configuration["partner:webClient"]).AllowAnyMethod().AllowAnyHeader();
                     });
             });
 
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options => {
-                    options.Authority = "http://localhost:5000";
+                    options.Authority = Configuration["partner:authService"];
                     options.RequireHttpsMetadata = false;
 
                     options.Audience = "backend";
@@ -116,19 +115,19 @@ namespace HomeCleaning
                 app.UseDeveloperExceptionPage();
             }
 
-            // app.UseHealthChecks("/health");
+            app.UseHealthChecks("/health");
             app.UseStaticFiles();
-            app.UseRouting();
-            // app.UseHttpMetrics();
+            app.UseRouting(); 
+            app.UseHttpMetrics();
             app.UseCors(CorsAllowUIApp);
 
             app.UseAuthentication();
             app.UseAuthorization();
-            //app.UseSwagger();
-            //app.UseSwaggerUI(c =>
-            //{
-            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "TseCam Web API");
-            //});
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "TseCam Web API");
+            });
 
             //app.UseHttpsRedirection();
             //app.UseResultExceptionHandler();

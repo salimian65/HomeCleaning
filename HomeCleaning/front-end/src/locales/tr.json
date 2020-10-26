@@ -19,7 +19,8 @@
         "changePassword": "تغییر پسورد",
         "submit": "sunmak",
         "start": "شروع",
-        "click": "کلیک"
+        "click": "کلیک",
+        "goForPayment": "Go for payment"
     },
     "validation": {
         "required": "{attribute} اجباری است",

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using IdentityProvider.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace IdentityProvider.Data
 {

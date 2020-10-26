@@ -19,15 +19,15 @@
              <li class="nav-item mx-0 mx-lg-1">
               <a
                 class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                href="#portfolio"
+                href="#service"
                 >Services</a
               >
             </li>
             <li class="nav-item mx-0 mx-lg-1">
               <a
                 class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                href="#portfolio"
-                >Services</a
+                href="#contact"
+                >Contact</a
               >
             </li>
             <li class="nav-item mx-0 mx-lg-1">
@@ -40,6 +40,7 @@
             <li class="nav-item mx-0 mx-lg-1">
              <login/>
             </li>
+            
           </ul>
         </div>
       </div>
