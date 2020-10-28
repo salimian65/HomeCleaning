@@ -1,5 +1,5 @@
 <template>
-  <div class="packageVue" style="padding: 150px">
+ <v-container style="padding: 150px 0 0 0">
     <h1>Confirm Your Request</h1>
     <v-row>
       <v-col cols="6">
@@ -38,7 +38,6 @@
         <h3>Extra Options</h3>
         <ul class="extra">
           <li v-for="item in order.cleaningExtraOptionSelected" :key="item.id">
-          
             <label> {{ item.name }}</label
             >
           </li>
@@ -57,7 +56,7 @@
         $t("buttons.goForPayment")
       }}</v-btn>
     </v-row>
-  </div>
+   </v-container>
 </template>
 <script>
 import {

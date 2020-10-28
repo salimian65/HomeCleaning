@@ -7,7 +7,7 @@
         async created() {
             try {
                 var result = await this.$root.mgr.signinRedirectCallback();
-                var returnToUrl = '/orderRequest';
+                var returnToUrl = '/package/1'; //  'orderRequest';
                 if (result.state !== undefined) { returnToUrl = result.state;}
                 this.$router.push({ path: returnToUrl });
             } catch (e) {

@@ -31,10 +31,13 @@ Vue.use(vuelidateErrorExtractor, {
 
 Vue.use(vueAwesomeCountdown, "vac");
 
-Vue.prototype.$baseUrl = "http://192.168.168.172:8087/";
-Vue.prototype.$baseApiUrl = "http://192.168.168.172:8087/api";
-axios.defaults.baseURL = "http://192.168.168.172:8087/api";
+// Vue.prototype.$baseUrl = "http://192.168.168.172:8087/";
+// Vue.prototype.$baseApiUrl = "http://192.168.168.172:8087/api";
+// axios.defaults.baseURL = "http://192.168.168.172:8087/api";
 
+Vue.prototype.$baseUrl = "http://localhost:6003";
+Vue.prototype.$baseApiUrl = "http://localhost:6003/api";
+axios.defaults.baseURL = "http://localhost:6003/api";
 
 Vue.component("authorizedCustomer-layout", AuthorizedCustomerLayout);
 Vue.component("default-layout", DefaultLayout);
@@ -56,18 +59,19 @@ let v = new Vue({
     render: h => h(App),
     methods: {
         async authenticate(returnPath) {
-            const user = await this.$root.getUser(); //see if the user details are in local storage
-            var ddd = !user;
-            if (!ddd) {
-                this.isAuthenticated = true;
-                this.user = user;
-            } else {
+            await this.$root.getUser(); //see if the user details are in local storage
+
+            if (!this.isAuthenticated) {
                 await this.$root.signIn(returnPath);
             }
         },
         async getUser() {
             try {
                 let user = await this.mgr.getUser();
+                if (user != null) {
+                    this.isAuthenticated = true;
+                    this.user = user;
+                }
                 return user;
             } catch (err) {
                 console.log(err);

@@ -19,6 +19,15 @@ namespace HomeCleaning.IdentityProvider
             Configuration = configuration;
         }
 
+
+        public static IEnumerable<ApiScope> ApiScopes =>
+            new ApiScope[]
+            {
+                new ApiScope("backend"),
+                new ApiScope("scope2"),
+            };
+
+
         public IEnumerable<IdentityResource> GetIdentityResources()
         {
             return new IdentityResource[]
@@ -28,13 +37,13 @@ namespace HomeCleaning.IdentityProvider
             };
         }
 
-        public IEnumerable<ApiResource> GetApis()
-        {
-            return new ApiResource[]
-            {
-                new ApiResource("backend", "Home Cleaning REST API"){ UserClaims = { JwtClaimTypes.Name } }
-            };
-        }
+        //public IEnumerable<ApiResource> GetApis()
+        //{
+        //    return new ApiResource[]
+        //    {
+        //        new ApiResource("backend", "Home Cleaning REST API"){ UserClaims = { JwtClaimTypes.Name } }
+        //    };
+        //}
 
         public IEnumerable<Client> GetClients()
         {

@@ -33,18 +33,10 @@ namespace HomeCleaning.IdentityProvider
         {
             services.AddControllersWithViews();
 
-            services.Configure<IISOptions>(iis =>
-            {
-                iis.AuthenticationDisplayName = "Windows";
-                iis.AutomaticAuthentication = false;
-            });
-
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
-            //    .AddRoleManager<RoleManager<IdentityRole>>()
-                .AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -56,15 +48,18 @@ namespace HomeCleaning.IdentityProvider
                     options.Events.RaiseInformationEvents = true;
                     options.Events.RaiseFailureEvents = true;
                     options.Events.RaiseSuccessEvents = true;
+
+                    options.EmitStaticAudienceClaim = true;
                 })
                 .AddInMemoryIdentityResources(config.GetIdentityResources())
-                .AddInMemoryApiResources(config.GetApis())
+                 // .AddInMemoryApiResources(config.GetApis())
+                .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(config.GetClients())
                 .AddAspNetIdentity<ApplicationUser>();
 
 
             services.AddScoped<IProfileService, ProfileService>();
-         
+
             builder.Services.ConfigureExternalCookie(options =>
             {
                 options.Cookie.IsEssential = true;
@@ -98,8 +93,6 @@ namespace HomeCleaning.IdentityProvider
                     options.ClientId = "copy client ID from Google here";
                     options.ClientSecret = "copy client secret from Google here";
                 });
-
-
         }
 
         public void Configure(IApplicationBuilder app, IServiceProvider serviceProvider)

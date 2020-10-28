@@ -1,5 +1,5 @@
 <template>
-  <div class="packageVue" style="padding: 150px">
+ <v-container style="padding: 150px 0 0 0">
     <h1>Make Your Request</h1>
     <v-row>
       <v-col cols="6">
@@ -186,7 +186,7 @@
         </v-card>
       </v-dialog> -->
     </v-row>
-  </div>
+   </v-container>
 </template>
 <script>
 import {

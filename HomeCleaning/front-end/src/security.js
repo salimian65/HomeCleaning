@@ -1,12 +1,23 @@
 import Oidc from 'oidc-client';
 
+// var mgr = new Oidc.UserManager({
+//     authority: 'http://192.168.168.172:8086',
+//     client_id: 'frontend',
+//     redirect_uri: 'http://192.168.168.172:8085/callback',
+//     response_type: 'code',
+//     scope: 'openid profile backend',
+//     post_logout_redirect_uri: 'http://192.168.168.172:8085',
+//     userStore: new Oidc.WebStorageStateStore({ store: window.localStorage }),
+// })
+
+
 var mgr = new Oidc.UserManager({
-    authority: 'http://192.168.168.172:8086',
+    authority: 'http://localhost:5000',
     client_id: 'frontend',
-    redirect_uri: 'http://192.168.168.172:8085/callback',
+    redirect_uri: 'http://localhost:8080/callback',
     response_type: 'code',
     scope: 'openid profile backend',
-    post_logout_redirect_uri: 'http://192.168.168.172:8085',
+    post_logout_redirect_uri: 'http://localhost:8080',
     userStore: new Oidc.WebStorageStateStore({ store: window.localStorage }),
 })
 

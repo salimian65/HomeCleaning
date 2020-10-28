@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <v-app>
+
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
       <div class="container">
         <a class="navbar-brand js-scroll-trigger" href="#page-top">ANASAYFA</a>
@@ -16,7 +17,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-             <li class="nav-item mx-0 mx-lg-1">
+            <li class="nav-item mx-0 mx-lg-1">
               <a
                 class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
                 href="#service"
@@ -24,37 +25,36 @@
               >
             </li>
             <li class="nav-item mx-0 mx-lg-1">
-              <a
+              <!-- <a
                 class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
                 href="#contact"
                 >Contact</a
-              >
+              > -->
+               <router-link to="/#contact"  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
+                Contact
+              </router-link>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
-              <a
-                class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                href="#about"
-                >ABOUT</a
-              >
+              <router-link to="/#about"  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
+                ABOUT
+              </router-link>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
-             <login/>
+              <login />
             </li>
-            
+            <li class="nav-item mx-0 mx-lg-1" >
+              <router-link   to="/server"  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
+                Server
+              </router-link>
+            </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <v-app>
-      <component :is="layout">
-        <router-view />
-      </component>
-      <alert-dialog ref="alertDialog"></alert-dialog>
-      <confirmation-dialog ref="confirmationDialog"></confirmation-dialog>
-      <toast ref="toast"></toast>
-    </v-app>
-   
+    <component :is="layout">
+      <router-view />
+    </component>
     <footer class="footer text-center">
       <div class="container">
         <div class="row">
@@ -115,17 +115,17 @@
         <i class="fa fa-chevron-up"></i
       ></a>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script>
 import AlertDialog from "./components/AlertDialog";
 import ConfirmationDialog from "./components/ConfirmationDialog";
 import Toast from "./components/Toast";
-import Login from "@/components/Login.vue"
+import Login from "@/components/Login.vue";
 const defaultLayout = "default";
 export default {
-  components: { AlertDialog, ConfirmationDialog, Toast,Login },
+  components: { AlertDialog, ConfirmationDialog, Toast, Login },
   data: function () {
     return {};
   },

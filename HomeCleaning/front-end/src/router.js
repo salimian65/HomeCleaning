@@ -5,6 +5,7 @@ import Home from "./views/Home.vue";
 import Package from "./views/Package.vue";
 import OrderRequest from "./views/OrderRequest.vue";
 import CallBack from './views/CallBack.vue'
+import Server from './views/Server.vue'
 Vue.use(Router);
 
 const router = new Router({
@@ -61,7 +62,20 @@ const router = new Router({
         {
             path: '/callback',
             name: 'callback',
-            component: CallBack
+            component: CallBack,
+            meta: {
+                layout: "default",
+                requiresAuth: false
+            }
+        },
+        {
+            path: '/server',
+            name: 'server',
+            component: Server,
+            meta: {
+                layout: "default",
+                requiresAuth: false
+            }
         },
     ],
 });
