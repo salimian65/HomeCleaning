@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using HomeCleaning.IdentityProvider.Models;
+using HomeCleaning.Domain;
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Events;

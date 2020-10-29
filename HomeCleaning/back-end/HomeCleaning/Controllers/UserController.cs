@@ -14,7 +14,9 @@ namespace HomeCleaning.Api.Controllers
     {
         private readonly UserService userService;
 
-        public UserController(UserService userService, IStringLocalizer<SharedResources> localizer) 
+        public UserController(
+             UserService userService,
+            IStringLocalizer<SharedResources> localizer)
         {
             this.userService = userService;
         }
@@ -29,7 +31,7 @@ namespace HomeCleaning.Api.Controllers
         [HttpPost("Remove")]
         public async Task<ActionResult<object>> Remove([FromBody] Guid id)
         {
-            await userService.Remove(id);
+            //  await userService.Remove(id);
             return new ActionResult<bool>(true);
         }
 
@@ -45,23 +47,23 @@ namespace HomeCleaning.Api.Controllers
             throw new Exception();
         }
 
-        [HttpGet("GetByUserName")]
-        public ActionResult<object> GetByUserName(string username)
-        {
-            return userService.GetUser(username);
-        }
+        //  [HttpGet("GetByUserName")]
+        // public ActionResult<object> GetByUserName(string username)
+        //{
+        //  //  return userService.GetUser(username);
+        //}
 
         [HttpPost("Enable")]
         public async Task<ActionResult<object>> Enable([FromBody] Guid id)
         {
-            await userService.Enable(id);
+            //   await userService.Enable(id);
             return new ActionResult<bool>(true);
         }
-        
+
         [HttpPost("Disable")]
         public async Task<ActionResult<object>> Disable([FromBody] Guid id)
         {
-            await userService.Disable(id);
+            //   await userService.Disable(id);
             return new ActionResult<bool>(true);
         }
     }

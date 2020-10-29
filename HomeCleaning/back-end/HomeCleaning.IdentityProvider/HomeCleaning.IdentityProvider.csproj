@@ -59,6 +59,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Migrations\" />
+    <ProjectReference Include="..\HomeCleaning.Persistance\HomeCleaning.Persistance.csproj" />
   </ItemGroup>
 </Project>

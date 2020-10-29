@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using HomeCleaning.AdminPanel.Models;
+using HomeCleaning.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +11,9 @@ namespace HomeCleaning.AdminPanel.Controllers
     public class RoleController : Controller
     {
         private RoleManager<IdentityRole> roleManager;
-        private UserManager<AppUser> userManager;
+        private UserManager<ApplicationUser> userManager;
 
-        public RoleController(RoleManager<IdentityRole> roleMgr, UserManager<AppUser> userMrg)
+        public RoleController(RoleManager<IdentityRole> roleMgr, UserManager<ApplicationUser> userMrg)
         {
             roleManager = roleMgr;
             userManager = userMrg;
@@ -56,9 +57,9 @@ namespace HomeCleaning.AdminPanel.Controllers
         public async Task<IActionResult> Update(string id)
         {
             IdentityRole role = await roleManager.FindByIdAsync(id);
-            List<AppUser> members = new List<AppUser>();
-            List<AppUser> nonMembers = new List<AppUser>();
-            foreach (AppUser user in userManager.Users)
+            List<ApplicationUser> members = new List<ApplicationUser>();
+            List<ApplicationUser> nonMembers = new List<ApplicationUser>();
+            foreach (ApplicationUser user in userManager.Users)
             {
                 var list = await userManager.IsInRoleAsync(user, role.Name) ? members : nonMembers;
                 list.Add(user);
@@ -79,7 +80,7 @@ namespace HomeCleaning.AdminPanel.Controllers
             {
                 foreach (string userId in model.AddIds ?? new string[] { })
                 {
-                    AppUser user = await userManager.FindByIdAsync(userId);
+                    ApplicationUser user = await userManager.FindByIdAsync(userId);
                     if (user != null)
                     {
                         result = await userManager.AddToRoleAsync(user, model.RoleName);
@@ -89,7 +90,7 @@ namespace HomeCleaning.AdminPanel.Controllers
                 }
                 foreach (string userId in model.DeleteIds ?? new string[] { })
                 {
-                    AppUser user = await userManager.FindByIdAsync(userId);
+                    ApplicationUser user = await userManager.FindByIdAsync(userId);
                     if (user != null)
                     {
                         result = await userManager.RemoveFromRoleAsync(user, model.RoleName);

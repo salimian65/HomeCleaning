@@ -5,7 +5,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using HomeCleaning.IdentityProvider.Models;
+using HomeCleaning.Domain;
 using IdentityModel;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;

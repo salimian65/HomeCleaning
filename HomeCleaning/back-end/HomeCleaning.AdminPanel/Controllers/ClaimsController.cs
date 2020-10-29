@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using HomeCleaning.AdminPanel.Models;
+using HomeCleaning.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +12,9 @@ namespace HomeCleaning.AdminPanel.Controllers
     [Authorize]
     public class ClaimsController : Controller
     {
-        private UserManager<AppUser> userManager;
+        private UserManager<ApplicationUser> userManager;
         private IAuthorizationService authService;
-        public ClaimsController(UserManager<AppUser> userMgr, IAuthorizationService auth)
+        public ClaimsController(UserManager<ApplicationUser> userMgr, IAuthorizationService auth)
         {
             userManager = userMgr;
             authService = auth;
@@ -27,7 +28,7 @@ namespace HomeCleaning.AdminPanel.Controllers
         [ActionName("Create")]
         public async Task<IActionResult> Create_Post(string claimType, string claimValue)
         {
-            AppUser user = await userManager.GetUserAsync(HttpContext.User);
+            ApplicationUser user = await userManager.GetUserAsync(HttpContext.User);
             Claim claim = new Claim(claimType, claimValue, ClaimValueTypes.String);
             IdentityResult result = await userManager.AddClaimAsync(user, claim);
 
@@ -41,7 +42,7 @@ namespace HomeCleaning.AdminPanel.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string claimValues)
         {
-            AppUser user = await userManager.GetUserAsync(HttpContext.User);
+            ApplicationUser user = await userManager.GetUserAsync(HttpContext.User);
 
             string[] claimValuesArray = claimValues.Split(";");
             string claimType = claimValuesArray[0], claimValue = claimValuesArray[1], claimIssuer = claimValuesArray[2];

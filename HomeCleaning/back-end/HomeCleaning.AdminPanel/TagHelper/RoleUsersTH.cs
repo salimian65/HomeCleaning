@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using HomeCleaning.AdminPanel.Models;
+using HomeCleaning.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -9,10 +10,10 @@ namespace HomeCleaning.AdminPanel.TagHelper
     [HtmlTargetElement("td", Attributes = "i-role")]
     public class RoleUsersTH : Microsoft.AspNetCore.Razor.TagHelpers.TagHelper
     {
-        private UserManager<AppUser> userManager;
+        private UserManager<ApplicationUser> userManager;
         private RoleManager<IdentityRole> roleManager;
 
-        public RoleUsersTH(UserManager<AppUser> usermgr, RoleManager<IdentityRole> rolemgr)
+        public RoleUsersTH(UserManager<ApplicationUser> usermgr, RoleManager<IdentityRole> rolemgr)
         {
             userManager = usermgr;
             roleManager = rolemgr;

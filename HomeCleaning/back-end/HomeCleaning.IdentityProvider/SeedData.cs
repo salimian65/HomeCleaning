@@ -5,8 +5,8 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
-using HomeCleaning.IdentityProvider.Data;
-using HomeCleaning.IdentityProvider.Models;
+using HomeCleaning.Domain;
+using HomeCleaning.Persistance;
 using IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -21,18 +21,18 @@ namespace HomeCleaning.IdentityProvider
         {
             var services = new ServiceCollection();
             services.AddLogging();
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<HomeCleaningContext>(options =>
                options.UseSqlServer(connectionString));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<HomeCleaningContext>()
                 .AddDefaultTokenProviders();
 
             using (var serviceProvider = services.BuildServiceProvider())
             {
                 using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
-                    var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
+                    var context = scope.ServiceProvider.GetService<HomeCleaningContext>();
                     context.Database.Migrate();
 
                     var roleMgr = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -46,6 +46,18 @@ namespace HomeCleaning.IdentityProvider
                         _ = roleMgr.CreateAsync(customer).Result;
                     }
 
+                    //------------------------------------------------------------------------
+                    var server = roleMgr.FindByNameAsync("server").Result;
+                    if (server == null)
+                    {
+                        server = new IdentityRole
+                        {
+                            Name = "server"
+                        };
+                        _ = roleMgr.CreateAsync(server).Result;
+                    }
+
+                    //------------------------------------------------------------------------
                     var admin = roleMgr.FindByNameAsync("admin").Result;
                     if (admin == null)
                     {
@@ -56,17 +68,18 @@ namespace HomeCleaning.IdentityProvider
                         _ = roleMgr.CreateAsync(admin).Result;
                     }
 
+                    ///////////////////////////////////////////////////////////////////
                     var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-                    var alice = userMgr.FindByNameAsync("alice").Result;
-                    if (alice == null)
+                    var mehrdad = userMgr.FindByNameAsync("mehrdad").Result;
+                    if (mehrdad == null)
                     {
-                        alice = new ApplicationUser
+                        mehrdad = new ApplicationUser
                         {
-                            UserName = "alice",
-                            Email = "AliceSmith@email.com",
+                            UserName = "mehrdad",
+                            Email = "salimian.mehrdad@email.com",
                             EmailConfirmed = true,
                         };
-                        var result = userMgr.CreateAsync(alice, "Pass123$").Result;
+                        var result = userMgr.CreateAsync(mehrdad, "Pass123$").Result;
                       
                         if (!result.Succeeded)
                         {
@@ -74,11 +87,11 @@ namespace HomeCleaning.IdentityProvider
                         }
                         //alice = userMgr.FindByNameAsync("alice").Result;
                     
-                        result = userMgr.AddClaimsAsync(alice, new Claim[]{
-                            new Claim(JwtClaimTypes.Name, "Alice Smith"),
-                            new Claim(JwtClaimTypes.GivenName, "Alice"),
-                            new Claim(JwtClaimTypes.FamilyName, "Smith"),
-                            new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
+                        result = userMgr.AddClaimsAsync(mehrdad, new Claim[]{
+                            new Claim(JwtClaimTypes.Name, "Mehrdad Salimian"),
+                            new Claim(JwtClaimTypes.GivenName, "Mehrdad"),
+                            new Claim(JwtClaimTypes.FamilyName, "Salimian"),
+                            new Claim(JwtClaimTypes.WebSite, "http://Mehrdad.com"),
                         }).Result;
 
                         if (!result.Succeeded)
@@ -86,29 +99,30 @@ namespace HomeCleaning.IdentityProvider
                             throw new Exception(result.Errors.First().Description);
                         }
 
-                        if (!userMgr.IsInRoleAsync(alice, customer.Name).Result)
+                        if (!userMgr.IsInRoleAsync(mehrdad, customer.Name).Result)
                         {
-                            _ = userMgr.AddToRoleAsync(alice, customer.Name).Result;
+                            _ = userMgr.AddToRoleAsync(mehrdad, customer.Name).Result;
                         }
 
-                        Log.Debug("alice created");
+                        Log.Debug("mehrdad created");
                     }
                     else
                     {
-                        Log.Debug("alice already exists");
+                        Log.Debug("mehrdad already exists");
                     }
 
-                    var bob = userMgr.FindByNameAsync("bob").Result;
-                    if (bob == null)
+                    //------------------------------------------------------------------------
+                    var elham = userMgr.FindByNameAsync("elham").Result;
+                    if (elham == null)
                     {
-                        bob = new ApplicationUser
+                        elham = new ApplicationUser
                         {
-                            UserName = "bob",
-                            Email = "BobSmith@email.com",
+                            UserName = "elham",
+                            Email ="elham@email.com",
                             EmailConfirmed = true,
                         };
 
-                        var result = userMgr.CreateAsync(bob, "Pass123$").Result;
+                        var result = userMgr.CreateAsync(elham, "Pass123$").Result;
                      
                         if (!result.Succeeded)
                         {
@@ -116,28 +130,73 @@ namespace HomeCleaning.IdentityProvider
                         }
                        
                         //bob = userMgr.FindByNameAsync("bob").Result;
-                        result = userMgr.AddClaimsAsync(bob, new Claim[]{
-                            new Claim(JwtClaimTypes.Name, "Bob Smith"),
-                            new Claim(JwtClaimTypes.GivenName, "Bob"),
-                            new Claim(JwtClaimTypes.FamilyName, "Smith"),
-                            new Claim(JwtClaimTypes.WebSite, "http://bob.com"),
+                        result = userMgr.AddClaimsAsync(elham, new Claim[]{
+                            new Claim(JwtClaimTypes.Name, "Elham Shamouli"),
+                            new Claim(JwtClaimTypes.GivenName, "Elham"),
+                            new Claim(JwtClaimTypes.FamilyName, "Shamouli"),
+                            new Claim(JwtClaimTypes.WebSite, "http://Elham.com"),
                             new Claim("location", "somewhere")
                         }).Result;
+
                         if (!result.Succeeded)
                         {
                             throw new Exception(result.Errors.First().Description);
                         }
 
-                        if (!userMgr.IsInRoleAsync(bob, admin.Name).Result)
+                        if (!userMgr.IsInRoleAsync(elham, server.Name).Result)
                         {
-                            _ = userMgr.AddToRoleAsync(bob, admin.Name).Result;
+                            _ = userMgr.AddToRoleAsync(elham, server.Name).Result;
                         }
 
-                        Log.Debug("bob created");
+                        Log.Debug("elham created");
                     }
                     else
                     {
-                        Log.Debug("bob already exists");
+                        Log.Debug("elham already exists");
+                    }
+
+                    //------------------------------------------------------------------------
+                    var behcet = userMgr.FindByNameAsync("behcet").Result;
+                    if (behcet == null)
+                    {
+                        behcet = new ApplicationUser
+                        {
+                            UserName = "behcet",
+                            Email = "behcet@email.com",
+                            EmailConfirmed = true,
+                        };
+
+                        var result = userMgr.CreateAsync(behcet, "Pass123$").Result;
+
+                        if (!result.Succeeded)
+                        {
+                            throw new Exception(result.Errors.First().Description);
+                        }
+
+                        //bob = userMgr.FindByNameAsync("bob").Result;
+                        result = userMgr.AddClaimsAsync(behcet, new Claim[]{
+                            new Claim(JwtClaimTypes.Name, "Elham Shamouli"),
+                            new Claim(JwtClaimTypes.GivenName, "Elham"),
+                            new Claim(JwtClaimTypes.FamilyName, "Shamouli"),
+                            new Claim(JwtClaimTypes.WebSite, "http://Elham.com"),
+                            new Claim("location", "somewhere")
+                        }).Result;
+
+                        if (!result.Succeeded)
+                        {
+                            throw new Exception(result.Errors.First().Description);
+                        }
+
+                        if (!userMgr.IsInRoleAsync(behcet, admin.Name).Result)
+                        {
+                            _ = userMgr.AddToRoleAsync(behcet, admin.Name).Result;
+                        }
+
+                        Log.Debug("behcet created");
+                    }
+                    else
+                    {
+                        Log.Debug("behcet already exists");
                     }
                 }
             }

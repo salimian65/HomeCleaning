@@ -5,20 +5,20 @@ using HomeCleaning.Domain;
 
 namespace HomeCleaning.Persistance.Externals.Idp
 {
-    public interface IIdpUserManagementService
-    {
-        Task<IEnumerable<User>> GetUsers(string searchQuery, int first = 0, int count = 25);
+    //public interface IIdpUserManagementService
+    //{
+    //    Task<IEnumerable<User>> GetUsers(string searchQuery, int first = 0, int count = 25);
 
-        Task<User> GetUserByUsername(string username);
+    //    Task<User> GetUserByUsername(string username);
 
-        Task<User> GetUserById(Guid id);
+    //    Task<User> GetUserById(Guid id);
 
-        Task<User> CreateUser(RegisteringUserDto user);
+    //    Task<User> CreateUser(RegisteringUserDto user);
 
-        Task EnableUser(Guid id);
+    //    Task EnableUser(Guid id);
 
-        Task DisableUser(Guid id);
+    //    Task DisableUser(Guid id);
 
-        Task RemoveUser(Guid id);
-    }
+    //    Task RemoveUser(Guid id);
+    // }
 }

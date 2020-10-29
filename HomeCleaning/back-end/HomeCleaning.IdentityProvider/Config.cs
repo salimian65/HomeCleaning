@@ -60,7 +60,7 @@ namespace HomeCleaning.IdentityProvider
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     RequireClientSecret = false,
-
+                    RequireConsent = false,
                     RedirectUris =
                     {
                       webClient,

@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
-using HomeCleaning.AdminPanel.Email;
 using HomeCleaning.AdminPanel.Models;
+using HomeCleaning.Domain;
+using HomeCleaning.Persistance.Email;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,10 +9,10 @@ namespace HomeCleaning.AdminPanel.Controllers
 {
     public class AdminController : Controller
     {
-        private UserManager<AppUser> userManager;
-        private IPasswordHasher<AppUser> passwordHasher;
-        private IPasswordValidator<AppUser> passwordValidator;
-        private IUserValidator<AppUser> userValidator;
+        private UserManager<ApplicationUser> userManager;
+        private IPasswordHasher<ApplicationUser> passwordHasher;
+        private IPasswordValidator<ApplicationUser> passwordValidator;
+        private IUserValidator<ApplicationUser> userValidator;
 
         /*public AdminController(UserManager<AppUser> usrMgr, IPasswordHasher<AppUser> passwordHash)
         {
@@ -19,7 +20,7 @@ namespace HomeCleaning.AdminPanel.Controllers
             passwordHasher = passwordHash;
         }*/
 
-        public AdminController(UserManager<AppUser> usrMgr, IPasswordHasher<AppUser> passwordHash, IPasswordValidator<AppUser> passwordVal, IUserValidator<AppUser> userValid)
+        public AdminController(UserManager<ApplicationUser> usrMgr, IPasswordHasher<ApplicationUser> passwordHash, IPasswordValidator<ApplicationUser> passwordVal, IUserValidator<ApplicationUser> userValid)
         {
             userManager = usrMgr;
             passwordHasher = passwordHash;
@@ -39,7 +40,7 @@ namespace HomeCleaning.AdminPanel.Controllers
         {
             if (ModelState.IsValid)
             {
-                AppUser appUser = new AppUser
+                ApplicationUser appUser = new ApplicationUser
                 {
                     UserName = user.Name,
                     Email = user.Email
@@ -97,7 +98,7 @@ namespace HomeCleaning.AdminPanel.Controllers
 
         public async Task<IActionResult> Update(string id)
         {
-            AppUser user = await userManager.FindByIdAsync(id);
+            ApplicationUser user = await userManager.FindByIdAsync(id);
             if (user != null)
                 return View(user);
             else
@@ -137,7 +138,7 @@ namespace HomeCleaning.AdminPanel.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(string id, string email, string password)
         {
-            AppUser user = await userManager.FindByIdAsync(id);
+            ApplicationUser user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
                 IdentityResult validEmail = null;
@@ -238,7 +239,7 @@ namespace HomeCleaning.AdminPanel.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            AppUser user = await userManager.FindByIdAsync(id);
+            ApplicationUser user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
                 IdentityResult result = await userManager.DeleteAsync(user);

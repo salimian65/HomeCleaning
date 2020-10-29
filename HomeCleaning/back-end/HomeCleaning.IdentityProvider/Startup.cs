@@ -3,9 +3,9 @@
 
 
 using System;
-using HomeCleaning.IdentityProvider.Data;
-using HomeCleaning.IdentityProvider.Models;
-using HomeCleaning.IdentityProvider.Services;
+using HomeCleaning.Domain;
+using HomeCleaning.Persistance;
+using HomeCleaning.Persistance.Services;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,11 +33,11 @@ namespace HomeCleaning.IdentityProvider
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<HomeCleaningContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<HomeCleaningContext>()
                 .AddDefaultTokenProviders();
 
             var config = new Config(Configuration);
@@ -90,8 +90,11 @@ namespace HomeCleaning.IdentityProvider
                     // register your IdentityServer with Google at https://console.developers.google.com
                     // enable the Google+ API
                     // set the redirect URI to http://localhost:5000/signin-google
-                    options.ClientId = "copy client ID from Google here";
-                    options.ClientSecret = "copy client secret from Google here";
+                   // options.ClientId = "copy client ID from Google here";
+                   // options.ClientSecret = "copy client secret from Google here";
+                   options.ClientId = "717469225962-3vk00r8tglnbts1cgc4j1afqb358o8nj.apps.googleusercontent.com";
+                   options.ClientSecret = "babQzWPLGwfOQVi0EYR-7Fbb";
+                   options.SignInScheme = IdentityConstants.ExternalScheme;
                 });
         }
 

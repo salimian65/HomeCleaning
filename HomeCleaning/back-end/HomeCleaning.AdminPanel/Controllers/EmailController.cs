@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using HomeCleaning.AdminPanel.Models;
+using HomeCleaning.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,8 +8,8 @@ namespace HomeCleaning.AdminPanel.Controllers
 {
     public class EmailController : Controller
     {
-        private UserManager<AppUser> userManager;
-        public EmailController(UserManager<AppUser> usrMgr)
+        private UserManager<ApplicationUser> userManager;
+        public EmailController(UserManager<ApplicationUser> usrMgr)
         {
             userManager = usrMgr;
         }

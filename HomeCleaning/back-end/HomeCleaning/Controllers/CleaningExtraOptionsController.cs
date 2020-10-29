@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using HomeCleaning.Domain;
-using HomeCleaning.Persistance.DataAccess;
+using HomeCleaning.Persistance;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

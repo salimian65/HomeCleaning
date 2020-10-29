@@ -120,6 +120,10 @@ let v = new Vue({
     }
 }).$mount("#app");
 
+// export default new vuetify({
+//     theme: { dark: true },
+// });
+
 axios.interceptors.request.use((config) => {
         const user = v.$root.user;
         if (user) {

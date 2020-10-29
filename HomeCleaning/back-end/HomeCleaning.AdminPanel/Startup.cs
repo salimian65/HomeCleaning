@@ -1,7 +1,9 @@
 using System;
 using HomeCleaning.AdminPanel.CustomPolicy;
-using HomeCleaning.AdminPanel.IdentityPolicy;
 using HomeCleaning.AdminPanel.Models;
+using HomeCleaning.Domain;
+using HomeCleaning.Persistance;
+using HomeCleaning.Persistance.IdentityPolicy;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,10 +22,10 @@ namespace HomeCleaning.AdminPanel
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IPasswordValidator<AppUser>, CustomPasswordPolicy>();
-            services.AddTransient<IUserValidator<AppUser>, CustomUsernameEmailPolicy>();
-            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
-            services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
+            services.AddTransient<IPasswordValidator<ApplicationUser>, CustomPasswordPolicy>();
+            services.AddTransient<IUserValidator<ApplicationUser>, CustomUsernameEmailPolicy>();
+            services.AddDbContext<HomeCleaningContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<HomeCleaningContext>().AddDefaultTokenProviders();
 
             /*services.ConfigureApplicationCookie(options =>
             {

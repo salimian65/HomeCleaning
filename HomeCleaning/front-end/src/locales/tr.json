@@ -2,13 +2,15 @@
     "labels": {
         "userName": "UserName",
         "password": "PassWord",
+        "password2": "RepeatPassWord",
         "loginBtn": "Login",
         "loading": "loading",
         "firstName": "firstName",
         "surname": "surname",
         "cellphone": "cellphone",
         "address": "address",
-        "email": "email"
+        "email": "email",
+        "confirmPasswrd": "Confirm Passwrd"
     },
     "buttons": {
         "next": "بعدی",
@@ -23,12 +25,12 @@
         "goForPayment": "Go for payment"
     },
     "validation": {
-        "required": "{attribute} اجباری است",
-        "email": "ساختار ایمیل وارد شده نادرست است.",
-        "minLength": "حداقل {min} کاراکتر",
-        "maxLength": "حداکثر {max} کاراکتر",
-        "between": "مقدار وارد شده باید بین {min} و {max} باشد.",
-        "glnStructure": "ساختار GLN نامعتبر است."
+        "required": "{attribute} is required",
+        "email": "the email structure is not correct",
+        "minLength": "minimum {min} character",
+        "maxLength": "maximun {max} character",
+        "between": "the amount shoud be between {min} and {max}."
+
     },
     "localization": {
         "locale": "fa-ir",

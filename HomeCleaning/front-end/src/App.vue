@@ -136,3 +136,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.theme--light.v-btn {
+   color: rgba(0, 0, 0, 0.87);
+}
+</style>

@@ -1,11 +1,15 @@
 using System.Globalization;
 using System.Linq;
 using HomeCleaning.Api.Authorization;
+using HomeCleaning.Domain;
+using HomeCleaning.Persistance;
 using HomeCleaning.Persistance.DataAccess;
+using HomeCleaning.Persistance.IdentityPolicy;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -64,9 +68,11 @@ namespace HomeCleaning.Api
                 c.ResolveConflictingActions(d => d.First()); // until aspnetcore supports action resolver
             });
 
-
+            services.AddTransient<IPasswordValidator<ApplicationUser>, CustomPasswordPolicy>();
+            services.AddTransient<IUserValidator<ApplicationUser>, CustomUsernameEmailPolicy>();
             services.AddDbContext<HomeCleaningContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("HomeCleaningContext")));
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<HomeCleaningContext>().AddDefaultTokenProviders();
 
             services.AddCors(options =>
             {

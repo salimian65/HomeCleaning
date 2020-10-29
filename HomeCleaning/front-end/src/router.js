@@ -6,6 +6,8 @@ import Package from "./views/Package.vue";
 import OrderRequest from "./views/OrderRequest.vue";
 import CallBack from './views/CallBack.vue'
 import Server from './views/Server.vue'
+import ServerRegistration from './views/ServerRegistration.vue'
+
 Vue.use(Router);
 
 const router = new Router({
@@ -77,6 +79,16 @@ const router = new Router({
                 requiresAuth: false
             }
         },
+        {
+            path: '/serverRegistration',
+            name: 'serverRegistration',
+            component: ServerRegistration,
+            meta: {
+                layout: "default",
+                requiresAuth: false
+            }
+        },
+
     ],
 });
 

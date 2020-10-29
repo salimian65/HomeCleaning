@@ -1,10 +1,6 @@
 using Framework.Domain;
 using HomeCleaning.Api.Contexts;
-using HomeCleaning.Domain.Repository;
 using HomeCleaning.Persistance.DataAccess;
-using HomeCleaning.Persistance.DataAccess.Repository;
-using HomeCleaning.Persistance.Externals.Idp;
-using HomeCleaning.Persistance.Externals.Idp.KeyCloak;
 using HomeCleaning.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -25,9 +21,9 @@ namespace HomeCleaning.Api
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUserContext, UserContext>();
-            services.AddScoped<IUserRepository, UserRepository>();
+         //   services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IIdpUserManagementService, KeyCloakUserManagementService>();
+         //   services.AddScoped<IIdpUserManagementService, KeyCloakUserManagementService>();
             services.AddScoped<UserService>();
         }
     }

@@ -1,16 +1,39 @@
 <template>
   <div class="server">
     <v-container style="padding: 150px 0 0 0">
-      <h1>Make Your Request</h1>
       <v-row>
         <v-col cols="6"> </v-col>
+        <v-col cols="6">
+          <v-card class="mx-auto my-12" max-width="550">
+            <!-- <template slot="progress">
+              <v-progress-linear
+                color="deep-purple"
+                height="10"
+                indeterminate
+              ></v-progress-linear>
+            </template> -->
+            <v-card-title large> Reach more customers, earn more</v-card-title>
+            <v-card-text>
+              <div>
+                EVERY MONTH, 150,000 CUSTOMERS ARE SEEKING A SERVICE FOR
+                PROJECTS WORTH 300 MILLION TL
+              </div>
+            </v-card-text>
+            <v-divider class="mx-4"></v-divider>
+            <v-card-actions>
+              <v-btn x-large block color="primary" :to="{name:`serverRegistration`}"
+                >SIGN UP FOR FREE</v-btn
+              >
+            </v-card-actions>
+            <v-card-text>
+              Do you already have an account?
+              <v-btn text @click="$root.signIn();"   Normal > Login! </v-btn>
+            </v-card-text>
+          </v-card>
+        </v-col>
       </v-row>
 
-      <v-row>
-        <v-btn large color="primary" @click="submit()">{{
-          $t("buttons.submit")
-        }}</v-btn>
-      </v-row>
+      <v-row> </v-row>
     </v-container>
   </div>
 </template>

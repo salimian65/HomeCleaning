@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using HomeCleaning.AdminPanel.Email;
 using HomeCleaning.AdminPanel.Models;
+using HomeCleaning.Domain;
+using HomeCleaning.Persistance.Email;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,10 @@ namespace HomeCleaning.AdminPanel.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private UserManager<AppUser> userManager;
-        private SignInManager<AppUser> signInManager;
+        private UserManager<ApplicationUser> userManager;
+        private SignInManager<ApplicationUser> signInManager;
 
-        public AccountController(UserManager<AppUser> userMgr, SignInManager<AppUser> signinMgr)
+        public AccountController(UserManager<ApplicationUser> userMgr, SignInManager<ApplicationUser> signinMgr)
         {
             userManager = userMgr;
             signInManager = signinMgr;
@@ -41,7 +42,7 @@ namespace HomeCleaning.AdminPanel.Controllers
         {
             if (ModelState.IsValid)
             {
-                AppUser appUser = await userManager.FindByEmailAsync(login.Email);
+                ApplicationUser appUser = await userManager.FindByEmailAsync(login.Email);
                 if (appUser != null)
                 {
                     await signInManager.SignOutAsync();
@@ -135,7 +136,7 @@ namespace HomeCleaning.AdminPanel.Controllers
                 return View(userInfo);
             else
             {
-                AppUser user = new AppUser
+                ApplicationUser user = new ApplicationUser
                 {
                     Email = info.Principal.FindFirst(ClaimTypes.Email).Value,
                     UserName = info.Principal.FindFirst(ClaimTypes.Email).Value
