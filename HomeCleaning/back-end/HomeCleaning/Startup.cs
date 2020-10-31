@@ -41,7 +41,6 @@ namespace HomeCleaning.Api
             var serilogLogger = new LoggerConfiguration()
                 .ReadFrom.Configuration(Configuration)
                 .CreateLogger();
-
             services.AddSingleton(new LoggerFactory().AddSerilog(serilogLogger).CreateLogger("TseCamWebApi"));
 
             services.AddLocalization();
@@ -68,7 +67,8 @@ namespace HomeCleaning.Api
                 c.ResolveConflictingActions(d => d.First()); // until aspnetcore supports action resolver
             });
 
-       
+            services.AddControllersWithViews();
+
             services.AddDbContext<HomeCleaningContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("HomeCleaningContext")));
 
@@ -124,16 +124,13 @@ namespace HomeCleaning.Api
 
             app.UseHealthChecks("/health");
             app.UseStaticFiles();
-            app.UseRouting(); 
-            app.UseHttpMetrics();
+            app.UseRouting();
+            app.UseIdentityServer();
             app.UseCors(CorsAllowUIApp);
-
             app.UseAuthentication();
-
             app.Use(async (context, next) => { 
                 await next();
             });
-
             app.UseAuthorization();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -143,54 +140,13 @@ namespace HomeCleaning.Api
 
             //app.UseHttpsRedirection();
             //app.UseResultExceptionHandler();
-
+            app.UseHttpMetrics();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
 
 
-        }
-
-        private void ConfigureAuthentication(IServiceCollection services)
-        {
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(o =>
-            {
-                o.RequireHttpsMetadata = false;
-                o.Authority = Configuration["Jwt:Authority"];
-                o.Audience = Configuration["Jwt:Audience"];
-
-                //o.Events = new JwtBearerEvents()
-                //{
-                //    // OnTokenValidated = async ctx =>
-                //    // {
-                //    // 	//Add claim if they are
-                //    // 	var claims = new List<Claim>
-                //    // 	{
-                //    // 		new Claim(ClaimTypes.Role, "superadmin")
-                //    // 	};
-                //    // 	var appIdentity = new ClaimsIdentity(claims);
-                //    // 	ctx.Principal.AddIdentity(appIdentity);
-                //    // },
-                //    OnAuthenticationFailed = c =>
-                //    {
-                //        c.NoResult();
-
-                //        c.Response.StatusCode = 500;
-                //        c.Response.ContentType = "text/plain";
-                //        //                        if (Environment.IsDevelopment())
-                //        //                        {
-                //        return c.Response.WriteAsync(c.Exception.ToString());
-                //        //                        }
-                //        //
-                //        //                        return c.Response.WriteAsync("An error occured processing your authentication.");
-                //    }
-                //};
-            });
         }
     }
 }
