@@ -68,11 +68,17 @@ namespace HomeCleaning.Api
                 c.ResolveConflictingActions(d => d.First()); // until aspnetcore supports action resolver
             });
 
-           // services.AddTransient<IPasswordValidator<ApplicationUser>, CustomPasswordPolicy>();
-           // services.AddTransient<IUserValidator<ApplicationUser>, CustomUsernameEmailPolicy>();
+       
             services.AddDbContext<HomeCleaningContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("HomeCleaningContext")));
-            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<HomeCleaningContext>().AddDefaultTokenProviders();
+
+            //  services.AddScoped<UserManager<ApplicationUser>>().AddEntityFrameworkSqlServer().add;
+            //   services.AddScoped<RoleManager<IdentityRole>>().AddEntityFrameworkSqlServer();
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddRoleManager<RoleManager<IdentityRole>>()
+                // .AddDefaultUI()
+                .AddEntityFrameworkStores<HomeCleaningContext>()
+                .AddDefaultTokenProviders();
 
             services.AddCors(options =>
             {
@@ -123,6 +129,11 @@ namespace HomeCleaning.Api
             app.UseCors(CorsAllowUIApp);
 
             app.UseAuthentication();
+
+            app.Use(async (context, next) => { 
+                await next();
+            });
+
             app.UseAuthorization();
             app.UseSwagger();
             app.UseSwaggerUI(c =>

@@ -1,8 +1,8 @@
 <template>
-  <v-container style="height: 800px;padding: 150px 0 0 0">
+  <v-container style="height: 800px; padding: 150px 0 0 0">
     <h3>Server Dashbord</h3>
     <v-data-table
-    dark
+      dark
       dense
       :headers="headers"
       :items="items"
@@ -21,12 +21,31 @@
       loading-text="Loading... Please wait"
       class="elevation-1 dblue-style"
     >
+      <template v-slot:item.orderStatus="{ item }">
+        <div class="action-btns">
+          <v-btn class="statusTitle" rounded outlined color="#6bb9c1">{{
+            item.orderStatus
+          }}</v-btn>
+        </div>
+      </template>
+
       <template v-slot:item.action="{ item }">
         <div class="action-btns">
           <router-link :to="`CartableDetail/${item.id}`">
-            <v-icon class="mr-2">mdi-file-edit-outline</v-icon>
+            <v-icon class="mr-2">mdi-file-edit</v-icon>
           </router-link>
+
+          <v-btn  @click="makeFinanceRequest(item)" class small text color="#0a8ac7">
+            <v-icon class="mr-2">mdi-file-edit</v-icon>
+          </v-btn>
+
+          <v-btn class small text color="#d0abab">
+            <v-icon>mdi-delete</v-icon>
+          </v-btn>
         </div>
+
+        <!-- <v-icon v-if="!item.financeRequested" medium class="mr-2" @click="makeFinanceRequest(item)">attach_money</v-icon>
+        <v-icon color="red" v-if="item.financeRequested" medium class="mr-2" @click="cancelFinanceRequest(item)">attach_money</v-icon>-->
       </template>
     </v-data-table>
   </v-container>
@@ -42,16 +61,15 @@ import {
 import { ValidationLength, ProprietorshipType } from "../constants";
 import ScrollToInvalidInput from "../components/ScrollToInvalidInput";
 import orderApi from "../api/orderApi";
+import serverRequestApi from "../api/serverRequestApi";
 
 export default {
   mixins: [ScrollToInvalidInput],
   props: {
     cartable: Number,
   },
-  components: {
-  
-  },
-  
+  components: {},
+
   data() {
     return {
       page: 1,
@@ -64,36 +82,46 @@ export default {
       options: {},
       rowsPerPageItems: [5, 10, 20],
       headers: [
-        { text: "Customer UserName", value: "clientUser.userName" },
-        { text: "customer Email", value: "clientUser.email" },
-        { text: "cleaningExtraOption", value: "cleaningExtraOption.name" },
-        { text: "cleaningPackage", value: "cleaningPackage.name" },
-        { text: "spaceSize", value: "spaceSize.name" },
+        { text: "UserName", value: "clientUser.userName" },
+        { text: "Email", value: "clientUser.email" },
+        { text: "Extra Option", value: "cleaningExtraOption.name" },
+        { text: "Package", value: "cleaningPackage.name" },
+        { text: "Size", value: "spaceSize.name" },
         { text: "price", value: "price" },
         { text: "discount", value: "discount" },
         { text: "tax", value: "tax" },
         { text: "totalPrice", value: "totalPrice" },
         { text: "Address", value: "address.addressStr" },
-        { text: "action", value: "action", sortable: false }
+        { text: "Status", value: "orderStatus" },
+        { text: "action", value: "action", sortable: false },
       ],
-      items: []
+      items: [],
     };
   },
 
-   methods: {
-    async getByUser() {
+  methods: {
+    makeFinanceRequest: async function (item) {
+      var self = this;
+      this.$root.getConfirmation("Would you want to accept this order?", "", async function () {
+          await serverRequestApi.add(item.id);
+          item.financeRequested = true;
+          self.$root.alert("Customer order accepted");
+        }
+      );
+    },
+    async getNewOrder() {
       this.loading = true;
       const { sortBy, sortDesc, page, itemsPerPage, filtered } = this.options;
-      var response = await orderApi.getOrder(page, itemsPerPage);
+      var response = await orderApi.getNewOrder(page, itemsPerPage);
       this.items = response.data;
-      this.totalCount = 10 // response.data.totalCount;
+      this.totalCount = 10; // response.data.totalCount;
       this.loading = false;
-    }
+    },
   },
 
   async mounted() {
-    await this.getByUser();
-  }
+    await this.getNewOrder();
+  },
 };
 </script>
 <style>

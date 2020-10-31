@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Framework.Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HomeCleaning.Domain;
 using HomeCleaning.Persistance;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HomeCleaning.Api.Controllers
 {
@@ -14,11 +16,13 @@ namespace HomeCleaning.Api.Controllers
     [ApiController]
     public class ServerRequestsController : ControllerBase
     {
+        private readonly IUserContext _userContext;
         private readonly HomeCleaningContext _context;
 
-        public ServerRequestsController(HomeCleaningContext context)
+        public ServerRequestsController(HomeCleaningContext context, IUserContext userContext)
         {
             _context = context;
+            _userContext = userContext;
         }
 
         // GET: api/ServerRequests
@@ -74,12 +78,17 @@ namespace HomeCleaning.Api.Controllers
             return NoContent();
         }
 
-        // POST: api/ServerRequests
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize(Roles = "server")]
+       // [Authorize]
         [HttpPost]
-        public async Task<ActionResult<ServerRequest>> PostServerRequest(ServerRequest serverRequest)
+        public async Task<ActionResult<ServerRequest>> PostServerRequest(int orderId)
         {
+            var serverRequest = new ServerRequest
+            {
+                OrderId = orderId,
+                ServerUserId = _userContext.CurrentUserPrincipal.UserId.ToString()
+            };
+
             _context.ServerRequest.Add(serverRequest);
             await _context.SaveChangesAsync();
 

@@ -8,7 +8,7 @@ namespace HomeCleaning.AdminPanel.Controllers
 {
     public class EmailController : Controller
     {
-        private UserManager<ApplicationUser> userManager;
+        private readonly UserManager<ApplicationUser> userManager;
         public EmailController(UserManager<ApplicationUser> usrMgr)
         {
             userManager = usrMgr;

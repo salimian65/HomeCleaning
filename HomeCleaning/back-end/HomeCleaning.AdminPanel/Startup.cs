@@ -24,8 +24,14 @@ namespace HomeCleaning.AdminPanel
         {
             services.AddTransient<IPasswordValidator<ApplicationUser>, CustomPasswordPolicy>();
             services.AddTransient<IUserValidator<ApplicationUser>, CustomUsernameEmailPolicy>();
-            services.AddDbContext<HomeCleaningContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
-            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<HomeCleaningContext>().AddDefaultTokenProviders();
+           
+            services.AddDbContext<HomeCleaningContext>(options =>
+                options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+           
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddRoleManager<RoleManager<IdentityRole>>()
+                .AddEntityFrameworkStores<HomeCleaningContext>()
+                .AddDefaultTokenProviders();
 
             /*services.ConfigureApplicationCookie(options =>
             {
@@ -87,6 +93,7 @@ namespace HomeCleaning.AdminPanel
                     opts.ClientSecret = "babQzWPLGwfOQVi0EYR-7Fbb";
                     opts.SignInScheme = IdentityConstants.ExternalScheme;
                 });
+
             services.AddControllersWithViews();
         }
 

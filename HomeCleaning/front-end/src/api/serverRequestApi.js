@@ -1,8 +1,8 @@
 // import serviceCallApi from "../frameworks/serviceCallApi";
 import axios from "axios";
-let orderApi = {
+let serverRequestApi = {
     urls: {
-        resource: "/Orders/",
+        resource: "/ServerRequests",
     },
     getNewOrder: async function(pageNumber, pageSize) {
         return await axios.get(this.urls.resource, {
@@ -13,10 +13,10 @@ let orderApi = {
         });
     },
 
-    add: async function(order) {
+    add: async function(orderId) {
         return await axios.post(this.urls.resource,
-            order, { headers: { "Content-Type": "application/json" } });
+            orderId, { headers: { "Content-Type": "application/json" } });
     },
 
 };
-export default orderApi;
+export default serverRequestApi;
