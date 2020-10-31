@@ -21,10 +21,23 @@ namespace HomeCleaning.Api.Controllers
             this.userService = userService;
         }
 
-        [HttpPost("Create")]
-        public async Task<ActionResult<object>> Create(UserDto dto)
+        [HttpGet]
+        public ActionResult<object> Get()
         {
-            await userService.Create(dto);
+            throw new Exception();
+        }
+
+        [HttpPost("CreateServer")]
+        public async Task<ActionResult<object>> CreateServer(UserDto dto)
+        {
+            await userService.Create(dto,"server");
+            return new ActionResult<bool>(true);
+        }
+
+        [HttpPost("CreateCustomer")]
+        public async Task<ActionResult<object>> CreateCustomer(UserDto dto)
+        {
+            await userService.Create(dto,"customer");
             return new ActionResult<bool>(true);
         }
 

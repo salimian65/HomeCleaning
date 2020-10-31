@@ -1,6 +1,5 @@
 <template>
   <v-app>
-
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
       <div class="container">
         <a class="navbar-brand js-scroll-trigger" href="#page-top">ANASAYFA</a>
@@ -30,20 +29,29 @@
                 href="#contact"
                 >Contact</a
               > -->
-               <router-link to="/#contact"  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
+              <router-link
+                to="/#contact"
+                class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+              >
                 Contact
               </router-link>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
-              <router-link to="/#about"  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
+              <router-link
+                to="/#about"
+                class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+              >
                 ABOUT
               </router-link>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
               <login />
             </li>
-            <li class="nav-item mx-0 mx-lg-1" >
-              <router-link   to="/server"  class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
+            <li class="nav-item mx-0 mx-lg-1">
+              <router-link
+                to="/server"
+                class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+              >
                 Server
               </router-link>
             </li>
@@ -55,6 +63,9 @@
     <component :is="layout">
       <router-view />
     </component>
+    <alert-dialog ref="alertDialog"></alert-dialog>
+    <confirmation-dialog ref="confirmationDialog"></confirmation-dialog>
+    <toast ref="toast"></toast>
     <footer class="footer text-center">
       <div class="container">
         <div class="row">
@@ -121,11 +132,16 @@
 <script>
 import AlertDialog from "./components/AlertDialog";
 import ConfirmationDialog from "./components/ConfirmationDialog";
-import Toast from "./components/Toast";
 import Login from "@/components/Login.vue";
+import Toast from "./components/Toast";
 const defaultLayout = "default";
 export default {
-  components: { AlertDialog, ConfirmationDialog, Toast, Login },
+  components: {
+    AlertDialog,
+    ConfirmationDialog,
+    Login,
+    Toast
+  },
   data: function () {
     return {};
   },
@@ -138,6 +154,10 @@ export default {
 </script>
 <style scoped>
 .theme--light.v-btn {
-   color: rgba(0, 0, 0, 0.87);
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.theme--light.v-btn {
+  color: white !important;
 }
 </style>

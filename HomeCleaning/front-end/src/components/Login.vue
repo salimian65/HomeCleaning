@@ -1,5 +1,5 @@
 <template>
-  <v-btn  icon @click="signIn" v-if="!$root.isAuthenticated" depressed>
+  <v-btn icon @click="signIn" v-if="!$root.isAuthenticated" depressed>
     <v-icon>mdi-account</v-icon>
     {{ $t("labels.loginBtn") }}
   </v-btn>
@@ -32,20 +32,30 @@ export default {
       }
     },
   },
-  // computed: {
-  //   user: function () {
-  //     return this.$root.user;
+  computed: {
+    user: function () {
+      return this.$root.getUser();
+    },
+  },
+  // watch: {
+  //   item: {
+  //     handler(val) {
+  //       this.$root.getUser();
+  //     },
   //   },
   // },
+  //  async mounted() {
+  //     //this.user = await this.$root.mgr.getUser()
+  //   },
 };
 </script>
 <style>
 .theme--light.v-btn.v-btn--icon {
-    color: #fff;
-    padding: 25px 30px;
+  color: #fff;
+  padding: 25px 30px;
 }
 
 .theme--light.v-btn {
-    color: white;
+  color: white;
 }
 </style>

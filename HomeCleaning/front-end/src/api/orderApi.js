@@ -1,15 +1,21 @@
-import serviceCallApi from "../frameworks/serviceCallApi";
-
+// import serviceCallApi from "../frameworks/serviceCallApi";
+import axios from "axios";
 let orderApi = {
     urls: {
         resource: "/Orders/",
     },
-    getAll: async function() {
-        return await serviceCallApi.get(this.urls.resource, {});
+    getOrder: async function(pageNumber, pageSize) {
+        return await axios.get(this.urls.resource, {
+            params: {
+                pageNumber,
+                pageSize
+            }
+        });
     },
 
     add: async function(order) {
-        return await serviceCallApi.post(this.urls.resource, order);
+        return await axios.post(this.urls.resource,
+            order, { headers: { "Content-Type": "application/json" } });
     },
 
 };

@@ -6,11 +6,11 @@
         "loginBtn": "Login",
         "loading": "loading",
         "firstName": "firstName",
-        "surname": "surname",
+        "lastName": "lastName",
         "cellphone": "cellphone",
         "address": "address",
         "email": "email",
-        "confirmPasswrd": "Confirm Passwrd"
+        "confirmPasswrd": "Confirm Password"
     },
     "buttons": {
         "next": "بعدی",
@@ -19,10 +19,12 @@
         "cancel": "انصراف",
         "edit": "ویرایش",
         "changePassword": "تغییر پسورد",
-        "submit": "sunmak",
+        "submit": "Submit",
         "start": "شروع",
         "click": "کلیک",
-        "goForPayment": "Go for payment"
+        "goForPayment": "Go for payment",
+        "signin": "Sign in",
+        "signup": "Sign up"
     },
     "validation": {
         "required": "{attribute} is required",

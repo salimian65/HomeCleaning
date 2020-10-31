@@ -27,6 +27,9 @@ namespace HomeCleaning.Persistance.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Cellphone")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -37,6 +40,12 @@ namespace HomeCleaning.Persistance.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -270,6 +279,9 @@ namespace HomeCleaning.Persistance.Migrations
                     b.Property<int>("CleaningPackageId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ClientUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18,2)");
 
@@ -294,26 +306,42 @@ namespace HomeCleaning.Persistance.Migrations
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CleaningExtraOptionId");
 
                     b.HasIndex("CleaningPackageId");
 
+                    b.HasIndex("ClientUserId");
+
                     b.HasIndex("SpaceSizeId");
 
-                    b.HasIndex("UserId1");
-
                     b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("HomeCleaning.Domain.ServerRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServerRequestStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ServerUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ServerUserId");
+
+                    b.ToTable("ServerRequest");
                 });
 
             modelBuilder.Entity("HomeCleaning.Domain.SpaceSize", b =>
@@ -630,15 +658,15 @@ namespace HomeCleaning.Persistance.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("HomeCleaning.Domain.ApplicationUser", "ClientUser")
+                        .WithMany()
+                        .HasForeignKey("ClientUserId");
+
                     b.HasOne("HomeCleaning.Domain.SpaceSize", "SpaceSize")
                         .WithMany()
                         .HasForeignKey("SpaceSizeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("HomeCleaning.Domain.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1");
 
                     b.OwnsOne("HomeCleaning.Domain.Address", "Address", b1 =>
                         {
@@ -646,6 +674,9 @@ namespace HomeCleaning.Persistance.Migrations
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("int")
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                            b1.Property<string>("AddressStr")
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Alley")
                                 .HasColumnType("nvarchar(max)");
@@ -666,6 +697,19 @@ namespace HomeCleaning.Persistance.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("OrderId");
                         });
+                });
+
+            modelBuilder.Entity("HomeCleaning.Domain.ServerRequest", b =>
+                {
+                    b.HasOne("HomeCleaning.Domain.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HomeCleaning.Domain.ApplicationUser", "ServerUser")
+                        .WithMany()
+                        .HasForeignKey("ServerUserId");
                 });
 
             modelBuilder.Entity("HomeCleaning.Domain.SpaceSize", b =>

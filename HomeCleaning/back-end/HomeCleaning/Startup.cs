@@ -68,8 +68,8 @@ namespace HomeCleaning.Api
                 c.ResolveConflictingActions(d => d.First()); // until aspnetcore supports action resolver
             });
 
-            services.AddTransient<IPasswordValidator<ApplicationUser>, CustomPasswordPolicy>();
-            services.AddTransient<IUserValidator<ApplicationUser>, CustomUsernameEmailPolicy>();
+           // services.AddTransient<IPasswordValidator<ApplicationUser>, CustomPasswordPolicy>();
+           // services.AddTransient<IUserValidator<ApplicationUser>, CustomUsernameEmailPolicy>();
             services.AddDbContext<HomeCleaningContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("HomeCleaningContext")));
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<HomeCleaningContext>().AddDefaultTokenProviders();
@@ -90,17 +90,17 @@ namespace HomeCleaning.Api
 
                     options.Audience = "backend";
                 });
-
+            services.AddMvc(options => { options.Filters.Add<UnhandledExceptionFilterAttribute>(); })
+                .AddControllersAsServices();
             services.AddAuthorization(options => {
                 options.AddPolicy("ProductOwner", policy => policy.Requirements.Add(new OrderOwnerAuthorizationRequirement()));
             });
 
-            services.AddSingleton<IAuthorizationHandler, OrderOwnerAuthorizationHandler>();
+            //services.AddSingleton<IAuthorizationHandler, OrderOwnerAuthorizationHandler>();
 
             new Bootstrap(services, Configuration).WireUp();
 
-            services.AddMvc(options => { options.Filters.Add<UnhandledExceptionFilterAttribute>(); })
-                .AddControllersAsServices();
+
 
         }
 

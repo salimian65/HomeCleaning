@@ -6,13 +6,16 @@
       :color="color"
     >
       {{ message }}
-      <v-btn
-        dark
-        text
-        @click="snackbar = false"
-      >
-        x
-      </v-btn>
+       <template v-slot:action="{ attrs }">
+        <v-btn
+          color="red"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
     </v-snackbar>
   </div>
 </template>

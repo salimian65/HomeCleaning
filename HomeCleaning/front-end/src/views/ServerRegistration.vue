@@ -5,30 +5,23 @@
         <v-card class="mx-auto my-12" max-width="550">
           <v-card-title large> Enroll Yourself</v-card-title>
           <v-divider class="mx-4"></v-divider>
-          <!-- <v-card-actions> -->
-          <v-row>
-            <v-col cols="12">
-              <Registrant
-                v-bind:registrant.sync="serverRegistrant.registrant"
-                :register="register"
-                :disabled="false"
-              />
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12">
-              <v-btn
-                style="padding: 5px"
-                color="primary"
-                v-if="!isNotEditable"
-                @click="update()"
-                x-large
-                block
-                >{{ $t("buttons.submit") }}</v-btn
-              >
-            </v-col>
-          </v-row>
-          <!-- </v-card-actions> -->
+          <v-card-actions>
+            <Registrant
+              v-bind:registrant.sync="serverRegistrant.registrant"
+              :register="register"
+              :disabled="false"
+            />
+          </v-card-actions>
+          <v-card-actions>
+            <v-btn
+              color="primary"
+              v-if="!isNotEditable"
+              @click="update()"
+              x-large
+              block
+              >{{ $t("buttons.submit") }}</v-btn
+            >
+          </v-card-actions>
         </v-card>
       </v-form>
     </v-container>
@@ -64,7 +57,7 @@ export default {
       serverRegistrant: {
         registrant: {
           firstName: "",
-          surname: "",
+          lastName: "",
           email: "",
           cellphone: "",
           password: "",
@@ -83,7 +76,7 @@ export default {
         return false;
       }
 
-      await userApi.add(this.recipient);
+      await userApi.createServer(this.serverRegistrant.registrant);
       this.$root.showSuccessToast(this.$t("labels.success"));
       this.isNotEditable = true;
     },
@@ -106,7 +99,7 @@ export default {
             minLength: minLength(3),
             maxLength: maxLength(15),
           },
-          surname: {
+          lastName: {
             required,
             minLength: minLength(3),
             maxLength: maxLength(15),

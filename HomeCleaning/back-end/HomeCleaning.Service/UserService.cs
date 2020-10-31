@@ -14,34 +14,36 @@ namespace HomeCleaning.Service
     public class UserService : BaseService
     {
         private readonly ILogger<UserService> logger;
-        private UserManager<ApplicationUser> userManager;
-        private IPasswordHasher<ApplicationUser> passwordHasher;
-        private IPasswordValidator<ApplicationUser> passwordValidator;
-        private IUserValidator<ApplicationUser> userValidator;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IPasswordHasher<ApplicationUser> passwordHasher;
+        private readonly IPasswordValidator<ApplicationUser> passwordValidator;
+        private readonly IUserValidator<ApplicationUser> userValidator;
         //  private readonly IUserRepository userRepository;
-        // private readonly IIdpUserManagementService idpUserManagement;
         private readonly IUnitOfWork unitOfWork;
-
 
         public UserService(IUnitOfWork unitOfWork,
                            // IUserRepository userRepository,
-                           // IIdpUserManagementService idpUserManagement,
                            ILogger<UserService> logger,
                            IUserContext userContext,
-                          UserManager<ApplicationUser> userManager, IPasswordHasher<ApplicationUser> passwordHasher, IPasswordValidator<ApplicationUser> passwordValidator, IUserValidator<ApplicationUser> userValidator) : base(userContext)
+                           UserManager<ApplicationUser> userManager,
+                           IPasswordHasher<ApplicationUser> passwordHasher, 
+                           IPasswordValidator<ApplicationUser> passwordValidator, 
+                           IUserValidator<ApplicationUser> userValidator,
+                           RoleManager<IdentityRole> roleManager) : base(userContext)
         {
             this.logger = logger;
             this.userManager = userManager;
             this.passwordHasher = passwordHasher;
             this.passwordValidator = passwordValidator;
             this.userValidator = userValidator;
+            this.roleManager = roleManager;
             this.unitOfWork = unitOfWork;
-            // this.idpUserManagement = idpUserManagement;
             // this.userRepository = userRepository;
 
         }
 
-        public async Task Create(UserDto dto)
+        public async Task Create(UserDto dto,string roleName)
         {
             ApplicationUser appUser = new ApplicationUser
             {
@@ -52,43 +54,32 @@ namespace HomeCleaning.Service
                 Cellphone = dto.Cellphone
             };
 
-            IdentityResult result = await userManager.CreateAsync(appUser, dto.Password);
-            if (result.Succeeded)
+            var role = roleManager.FindByNameAsync(roleName).Result;
+            IdentityResult user = await userManager.CreateAsync(appUser, dto.Password);
+            if (!userManager.IsInRoleAsync(appUser, role.Name).Result)
+            {
+                _ = userManager.AddToRoleAsync(appUser, role.Name).Result;
+            }
+            if (user.Succeeded)
             {
                 var token = await userManager.GenerateEmailConfirmationTokenAsync(appUser);
-                var confirmationLink =
-                    "ConfirmEmail/Email"; //Url.Action("ConfirmEmail", "Email", new { token, email = dto.Email }, Request.Scheme);
+               // var confirmationLink = @"<a target=""_blank"" href=""http://localhost:8080/emailconfirmation?email={}&token={}"">Home cleaning email confirmation</a>";
+                var confirmationLink = $"<a target=\"_blank\" " +
+                                        $"href=\"http://localhost:8080/emailconfirmation?email={dto.Email}&token={token}\">" +
+                                        $"Welcame to Home Cleaning. it is the email confirmation</a>";
+                //Url.Action("ConfirmEmail", "Email", new { token, email = dto.Email }, Request.Scheme);
                 EmailHelper emailHelper = new EmailHelper();
                 bool emailResponse = emailHelper.SendEmail(dto.Email, confirmationLink);
             }
             else
             {
-                foreach (IdentityError error in result.Errors)
+                foreach (IdentityError error in user.Errors)
                 {
                     //  ModelState.AddModelError("", error.Description);
                 }
-
-                //RegisteringUserDto registeringUserDto = new RegisteringUserDto
-                //{
-                //    Id = Guid.NewGuid(),
-                //    Username = userDto.Username,
-                //    FirstName = userDto.FirstName,
-                //    LastName = userDto.LastName,
-                //    Email = userDto.Email,
-                //    Attributes = new AttributesDto("OrganizationName", "OrganizationId"),
-                //    Credentials = new[] { new CredentialDto(userDto.Password) }
-                //};
-
-                //User user = await idpUserManagement.CreateUser(registeringUserDto);
-                //user.FirstNameSetter(userDto.FirstName);
-                //user.LastnameSetter(userDto.LastName);
-                //user.NationalCodeSetter(userDto.NationalCode);
-                //user.CellphoneSetter(userDto.Cellphone);
-                //user.EmailSetter(userDto.Email);
-                //await userRepository.Add(user);
-                //await unitOfWork.CommitAsync();
             }
         }
+
         //public async Task<AuthUserDto> GetUser(string username)
             //{
             //    var authUserDto = new AuthUserDto();

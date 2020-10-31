@@ -52,7 +52,14 @@ let v = new Vue({
     router,
     vuetify,
     i18n,
-    data: globalData,
+    //mixins: [Toast],
+    data: function() {
+        return {
+            isAuthenticated: false,
+            user: '',
+            mgr: mgr
+        }
+    },
     components: {
         AlertDialog
     },
@@ -62,7 +69,11 @@ let v = new Vue({
             await this.$root.getUser(); //see if the user details are in local storage
 
             if (!this.isAuthenticated) {
-                await this.$root.signIn(returnPath);
+                this.$router.push({
+                    name: "customerRegistration",
+                    params: { returnPath: returnPath },
+                });
+                // await this.$root.signIn(returnPath);
             }
         },
         async getUser() {
@@ -117,6 +128,11 @@ let v = new Vue({
     },
     mounted() {
         this.getUser();
+    },
+    watch: {
+        "mgr": function(oldVal, newVal) {
+            this.getUser();
+        }
     }
 }).$mount("#app");
 

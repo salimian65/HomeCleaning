@@ -6,10 +6,10 @@ namespace HomeCleaning.Domain
 {
     public class Order : Entity
     {
-        //  [ForeignKey("SpaceSizeId")]
-        public Guid UserId { get; set; }
+        public string ClientUserId { get; set; }
 
-        public ApplicationUser User { get; set; }
+        [ForeignKey("ClientUserId")]
+        public ApplicationUser ClientUser { get; set; }
 
         public int SpaceSizeId { get; set; }
 
@@ -40,8 +40,30 @@ namespace HomeCleaning.Domain
 
         public decimal Tax { get; set; }
 
-        public string UserName { get; set; }
-
         public OrderStatus OrderStatus { get; set; }
+    }
+
+    public class ServerRequest: Entity
+    {
+        public string ServerUserId { get; set; }
+
+        [ForeignKey("ServerUserId")]
+        public ApplicationUser ServerUser { get; set; }
+
+        public int OrderId { get; set; }
+
+        [ForeignKey("OrderId")]
+        public Order Order { get; set; }
+
+        public ServerRequestStatus ServerRequestStatus { get; set; }
+
+    }
+
+    public enum ServerRequestStatus
+    {
+        Starting = 1,
+        Approved = 2,
+        InProcessed = 3,
+        Ended = 4
     }
 }

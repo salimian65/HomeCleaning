@@ -7,6 +7,9 @@ import OrderRequest from "./views/OrderRequest.vue";
 import CallBack from './views/CallBack.vue'
 import Server from './views/Server.vue'
 import ServerRegistration from './views/ServerRegistration.vue'
+import CustomerRegistration from './views/CustomerRegistration.vue'
+import ServerDashbord from './views/ServerDashbord.vue';
+import EmailConfirmation from './views/EmailConfirmation.vue'
 
 Vue.use(Router);
 
@@ -88,7 +91,38 @@ const router = new Router({
                 requiresAuth: false
             }
         },
+        {
+            path: '/customerRegistration',
+            name: 'customerRegistration',
+            props: (route) => ({
+                ...route.params
+            }),
+            component: CustomerRegistration,
+            meta: {
+                layout: "default",
+                requiresAuth: false
+            }
+        },
 
+        {
+            path: '/serverDashbord',
+            name: 'serverDashbord',
+            component: ServerDashbord,
+            meta: {
+                layout: "default",
+                requiresAuth: false
+            }
+        },
+
+        {
+            path: '/emailConfirmation',
+            name: 'emailConfirmation',
+            component: EmailConfirmation,
+            meta: {
+                layout: "default",
+                requiresAuth: false
+            }
+        },
     ],
 });
 

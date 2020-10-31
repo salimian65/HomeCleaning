@@ -20,6 +20,8 @@ namespace HomeCleaning.Persistance
 
         public DbSet<Order> Order { get; set; }
 
+        public DbSet<ServerRequest> ServerRequest { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

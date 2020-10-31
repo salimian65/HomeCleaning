@@ -16,15 +16,15 @@
         :disabled="disabled"
       ></v-text-field>
     </form-group>
-    <form-group :validator="$v.surname" :name="$t('labels.surname')">
+    <form-group :validator="$v.lastName" :name="$t('labels.lastName')">
       <v-text-field
-        v-model.trim="localstate.surname"
-        :counter="$v.surname.$params.maxLength.max"
+        v-model.trim="localstate.lastName"
+        :counter="$v.lastName.$params.maxLength.max"
         slot-scope="{ attrs }"
         v-bind="attrs"
-        :maxLength="$v.surname.$params.maxLength.max"
+        :maxLength="$v.lastName.$params.maxLength.max"
         outlined
-        :label="$t('labels.surname')"
+        :label="$t('labels.lastName')"
         required
         :disabled="disabled"
       ></v-text-field>
@@ -63,7 +63,7 @@
       ></v-text-field>
     </form-group>
     <form-group :validator="$v.password" :name="$t('labels.password')" >
-      <password v-model="localstate.password" />
+      <password v-model="localstate.password" placeholder="password" />
     </form-group>
     <form-group
       :validator="$v.password2"
@@ -75,7 +75,7 @@
         slot-scope="{ attrs }"
         v-bind="attrs"
         v-model="localstate.password2"
-        :label="$t('confirmPasswrd')"
+        :label="$t('labels.confirmPasswrd')"
          outlined
       ></v-text-field>
     </form-group>
@@ -135,7 +135,7 @@ export default {
 //         minLength: minLength(3),
 //         maxLength: maxLength(15),
 //       },
-//       surname: {
+//       lastName: {
 //         required,
 //         minLength: minLength(3),
 //         maxLength: maxLength(15),

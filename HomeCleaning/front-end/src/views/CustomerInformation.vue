@@ -11,13 +11,13 @@
         :disabled="disabled"
       ></v-text-field>
     </form-group>
-    <form-group :name="$t('labels.surname')">
+    <form-group :name="$t('labels.lastName')">
       <v-text-field
-        v-model.trim="localstate.surname"
+        v-model.trim="localstate.lastName"
         slot-scope="{ attrs }"
         v-bind="attrs"
         outlined
-        :label="$t('labels.surname')"
+        :label="$t('labels.lastName')"
         required
         :disabled="disabled"
       ></v-text-field>
@@ -34,7 +34,7 @@
       ></v-text-field>
     </form-group>
     <form-group :name="$t('labels.address')">
-      <v-text-field
+      <v-textarea
         slot-scope="{ attrs }"
         v-bind="attrs"
         outlined
@@ -42,9 +42,9 @@
         :label="$t('labels.address')"
         required
         :disabled="disabled"
-      ></v-text-field>
+      ></v-textarea>
     </form-group>
-    <form-group :name="$t('labels.email')">
+    <!-- <form-group :name="$t('labels.email')">
       <v-text-field
         type="email"
         v-model.trim="localstate.email"
@@ -54,17 +54,11 @@
         outlined
         required
         :disabled="disabled"
-      ></v-text-field>
-    </form-group>
+      ></v-text-field> 
+    </form-group>-->
   </v-container>
 </template>
 <script>
-import cleaningCategoryApi from "../api/cleaningCategoryApi";
-import spaceSizeApi from "../api/spaceSizeApi";
-import cleaningPackageApi from "../api/cleaningPackageApi";
-import cleaningExtraOptionApi from "../api/cleaningExtraOptionApi";
-import orderApi from "../api/orderApi";
-import orderModel from "../models/orderModel";
 import {
   required,
   minLength,
@@ -82,13 +76,6 @@ export default {
   },
   data: function () {
     return {
-      categoryId: this.$route.params["categoryId"],
-      // localstate: {
-      //   firstName: "",
-      //   surname: "",
-      //   email: "",
-      //   cellphone: "",
-      // },
     };
   },
   methods: {},
@@ -108,7 +95,6 @@ export default {
   },
 
   async mounted() {},
-
   validations: {
     localstate: {
       firstName: {
@@ -116,16 +102,16 @@ export default {
         minLength: minLength(3),
         maxLength: maxLength(15),
       },
-      surname: {
+      lastName: {
         required,
         minLength: minLength(3),
         maxLength: maxLength(15),
       },
-      email: {
-        required,
-        email,
-        maxLength: maxLength(50),
-      },
+      // email: {
+      //   required,
+      //   email,
+      //   maxLength: maxLength(50),
+      // },
       cellphone: {
         required,
         minLength: minLength(13),

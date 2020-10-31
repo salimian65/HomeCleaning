@@ -85,8 +85,7 @@ namespace HomeCleaning.IdentityProvider
                         {
                             throw new Exception(result.Errors.First().Description);
                         }
-                        //alice = userMgr.FindByNameAsync("alice").Result;
-                    
+                      
                         result = userMgr.AddClaimsAsync(mehrdad, new Claim[]{
                             new Claim(JwtClaimTypes.Name, "Mehrdad Salimian"),
                             new Claim(JwtClaimTypes.GivenName, "Mehrdad"),
@@ -129,7 +128,6 @@ namespace HomeCleaning.IdentityProvider
                             throw new Exception(result.Errors.First().Description);
                         }
                        
-                        //bob = userMgr.FindByNameAsync("bob").Result;
                         result = userMgr.AddClaimsAsync(elham, new Claim[]{
                             new Claim(JwtClaimTypes.Name, "Elham Shamouli"),
                             new Claim(JwtClaimTypes.GivenName, "Elham"),
@@ -173,12 +171,11 @@ namespace HomeCleaning.IdentityProvider
                             throw new Exception(result.Errors.First().Description);
                         }
 
-                        //bob = userMgr.FindByNameAsync("bob").Result;
                         result = userMgr.AddClaimsAsync(behcet, new Claim[]{
-                            new Claim(JwtClaimTypes.Name, "Elham Shamouli"),
-                            new Claim(JwtClaimTypes.GivenName, "Elham"),
-                            new Claim(JwtClaimTypes.FamilyName, "Shamouli"),
-                            new Claim(JwtClaimTypes.WebSite, "http://Elham.com"),
+                            new Claim(JwtClaimTypes.Name, "Behcet Ghahreman"),
+                            new Claim(JwtClaimTypes.GivenName, "Behcet"),
+                            new Claim(JwtClaimTypes.FamilyName, "Ghahreman"),
+                            new Claim(JwtClaimTypes.WebSite, "http://Ghahreman.com"),
                             new Claim("location", "somewhere")
                         }).Result;
 
