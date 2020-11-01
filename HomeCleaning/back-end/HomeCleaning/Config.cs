@@ -19,7 +19,7 @@ namespace HomeCleaning.Api
         }
 
 
-        public static IEnumerable<ApiScope> ApiScopes =>
+        public IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
                 new ApiScope("backend"),
@@ -54,7 +54,7 @@ namespace HomeCleaning.Api
                 {
                     ClientId = "frontend",
                     ClientName = "Home Cleaning JavaScript Client",
-                    ClientUri =Configuration["partner:client"],
+                    ClientUri = webClient,
 
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,

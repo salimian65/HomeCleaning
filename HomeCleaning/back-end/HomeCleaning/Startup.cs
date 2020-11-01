@@ -5,10 +5,13 @@ using HomeCleaning.Domain;
 using HomeCleaning.Persistance;
 using HomeCleaning.Persistance.DataAccess;
 using HomeCleaning.Persistance.IdentityPolicy;
+using HomeCleaning.Persistance.Services;
+using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
@@ -72,14 +75,53 @@ namespace HomeCleaning.Api
             services.AddDbContext<HomeCleaningContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("HomeCleaningContext")));
 
-            //  services.AddScoped<UserManager<ApplicationUser>>().AddEntityFrameworkSqlServer().add;
-            //   services.AddScoped<RoleManager<IdentityRole>>().AddEntityFrameworkSqlServer();
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddRoleManager<RoleManager<IdentityRole>>()
-                // .AddDefaultUI()
                 .AddEntityFrameworkStores<HomeCleaningContext>()
                 .AddDefaultTokenProviders();
 
+            var config = new Config(Configuration);
+
+            var builder = services.AddIdentityServer(options =>
+                {
+                    options.Events.RaiseErrorEvents = true;
+                    options.Events.RaiseInformationEvents = true;
+                    options.Events.RaiseFailureEvents = true;
+                    options.Events.RaiseSuccessEvents = true;
+
+                    options.EmitStaticAudienceClaim = true;
+                })
+                .AddInMemoryIdentityResources(config.GetIdentityResources())
+                // .AddInMemoryApiResources(config.GetApis())
+                .AddInMemoryApiScopes(config.ApiScopes)
+                .AddInMemoryClients(config.GetClients())
+                .AddAspNetIdentity<ApplicationUser>();
+
+            services.AddScoped<IProfileService, ProfileService>();
+
+            builder.Services.ConfigureExternalCookie(options =>
+            {
+                options.Cookie.IsEssential = true;
+                options.Cookie.SameSite = (SameSiteMode)(-1); //SameSiteMode.Unspecified in .NET Core 3.1
+            });
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.IsEssential = true;
+                options.Cookie.SameSite = (SameSiteMode)(-1); //SameSiteMode.Unspecified in .NET Core 3.1
+            });
+
+            builder.AddDeveloperSigningCredential();
+           
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    options.ClientId = "717469225962-3vk00r8tglnbts1cgc4j1afqb358o8nj.apps.googleusercontent.com";
+                    options.ClientSecret = "babQzWPLGwfOQVi0EYR-7Fbb";
+                    options.SignInScheme = IdentityConstants.ExternalScheme;
+                });
+           
+            services.AddLocalApiAuthentication();
+            //.............................................
             services.AddCors(options =>
             {
                 options.AddPolicy(CorsAllowUIApp,
@@ -89,15 +131,17 @@ namespace HomeCleaning.Api
                     });
             });
 
-            services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options => {
-                    options.Authority = Configuration["partner:authService"];
-                    options.RequireHttpsMetadata = false;
+            //services.AddAuthentication("Bearer")
+            //    .AddJwtBearer("Bearer", options => {
+            //        options.Authority = Configuration["partner:authService"];
+            //        options.RequireHttpsMetadata = false;
 
-                    options.Audience = "backend";
-                });
+            //        options.Audience = "backend";
+            //    });
+
             services.AddMvc(options => { options.Filters.Add<UnhandledExceptionFilterAttribute>(); })
                 .AddControllersAsServices();
+
             services.AddAuthorization(options => {
                 options.AddPolicy("ProductOwner", policy => policy.Requirements.Add(new OrderOwnerAuthorizationRequirement()));
             });
@@ -143,7 +187,8 @@ namespace HomeCleaning.Api
             app.UseHttpMetrics();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+              //  endpoints.MapControllers();
+                endpoints.MapDefaultControllerRoute();
             });
 
 
