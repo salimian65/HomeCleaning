@@ -30,31 +30,16 @@ namespace HomeCleaning.Persistance.Services
 
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
-            string sub = context.Subject.GetSubjectId();
-            ApplicationUser user = await _userMgr.FindByIdAsync(sub);
-            ClaimsPrincipal userClaims = await _userClaimsPrincipalFactory.CreateAsync(user);
+            context.IssuedClaims.AddRange(context.Subject.Claims);
 
-            List<Claim> claims = userClaims.Claims.ToList();
-            claims = claims.Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();
+            var user = await _userMgr.GetUserAsync(context.Subject);
 
-            if (_userMgr.SupportsUserRole)
+            var roles = await _userMgr.GetRolesAsync(user);
+
+            foreach (var role in roles)
             {
-                IList<string> roles = await _userMgr.GetRolesAsync(user);
-                foreach (var roleName in roles)
-                {
-                    claims.Add(new Claim(JwtClaimTypes.Role, roleName));
-                    if (_roleMgr.SupportsRoleClaims)
-                    {
-                        IdentityRole role = await _roleMgr.FindByNameAsync(roleName);
-                        if (role != null)
-                        {
-                            claims.AddRange(await _roleMgr.GetClaimsAsync(role));
-                        }
-                    }
-                }
+                context.IssuedClaims.Add(new Claim(JwtClaimTypes.Role, role));
             }
-
-            context.IssuedClaims = claims;
         }
 
         public async Task IsActiveAsync(IsActiveContext context)
@@ -63,24 +48,60 @@ namespace HomeCleaning.Persistance.Services
             ApplicationUser user = await _userMgr.FindByIdAsync(sub);
             context.IsActive = user != null;
         }
+
+        //public async Task GetProfileDataAsync(ProfileDataRequestContext context)
+        //{
+        //    string sub = context.Subject.GetSubjectId();
+        //    ApplicationUser user = await _userMgr.FindByIdAsync(sub);
+        //    ClaimsPrincipal userClaims = await _userClaimsPrincipalFactory.CreateAsync(user);
+
+        //    List<Claim> claims = userClaims.Claims.ToList();
+        //    claims = claims.Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();
+
+        //    if (_userMgr.SupportsUserRole)
+        //    {
+        //        IList<string> roles = await _userMgr.GetRolesAsync(user);
+        //        foreach (var roleName in roles)
+        //        {
+        //            claims.Add(new Claim(JwtClaimTypes.Role, roleName));
+        //            if (_roleMgr.SupportsRoleClaims)
+        //            {
+        //                IdentityRole role = await _roleMgr.FindByNameAsync(roleName);
+        //                if (role != null)
+        //                {
+        //                    claims.AddRange(await _roleMgr.GetClaimsAsync(role));
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    context.IssuedClaims = claims;
+        //}
+
+        //public async Task IsActiveAsync(IsActiveContext context)
+        //{
+        //    string sub = context.Subject.GetSubjectId();
+        //    ApplicationUser user = await _userMgr.FindByIdAsync(sub);
+        //    context.IsActive = user != null;
+        //}
     }
 
 
-    public class MyUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<ApplicationUser, IdentityRole>
-    {
-        public MyUserClaimsPrincipalFactory(
-            UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager,
-            IOptions<IdentityOptions> optionsAccessor)
-            : base(userManager, roleManager, optionsAccessor)
-        {
-        }
+    //public class MyUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<ApplicationUser, IdentityRole>
+    //{
+    //    public MyUserClaimsPrincipalFactory(
+    //        UserManager<ApplicationUser> userManager,
+    //        RoleManager<IdentityRole> roleManager,
+    //        IOptions<IdentityOptions> optionsAccessor)
+    //        : base(userManager, roleManager, optionsAccessor)
+    //    {
+    //    }
 
-        protected override async Task<ClaimsIdentity> GenerateClaimsAsync(ApplicationUser user)
-        {
-            var identity = await base.GenerateClaimsAsync(user);
-          //  identity.AddClaim(new Claim("ContactName", user.ContactName ?? ""));
-            return identity;
-        }
-    }
+    //    protected override async Task<ClaimsIdentity> GenerateClaimsAsync(ApplicationUser user)
+    //    {
+    //        var identity = await base.GenerateClaimsAsync(user);
+    //      //  identity.AddClaim(new Claim("ContactName", user.ContactName ?? ""));
+    //        return identity;
+    //    }
+    //}
 }

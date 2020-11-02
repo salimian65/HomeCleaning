@@ -24,7 +24,7 @@ namespace HomeCleaning.Api
          //   services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
          //   services.AddScoped<IIdpUserManagementService, KeyCloakUserManagementService>();
-            services.AddScoped<UserService>();
+         //   services.AddScoped<UserService>();
         }
     }
 }

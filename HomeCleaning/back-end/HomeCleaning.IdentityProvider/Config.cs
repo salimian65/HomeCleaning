@@ -3,6 +3,7 @@
 
 
 using System.Collections.Generic;
+using System.Security.Claims;
 using IdentityModel;
 using IdentityServer4.Models;
 using Microsoft.Extensions.Configuration;
@@ -20,30 +21,27 @@ namespace HomeCleaning.IdentityProvider
         }
 
 
-        public static IEnumerable<ApiScope> ApiScopes =>
-            new ApiScope[]
-            {
-                new ApiScope("backend"),
-                new ApiScope("scope2"),
-            };
-
-
         public IEnumerable<IdentityResource> GetIdentityResources()
         {
             return new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+              //  new IdentityResource("roles", new[] { "role" })
             };
         }
 
-        //public IEnumerable<ApiResource> GetApis()
-        //{
-        //    return new ApiResource[]
-        //    {
-        //        new ApiResource("backend", "Home Cleaning REST API"){ UserClaims = { JwtClaimTypes.Name } }
-        //    };
-        //}
+        public IEnumerable<ApiResource> GetApis()
+        {
+            return new ApiResource[]
+            {
+              //  new ApiResource("api1", "My API"),
+              //  new ApiResource("roles", "My Roles"),
+              //  new IdentityResource("roles", new[] { "role" })
+                new ApiResource("backend", "Home Cleaning REST API"){ UserClaims = { JwtClaimTypes.Name } }
+            };
+        }
+
 
         public IEnumerable<Client> GetClients()
         {
@@ -55,7 +53,7 @@ namespace HomeCleaning.IdentityProvider
                 {
                     ClientId = "frontend",
                     ClientName = "Home Cleaning JavaScript Client",
-                    ClientUri =Configuration["partner:client"],
+                    ClientUri = webClient,
 
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
@@ -71,10 +69,36 @@ namespace HomeCleaning.IdentityProvider
 
                     PostLogoutRedirectUris = { webClient },
                     AllowedCorsOrigins = {     webClient },
-
                     AllowedScopes = { "openid", "profile", "backend" }
-                }
+                    //AllowedScopes = { "openid",
+                    //                  "profile",
+                    //                  "roles",
+                    //                   "api1",
+                    //                   ClaimTypes.Role
+                    //}
+                  //  AllowedScopes = { "openid", "profile", "backend" }
+                },
+
+                new Client
+                {
+                    ClientId = "client",
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+
+                    ClientSecrets =
+                    {
+                        new Secret("sssss".Sha256())
+                    },
+
+                    AllowedScopes = { "backend" }
+                },
             };
         }
+
+        //public  IEnumerable<ApiScope> ApiScopes =>
+        //    new ApiScope[]
+        //    {
+        //        new ApiScope("backend"),
+        //        new ApiScope("scope2"),
+        //    };
     }
 }
