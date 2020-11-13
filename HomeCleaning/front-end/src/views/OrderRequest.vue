@@ -30,6 +30,12 @@
                   {{ order.cleaningExtraOptionSelected.name }}
                 </td>
               </tr>
+               <tr>
+                <td>Schedule Time</td>
+                <td>
+                  {{ order.scheduledDate }}  {{ order.scheduledTime }}
+                </td>
+              </tr>
               <tr>
                 <td style="background-color: silver" colspan="2">Customer</td>
               </tr>
@@ -131,6 +137,8 @@ export default {
           lastName: "",
           cellphone: "",
         },
+        scheduledDate:"",
+        scheduledTime:"",
         cleaningCategorySelected: {
           name: "",
           id: "",
@@ -168,7 +176,7 @@ export default {
         discount: 0.0,
         totalPrice: 99.99,
         tax: 0.0,
-        OrderStatus: 1,
+        scheduledTime:this.order.scheduledDate +"T"+ this.order.scheduledTime+":00",
         address: {
           addressStr: this.order.customer.address,
         },

@@ -1,12 +1,134 @@
-﻿<!DOCTYPE html>
-
+﻿@using HomeCleaning.Domain;
+@inject UserManager<ApplicationUser>  userManager;
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <link href="~/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 </head>
-<body class="m-1 p-1">
-    @RenderBody()
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">ANASAYFA</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/serverrequests">Server Requests</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Authentication
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/Admin">Admin</a>
+                        <a class="dropdown-item" href="/Role">Role</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/Claims">Claims</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Based Data
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/SpaceSizes">Space Size</a>
+                        <a class="dropdown-item" href="/CleaningPackages">Cleaning Package</a>
+                        <a class="dropdown-item" href="/cleaningExtraOptions">Cleaning Extra Option</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/cleaningCategories">Cleaning Category</a>
+                    </div>
+                </li>
+            </ul>
+
+            @if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                <span style="color:white">Hello @User.Identity.Name</span>
+                <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">Logout</a>
+            }
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+    <div class="container" style="min-height:800px">
+        @RenderBody()
+    </div>
+    @RenderSection("Scripts", required: false)
+    <footer class="footer text-center">
+        <div class="container">
+            <div class="row">
+                <!-- Footer Location-->
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h4 class="mb-4">LOCATION</h4>
+                    <p class="pre-wrap lead mb-0">
+                        İkitelli OSB Mh. Ytü Teknopark Sk. Ytü Technopark Apt. No: 1 /
+                        1B23 Basaksehir / Istanbul
+                    </p>
+                </div>
+                <!-- Footer Social Icons-->
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h4 class="mb-4">AROUND THE WEB</h4>
+                    <a class="btn btn-outline-light btn-social mx-1"
+                       href="https://www.facebook.com/TechnorobYazilim/">
+                        <i class="fab fa-fw fa-facebook-f"></i>
+                    </a>
+                    <a class="btn btn-outline-light btn-social mx-1"
+                       href="https://www.youtube.com/channel/UCi-7zG2ii15gjoan_MzFS9w">
+                        <i class="fab fa-fw fa-youtube"></i>
+                    </a>
+                    <a class="btn btn-outline-light btn-social mx-1"
+                       href="https://tr.linkedin.com/company/technorob">
+                        <i class="fab fa-fw fa-linkedin-in"></i>
+                    </a>
+                </div>
+                <!-- Footer About Text-->
+                <div class="col-lg-4">
+                    <h4 class="mb-4">Technorob Yazılım</h4>
+                    <p class="pre-wrap lead mb-0">
+                        With the support of Yıldız Technical University, we want to
+                        increase and continue our struggle to be beneficial to both the
+                        commercial sector and our country in many projects.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Copyright Section-->
+    <section class="copyright py-4 text-center text-white">
+        <div class="container">
+            <small class="pre-wrap">
+                Copyright © 2019 TechnoRob Yazılım Bilişim Sistemleri Ltd. Şti. All
+                Rights Reserved
+            </small>
+        </div>
+    </section>
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
+    <div class="scroll-to-top d-lg-none position-fixed">
+        <a class="js-scroll-trigger d-block text-center text-white rounded"
+           href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </div>
+
 </body>
 </html>
+<style>
+    .footer {
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+        background-color: #2c3e50;
+        color: #fff;
+    }
+</style>

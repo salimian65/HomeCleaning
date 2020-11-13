@@ -93,7 +93,7 @@ namespace HomeCleaning.ApiAndAuth
                 options.EmitStaticAudienceClaim = true;
             })
                 .AddInMemoryIdentityResources(config.GetIdentityResources())
-                .AddInMemoryApiScopes(config.ApiScopes)
+                .AddInMemoryApiResources(config.GetApis())
                 .AddInMemoryClients(config.GetClients())
                 .AddDeveloperSigningCredential()
                 .AddAspNetIdentity<ApplicationUser>();
@@ -117,7 +117,7 @@ namespace HomeCleaning.ApiAndAuth
 
 
             // not recommended for production - you need to store your key material somewhere secure
-            builder.AddDeveloperSigningCredential();
+           // builder.AddDeveloperSigningCredential();
 
             services.AddAuthentication()
                 .AddGoogle(options =>

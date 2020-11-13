@@ -71,6 +71,49 @@ namespace HomeCleaning.ApiAndAuth
 
                     ///////////////////////////////////////////////////////////////////
                     var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                    ////////////////////////////////////////////////////////////////////////
+                    var mohammad = userMgr.FindByNameAsync("mohammad").Result;
+                    if (mohammad == null)
+                    {
+                        mohammad = new ApplicationUser
+                        {
+                            UserName = "mohammad",
+                            Email = "mohammad@email.com",
+                            EmailConfirmed = true,
+                        };
+                        var result = userMgr.CreateAsync(mohammad, "Pass123$").Result;
+
+                        if (!result.Succeeded)
+                        {
+                            throw new Exception(result.Errors.First().Description);
+                        }
+
+                        if (!userMgr.IsInRoleAsync(mohammad, customer.Name).Result)
+                        {
+                            _ = userMgr.AddToRoleAsync(mohammad, customer.Name).Result;
+                        }
+
+                        result = userMgr.AddClaimsAsync(mohammad, new Claim[]{
+                            new Claim(JwtClaimTypes.Role, customer.Name),
+                            new Claim(JwtClaimTypes.Name, "mohammad mohammady"),
+                            new Claim(JwtClaimTypes.GivenName, "mohammad"),
+                            new Claim(JwtClaimTypes.FamilyName, "mohammady"),
+                            new Claim(JwtClaimTypes.WebSite, "http://mohammady.com"),
+                        }).Result;
+
+                        if (!result.Succeeded)
+                        {
+                            throw new Exception(result.Errors.First().Description);
+                        }
+
+                        Log.Debug("mohammad created");
+                    }
+                    else
+                    {
+                        Log.Debug("mohammad already exists");
+                    }
+
+                   // ------------------------------------------------------------------------
                     var mehrdad = userMgr.FindByNameAsync("mehrdad").Result;
                     if (mehrdad == null)
                     {
@@ -87,7 +130,13 @@ namespace HomeCleaning.ApiAndAuth
                             throw new Exception(result.Errors.First().Description);
                         }
 
+                        if (!userMgr.IsInRoleAsync(mehrdad, customer.Name).Result)
+                        {
+                            _ = userMgr.AddToRoleAsync(mehrdad, customer.Name).Result;
+                        }
+
                         result = userMgr.AddClaimsAsync(mehrdad, new Claim[]{
+                            new Claim(JwtClaimTypes.Role, customer.Name),
                             new Claim(JwtClaimTypes.Name, "Mehrdad Salimian"),
                             new Claim(JwtClaimTypes.GivenName, "Mehrdad"),
                             new Claim(JwtClaimTypes.FamilyName, "Salimian"),
@@ -97,11 +146,6 @@ namespace HomeCleaning.ApiAndAuth
                         if (!result.Succeeded)
                         {
                             throw new Exception(result.Errors.First().Description);
-                        }
-
-                        if (!userMgr.IsInRoleAsync(mehrdad, customer.Name).Result)
-                        {
-                            _ = userMgr.AddToRoleAsync(mehrdad, customer.Name).Result;
                         }
 
                         Log.Debug("mehrdad created");
@@ -129,7 +173,13 @@ namespace HomeCleaning.ApiAndAuth
                             throw new Exception(result.Errors.First().Description);
                         }
 
+                        if (!userMgr.IsInRoleAsync(elham, server.Name).Result)
+                        {
+                            _ = userMgr.AddToRoleAsync(elham, server.Name).Result;
+                        }
+
                         result = userMgr.AddClaimsAsync(elham, new Claim[]{
+                            new Claim(JwtClaimTypes.Role, server.Name),
                             new Claim(JwtClaimTypes.Name, "Elham Shamouli"),
                             new Claim(JwtClaimTypes.GivenName, "Elham"),
                             new Claim(JwtClaimTypes.FamilyName, "Shamouli"),
@@ -142,16 +192,59 @@ namespace HomeCleaning.ApiAndAuth
                             throw new Exception(result.Errors.First().Description);
                         }
 
-                        if (!userMgr.IsInRoleAsync(elham, server.Name).Result)
-                        {
-                            _ = userMgr.AddToRoleAsync(elham, server.Name).Result;
-                        }
+
 
                         Log.Debug("elham created");
                     }
                     else
                     {
                         Log.Debug("elham already exists");
+                    }
+
+                    //------------------------------------------------------------------------
+                    var majid = userMgr.FindByNameAsync("majid").Result;
+                    if (majid == null)
+                    {
+                        majid = new ApplicationUser
+                        {
+                            UserName = "majid",
+                            Email = "majid@email.com",
+                            EmailConfirmed = true,
+                        };
+
+                        var result = userMgr.CreateAsync(majid, "Pass123$").Result;
+
+                        if (!result.Succeeded)
+                        {
+                            throw new Exception(result.Errors.First().Description);
+                        }
+
+                        if (!userMgr.IsInRoleAsync(majid, server.Name).Result)
+                        {
+                            _ = userMgr.AddToRoleAsync(majid, server.Name).Result;
+                        }
+
+                        result = userMgr.AddClaimsAsync(majid, new Claim[]{
+                            new Claim(JwtClaimTypes.Role, server.Name),
+                            new Claim(JwtClaimTypes.Name, "Majid Majidi"),
+                            new Claim(JwtClaimTypes.GivenName, "Majid"),
+                            new Claim(JwtClaimTypes.FamilyName, "Majidi"),
+                            new Claim(JwtClaimTypes.WebSite, "http://Majidi.com"),
+                            new Claim("location", "somewhere")
+                        }).Result;
+
+                        if (!result.Succeeded)
+                        {
+                            throw new Exception(result.Errors.First().Description);
+                        }
+
+
+
+                        Log.Debug("Majidi created");
+                    }
+                    else
+                    {
+                        Log.Debug("Majidi already exists");
                     }
 
                     //------------------------------------------------------------------------
@@ -172,7 +265,13 @@ namespace HomeCleaning.ApiAndAuth
                             throw new Exception(result.Errors.First().Description);
                         }
 
+                        if (!userMgr.IsInRoleAsync(behcet, admin.Name).Result)
+                        {
+                            _ = userMgr.AddToRoleAsync(behcet, admin.Name).Result;
+                        }
+
                         result = userMgr.AddClaimsAsync(behcet, new Claim[]{
+                            new Claim(JwtClaimTypes.Role, admin.Name),
                             new Claim(JwtClaimTypes.Name, "Behcet Ghahreman"),
                             new Claim(JwtClaimTypes.GivenName, "Behcet"),
                             new Claim(JwtClaimTypes.FamilyName, "Ghahreman"),
@@ -185,10 +284,7 @@ namespace HomeCleaning.ApiAndAuth
                             throw new Exception(result.Errors.First().Description);
                         }
 
-                        if (!userMgr.IsInRoleAsync(behcet, admin.Name).Result)
-                        {
-                            _ = userMgr.AddToRoleAsync(behcet, admin.Name).Result;
-                        }
+
 
                         Log.Debug("behcet created");
                     }
