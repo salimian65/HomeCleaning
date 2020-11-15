@@ -52,7 +52,7 @@ namespace HomeCleaning.IdentityProvider
                     options.EmitStaticAudienceClaim = true;
                 })
                 .AddInMemoryIdentityResources(config.GetIdentityResources())
-                 // .AddInMemoryApiResources(config.GetApis())
+                .AddInMemoryApiResources(config.GetApis())
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(config.GetClients())
                 .AddAspNetIdentity<ApplicationUser>();
@@ -90,11 +90,11 @@ namespace HomeCleaning.IdentityProvider
                     // register your IdentityServer with Google at https://console.developers.google.com
                     // enable the Google+ API
                     // set the redirect URI to http://localhost:5000/signin-google
-                   // options.ClientId = "copy client ID from Google here";
-                   // options.ClientSecret = "copy client secret from Google here";
-                   options.ClientId = "717469225962-3vk00r8tglnbts1cgc4j1afqb358o8nj.apps.googleusercontent.com";
-                   options.ClientSecret = "babQzWPLGwfOQVi0EYR-7Fbb";
-                   options.SignInScheme = IdentityConstants.ExternalScheme;
+                    // options.ClientId = "copy client ID from Google here";
+                    // options.ClientSecret = "copy client secret from Google here";
+                    options.ClientId = "717469225962-3vk00r8tglnbts1cgc4j1afqb358o8nj.apps.googleusercontent.com";
+                    options.ClientSecret = "babQzWPLGwfOQVi0EYR-7Fbb";
+                    options.SignInScheme = IdentityConstants.ExternalScheme;
                 });
         }
 

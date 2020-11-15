@@ -5,7 +5,7 @@
   </v-btn>
   <v-btn text @click="signout" v-else depressed>
     <v-icon color="white">mdi-account-off</v-icon>
-    {{ $root.user.name }}
+    {{ $root.user.profile.name }}
   </v-btn>
 </template>
 

@@ -6,6 +6,7 @@ using Framework.Domain;
 using HomeCleaning.Domain;
 using HomeCleaning.Persistance;
 using HomeCleaning.Persistance.DataAccess;
+using IdentityModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +31,7 @@ namespace HomeCleaning.Api.Controllers
         public async Task<ActionResult<IEnumerable<Order>>> GetOrder()
         {
             return await _context.Order
-                .Include(a=>a.ClientUser)
+                .Include(a => a.ClientUser)
                 .Include(a => a.CleaningExtraOption)
                 .Include(a => a.CleaningPackage)
                 .Include(a => a.SpaceSize)
@@ -87,13 +88,15 @@ namespace HomeCleaning.Api.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         //  [Authorize(Roles = "customer")]
-       // [Authorize]
+        //  [Authorize]
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {
             order.RegisterTime = DateTime.Now;
             order.ScheduledTime = DateTime.Now;
-            order.ClientUserId ="8a1c5263-f8ad-405b-a25d-707ce4dd32b2"; // _userContext.CurrentUserPrincipal.UserId;
+            var UserName = User.FindFirst(c => c.Type == JwtClaimTypes.Name && c.Issuer == "http://localhost:5000").Value;
+            var dd = _userContext.CurrentUserPrincipal.UserId;
+            order.ClientUserId = "8a1c5263-f8ad-405b-a25d-707ce4dd32b2"; // _userContext.CurrentUserPrincipal.UserId;
             _context.Order.Add(order);
             await _context.SaveChangesAsync();
 

@@ -23,7 +23,7 @@ namespace HomeCleaning.IdentityProvider
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
-                new ApiScope("backend"),
+                new ApiScope("backend",new List<string>{ JwtClaimTypes.Name } ),
                 new ApiScope("scope2"),
             };
 
@@ -37,13 +37,13 @@ namespace HomeCleaning.IdentityProvider
             };
         }
 
-        //public IEnumerable<ApiResource> GetApis()
-        //{
-        //    return new ApiResource[]
-        //    {
-        //        new ApiResource("backend", "Home Cleaning REST API"){ UserClaims = { JwtClaimTypes.Name } }
-        //    };
-        //}
+        public IEnumerable<ApiResource> GetApis()
+        {
+            return new ApiResource[]
+            {
+                new ApiResource("backend", "Home Cleaning REST API"){ UserClaims = { JwtClaimTypes.Name } }
+            };
+        }
 
         public IEnumerable<Client> GetClients()
         {
@@ -55,7 +55,7 @@ namespace HomeCleaning.IdentityProvider
                 {
                     ClientId = "frontend",
                     ClientName = "Home Cleaning JavaScript Client",
-                    ClientUri =Configuration["partner:client"],
+                    ClientUri = webClient,//Configuration["partner:client"],
 
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
