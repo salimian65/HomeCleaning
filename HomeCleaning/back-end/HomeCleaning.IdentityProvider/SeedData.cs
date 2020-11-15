@@ -85,8 +85,14 @@ namespace HomeCleaning.IdentityProvider
                         {
                             throw new Exception(result.Errors.First().Description);
                         }
-                      
+
+                        if (!userMgr.IsInRoleAsync(mehrdad, customer.Name).Result)
+                        {
+                            _ = userMgr.AddToRoleAsync(mehrdad, customer.Name).Result;
+                        }
+
                         result = userMgr.AddClaimsAsync(mehrdad, new Claim[]{
+                            new Claim(JwtClaimTypes.Role, customer.Name),
                             new Claim(JwtClaimTypes.Name, "Mehrdad Salimian"),
                             new Claim(JwtClaimTypes.GivenName, "Mehrdad"),
                             new Claim(JwtClaimTypes.FamilyName, "Salimian"),
@@ -96,11 +102,6 @@ namespace HomeCleaning.IdentityProvider
                         if (!result.Succeeded)
                         {
                             throw new Exception(result.Errors.First().Description);
-                        }
-
-                        if (!userMgr.IsInRoleAsync(mehrdad, customer.Name).Result)
-                        {
-                            _ = userMgr.AddToRoleAsync(mehrdad, customer.Name).Result;
                         }
 
                         Log.Debug("mehrdad created");
@@ -127,8 +128,14 @@ namespace HomeCleaning.IdentityProvider
                         {
                             throw new Exception(result.Errors.First().Description);
                         }
-                       
+
+                        if (!userMgr.IsInRoleAsync(elham, server.Name).Result)
+                        {
+                            _ = userMgr.AddToRoleAsync(elham, server.Name).Result;
+                        }
+
                         result = userMgr.AddClaimsAsync(elham, new Claim[]{
+                            new Claim(JwtClaimTypes.Role, server.Name),
                             new Claim(JwtClaimTypes.Name, "Elham Shamouli"),
                             new Claim(JwtClaimTypes.GivenName, "Elham"),
                             new Claim(JwtClaimTypes.FamilyName, "Shamouli"),
@@ -141,10 +148,7 @@ namespace HomeCleaning.IdentityProvider
                             throw new Exception(result.Errors.First().Description);
                         }
 
-                        if (!userMgr.IsInRoleAsync(elham, server.Name).Result)
-                        {
-                            _ = userMgr.AddToRoleAsync(elham, server.Name).Result;
-                        }
+                       
 
                         Log.Debug("elham created");
                     }
@@ -171,7 +175,13 @@ namespace HomeCleaning.IdentityProvider
                             throw new Exception(result.Errors.First().Description);
                         }
 
+                        if (!userMgr.IsInRoleAsync(behcet, admin.Name).Result)
+                        {
+                            _ = userMgr.AddToRoleAsync(behcet, admin.Name).Result;
+                        }
+
                         result = userMgr.AddClaimsAsync(behcet, new Claim[]{
+                            new Claim(JwtClaimTypes.Role, admin.Name),
                             new Claim(JwtClaimTypes.Name, "Behcet Ghahreman"),
                             new Claim(JwtClaimTypes.GivenName, "Behcet"),
                             new Claim(JwtClaimTypes.FamilyName, "Ghahreman"),
@@ -184,10 +194,7 @@ namespace HomeCleaning.IdentityProvider
                             throw new Exception(result.Errors.First().Description);
                         }
 
-                        if (!userMgr.IsInRoleAsync(behcet, admin.Name).Result)
-                        {
-                            _ = userMgr.AddToRoleAsync(behcet, admin.Name).Result;
-                        }
+                       
 
                         Log.Debug("behcet created");
                     }

@@ -2,7 +2,7 @@
 import axios from "axios";
 let orderApi = {
     urls: {
-        resource: "/Orders/",
+        resource: "/products/",
     },
     getNewOrder: async function(pageNumber, pageSize) {
         return await axios.get(this.urls.resource, {

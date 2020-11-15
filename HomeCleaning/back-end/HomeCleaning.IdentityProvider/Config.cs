@@ -3,7 +3,9 @@
 
 
 using System.Collections.Generic;
+using System.Security.Claims;
 using IdentityModel;
+using IdentityServer4;
 using IdentityServer4.Models;
 using Microsoft.Extensions.Configuration;
 
@@ -20,14 +22,6 @@ namespace HomeCleaning.IdentityProvider
         }
 
 
-        public static IEnumerable<ApiScope> ApiScopes =>
-            new ApiScope[]
-            {
-                new ApiScope("backend",new List<string>{ JwtClaimTypes.Name } ),
-                new ApiScope("scope2"),
-            };
-
-
         public IEnumerable<IdentityResource> GetIdentityResources()
         {
             return new IdentityResource[]
@@ -37,13 +31,19 @@ namespace HomeCleaning.IdentityProvider
             };
         }
 
-        public IEnumerable<ApiResource> GetApis()
+        public IEnumerable<ApiResource> GetApiResources()
         {
             return new ApiResource[]
             {
-                new ApiResource("backend", "Home Cleaning REST API"){ UserClaims = { JwtClaimTypes.Name } }
+                new ApiResource("backend", "MarketPlace REST API", new [] { JwtClaimTypes.Role,JwtClaimTypes.Name}),
             };
         }
+
+        public IEnumerable<ApiScope> ApiScopes =>
+            new ApiScope[]
+            {
+                new ApiScope("backend",new [] { JwtClaimTypes.Role,JwtClaimTypes.Name}),
+            };
 
         public IEnumerable<Client> GetClients()
         {
@@ -55,26 +55,36 @@ namespace HomeCleaning.IdentityProvider
                 {
                     ClientId = "frontend",
                     ClientName = "Home Cleaning JavaScript Client",
-                    ClientUri = webClient,//Configuration["partner:client"],
+                    ClientUri = webClient,
 
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     RequireClientSecret = false,
                     RequireConsent = false,
+
+                    AllowOfflineAccess = true,
+                    AccessTokenLifetime = 90, // 1.5 minutes
+                    AbsoluteRefreshTokenLifetime = 0,
+                    RefreshTokenUsage = TokenUsage.OneTimeOnly,
+                    RefreshTokenExpiration = TokenExpiration.Sliding,
+                    UpdateAccessTokenClaimsOnRefresh = true,
+                    ClientClaimsPrefix = string.Empty,
+
                     RedirectUris =
                     {
-                      webClient,
                       webClient + "/callback",
-                      webClient + "/silent",
-                      webClient + "/popup",
-                    },
+                      webClient + "/static/silent-renew.html",
+                     },
 
                     PostLogoutRedirectUris = { webClient },
-                    AllowedCorsOrigins = {     webClient },
-
-                    AllowedScopes = { "openid", "profile", "backend" }
+                    AllowedCorsOrigins = { webClient },
+                    AllowedScopes = {  IdentityServerConstants.StandardScopes.OpenId,
+                                       IdentityServerConstants.StandardScopes.Profile, 
+                                       "backend" }
+                   
                 }
             };
         }
+
     }
 }

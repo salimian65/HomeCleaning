@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using HomeCleaning.Api.Authorization;
 using HomeCleaning.Domain;
@@ -38,158 +39,80 @@ namespace HomeCleaning.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var serilogLogger = new LoggerConfiguration()
-                .ReadFrom.Configuration(Configuration)
-                .CreateLogger();
+            services.AddControllers();
 
-            services.AddSingleton(new LoggerFactory().AddSerilog(serilogLogger).CreateLogger("TseCamWebApi"));
-
-            services.AddLocalization();
-            services.Configure<RequestLocalizationOptions>(o =>
-            {
-                var supportedCultures = new[]
-                {
-                    new CultureInfo("en"),
-                    new CultureInfo("tr"),
-                    new CultureInfo("ar")
-                };
-
-                o.DefaultRequestCulture = new RequestCulture("en", "en");
-                o.SupportedCultures = supportedCultures;
-                o.SupportedUICultures = supportedCultures;
-
-                o.RequestCultureProviders.Insert(0, new AcceptLanguageHeaderRequestCultureProvider());
-            });
-
-            services.AddHealthChecks();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Home Cleaning Web API", Version = "v1" });
-                c.ResolveConflictingActions(d => d.First()); // until aspnetcore supports action resolver
-            });
-
-       
+            //-----------------------------------------------------------------
             services.AddDbContext<HomeCleaningContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("HomeCleaningContext")));
 
-            //  services.AddScoped<UserManager<ApplicationUser>>().AddEntityFrameworkSqlServer().add;
-            //   services.AddScoped<RoleManager<IdentityRole>>().AddEntityFrameworkSqlServer();
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddRoleManager<RoleManager<IdentityRole>>()
-                // .AddDefaultUI()
                 .AddEntityFrameworkStores<HomeCleaningContext>()
                 .AddDefaultTokenProviders();
 
+            //----------------------------------------------------------------------------
+            //  (new JwtSecurityTokenHandler()).InboundClaimTypeMap.Clear();
+
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.Authority = Configuration["partner:authService"];
+                    options.RequireHttpsMetadata = false;
+                    options.Audience = "backend";
+                });
+
+            //----------------------------------------------------------------------------
             services.AddCors(options =>
             {
                 options.AddPolicy(CorsAllowUIApp,
                     policyBuilder =>
                     {
-                       policyBuilder.WithOrigins(Configuration["partner:webClient"]).AllowAnyMethod().AllowAnyHeader();
+                        policyBuilder.WithOrigins(Configuration["partner:webClient"]).AllowAnyMethod().AllowAnyHeader();
                     });
             });
 
-            services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options => {
-                    options.Authority = Configuration["partner:authService"];
-                    options.RequireHttpsMetadata = false;
-
-                    options.Audience = "backend";
-                });
-            services.AddMvc(options => { options.Filters.Add<UnhandledExceptionFilterAttribute>(); })
-                .AddControllersAsServices();
-            services.AddAuthorization(options => {
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("customer", policy => policy.RequireClaim("role", "customer"));
+                // options.AddPolicy("server", policy => policy.RequireClaim("Role", "server"));
+                // options.AddPolicy("admin", policy => policy.RequireClaim("Role", "admin"));
                 options.AddPolicy("ProductOwner", policy => policy.Requirements.Add(new OrderOwnerAuthorizationRequirement()));
             });
 
-            //services.AddSingleton<IAuthorizationHandler, OrderOwnerAuthorizationHandler>();
+            services.AddSingleton<IAuthorizationHandler, OrderOwnerAuthorizationHandler>();
+
+            //----------------------------------------------------------------------------
+
+            services.AddMvc(options => { options.Filters.Add<UnhandledExceptionFilterAttribute>(); })
+                .AddControllersAsServices();
 
             new Bootstrap(services, Configuration).WireUp();
-
-
-
         }
+
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
-            var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
-            app.UseRequestLocalization(locOptions.Value);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHealthChecks("/health");
-            app.UseStaticFiles();
-            app.UseRouting(); 
-            app.UseHttpMetrics();
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
             app.UseCors(CorsAllowUIApp);
 
             app.UseAuthentication();
 
-            app.Use(async (context, next) => { 
-                await next();
-            });
-
             app.UseAuthorization();
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "TseCam Web API");
-            });
-
-            //app.UseHttpsRedirection();
-            //app.UseResultExceptionHandler();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
-
-
-        }
-
-        private void ConfigureAuthentication(IServiceCollection services)
-        {
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(o =>
-            {
-                o.RequireHttpsMetadata = false;
-                o.Authority = Configuration["Jwt:Authority"];
-                o.Audience = Configuration["Jwt:Audience"];
-
-                //o.Events = new JwtBearerEvents()
-                //{
-                //    // OnTokenValidated = async ctx =>
-                //    // {
-                //    // 	//Add claim if they are
-                //    // 	var claims = new List<Claim>
-                //    // 	{
-                //    // 		new Claim(ClaimTypes.Role, "superadmin")
-                //    // 	};
-                //    // 	var appIdentity = new ClaimsIdentity(claims);
-                //    // 	ctx.Principal.AddIdentity(appIdentity);
-                //    // },
-                //    OnAuthenticationFailed = c =>
-                //    {
-                //        c.NoResult();
-
-                //        c.Response.StatusCode = 500;
-                //        c.Response.ContentType = "text/plain";
-                //        //                        if (Environment.IsDevelopment())
-                //        //                        {
-                //        return c.Response.WriteAsync(c.Exception.ToString());
-                //        //                        }
-                //        //
-                //        //                        return c.Response.WriteAsync("An error occured processing your authentication.");
-                //    }
-                //};
             });
         }
     }

@@ -223,7 +223,7 @@ export default {
       this.loading = false;
     },
 
-    submit() {
+   async submit() {
       this.order.cleaningCategorySelected = this.cleaningCategories[0];
       localStorage.setItem("order", JSON.stringify(this.order));
       this.$router.push({
@@ -231,7 +231,10 @@ export default {
         params: { order: this.order },
       });
 
-      //  await orderApi.add(orderInstance);
+         var response = await orderApi.add(this.order);
+      if (response.status == 201) {
+        this.$root.showSuccessToast("your order successfully registered");
+      }
     },
 
     register: function () {},

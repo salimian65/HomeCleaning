@@ -33,13 +33,19 @@ namespace HomeCleaning.IdentityProvider
         {
             services.AddControllersWithViews();
 
+            services.Configure<IISOptions>(iis =>
+            {
+                iis.AuthenticationDisplayName = "Windows";
+                iis.AutomaticAuthentication = false;
+            });
+
             services.AddDbContext<HomeCleaningContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<HomeCleaningContext>()
-                .AddDefaultTokenProviders();
-
+                .AddDefaultTokenProviders()
+                .AddClaimsPrincipalFactory<ClaimsFactory>();
             var config = new Config(Configuration);
 
             var builder = services.AddIdentityServer(options =>
@@ -51,39 +57,18 @@ namespace HomeCleaning.IdentityProvider
 
                     options.EmitStaticAudienceClaim = true;
                 })
+                .AddDeveloperSigningCredential()
                 .AddInMemoryIdentityResources(config.GetIdentityResources())
                 .AddInMemoryApiResources(config.GetApis())
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(config.GetClients())
                 .AddAspNetIdentity<ApplicationUser>();
+               // .AddProfileService<ProfileService>();
 
+            //services.AddScoped<IProfileService, ProfileService>();
+            services.AddAuthentication();
 
-            services.AddScoped<IProfileService, ProfileService>();
-
-            builder.Services.ConfigureExternalCookie(options =>
-            {
-                options.Cookie.IsEssential = true;
-                options.Cookie.SameSite = (SameSiteMode)(-1); //SameSiteMode.Unspecified in .NET Core 3.1
-            });
-
-            builder.Services.ConfigureApplicationCookie(options =>
-            {
-                options.Cookie.IsEssential = true;
-                options.Cookie.SameSite = (SameSiteMode)(-1); //SameSiteMode.Unspecified in .NET Core 3.1
-            });
-
-            //var rsa = new RsaKeyService(Environment, TimeSpan.FromDays(30));
-            //services.AddSingleton<RsaKeyService>(provider => rsa);
-            //if (Environment.IsDevelopment())
-            //{
-            builder.AddDeveloperSigningCredential();
-            //}
-            //else
-            //{
-            //    builder.AddSigningCredential(rsa.GetKey());
-            //   // throw new Exception("need to configure key material");
-            //}
-
+            //-----------------------------------------------------------------------
             services.AddAuthentication()
                 .AddGoogle(options =>
                 {
@@ -96,7 +81,21 @@ namespace HomeCleaning.IdentityProvider
                     options.ClientSecret = "babQzWPLGwfOQVi0EYR-7Fbb";
                     options.SignInScheme = IdentityConstants.ExternalScheme;
                 });
+
+            //----------------------------------------------------------------------------
+            builder.Services.ConfigureExternalCookie(options =>
+            {
+                options.Cookie.IsEssential = true;
+                options.Cookie.SameSite = SameSiteMode.Lax; //SameSiteMode.Unspecified in .NET Core 3.1
+            });
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.IsEssential = true;
+                options.Cookie.SameSite = SameSiteMode.Lax; //SameSiteMode.Unspecified in .NET Core 3.1
+            });
         }
+
 
         public void Configure(IApplicationBuilder app, IServiceProvider serviceProvider)
         {
