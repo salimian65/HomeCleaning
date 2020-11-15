@@ -88,7 +88,7 @@ namespace HomeCleaning.Api.Controllers
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         //  [Authorize(Roles = "customer")]
         //[Authorize(Policy = "ProductOwner")]
-        [Authorize]
+       // [Authorize]
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {

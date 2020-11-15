@@ -45,17 +45,11 @@ namespace HomeCleaning.Api
             services.AddDbContext<HomeCleaningContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("HomeCleaningContext")));
 
-            //  services.AddScoped<UserManager<ApplicationUser>>().AddEntityFrameworkSqlServer().add;
-            //   services.AddScoped<RoleManager<IdentityRole>>().AddEntityFrameworkSqlServer();
-            //services.AddIdentity<ApplicationUser, IdentityRole>()
-            //    .AddRoleManager<RoleManager<IdentityRole>>()
-            //    .AddEntityFrameworkStores<HomeCleaningContext>()
-            //    .AddDefaultTokenProviders();
 
-            //----------------------------------------------------------------------------
-            
-
-            services.AddSingleton<IAuthorizationHandler, OrderOwnerAuthorizationHandler>();
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddRoleManager<RoleManager<IdentityRole>>()
+                .AddEntityFrameworkStores<HomeCleaningContext>()
+                .AddDefaultTokenProviders();
 
             //----------------------------------------------------------------------------
             //  (new JwtSecurityTokenHandler()).InboundClaimTypeMap.Clear();
@@ -80,14 +74,18 @@ namespace HomeCleaning.Api
 
             services.AddAuthorization(options =>
             {
-                //options.AddPolicy("customer", policy => policy.RequireClaim("Role", "customer"));
+                options.AddPolicy("customer", policy => policy.RequireClaim("role", "customer"));
                 // options.AddPolicy("server", policy => policy.RequireClaim("Role", "server"));
                 // options.AddPolicy("admin", policy => policy.RequireClaim("Role", "admin"));
                 options.AddPolicy("ProductOwner", policy => policy.Requirements.Add(new OrderOwnerAuthorizationRequirement()));
             });
 
-            //services.AddMvc(options => { options.Filters.Add<UnhandledExceptionFilterAttribute>(); })
-            //    .AddControllersAsServices();
+            services.AddSingleton<IAuthorizationHandler, OrderOwnerAuthorizationHandler>();
+
+            //----------------------------------------------------------------------------
+
+            services.AddMvc(options => { options.Filters.Add<UnhandledExceptionFilterAttribute>(); })
+                .AddControllersAsServices();
 
             new Bootstrap(services, Configuration).WireUp();
         }

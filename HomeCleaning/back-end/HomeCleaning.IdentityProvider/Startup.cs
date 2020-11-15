@@ -44,8 +44,8 @@ namespace HomeCleaning.IdentityProvider
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<HomeCleaningContext>()
-                .AddDefaultTokenProviders();
-
+                .AddDefaultTokenProviders()
+                .AddClaimsPrincipalFactory<ClaimsFactory>();
             var config = new Config(Configuration);
 
             var builder = services.AddIdentityServer(options =>
@@ -59,7 +59,8 @@ namespace HomeCleaning.IdentityProvider
                 })
                 .AddDeveloperSigningCredential()
                 .AddInMemoryIdentityResources(config.GetIdentityResources())
-                .AddInMemoryApiResources(config.GetApis())
+                .AddInMemoryApiResources(config.GetApiResources())
+                //.AddInMemoryApiScopes(config.ApiScopes)
                 .AddInMemoryClients(config.GetClients())
                 .AddAspNetIdentity<ApplicationUser>();
                // .AddProfileService<ProfileService>();
