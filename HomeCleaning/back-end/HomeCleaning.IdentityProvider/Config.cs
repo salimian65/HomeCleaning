@@ -11,18 +11,86 @@ using Microsoft.Extensions.Configuration;
 
 namespace HomeCleaning.IdentityProvider
 {
-    public class Config
+    //public class Config
+    //{
+    //    private IConfiguration Configuration { get; }
+
+
+    //    public Config(IConfiguration configuration)
+    //    {
+    //        Configuration = configuration;
+    //    }
+
+
+    //    public IEnumerable<IdentityResource> GetIdentityResources()
+    //    {
+    //        return new IdentityResource[]
+    //        {
+    //            new IdentityResources.OpenId(),
+    //            new IdentityResources.Profile(),
+    //        };
+    //    }
+
+    //    public IEnumerable<ApiResource> GetApiResources()
+    //    {
+    //        return new ApiResource[]
+    //        {//, new [] { JwtClaimTypes.Role,JwtClaimTypes.Name}
+    //            new ApiResource("backend", "MarketPlace REST API"),
+    //        };
+    //    }
+
+    //    public IEnumerable<ApiScope> ApiScopes =>
+    //        new ApiScope[]
+    //        {
+    //            new ApiScope("backend", "My API"),
+    //        };
+
+    //    public IEnumerable<Client> GetClients()
+    //    {
+    //        var webClient = Configuration["partner:webClient"];
+    //        return new[]
+    //        {
+    //            // SPA client using code flow + pkce
+    //            new Client
+    //            {
+    //                ClientId = "frontend",
+    //                ClientName = "Home Cleaning JavaScript Client",
+    //                ClientUri = webClient,
+
+    //                AllowedGrantTypes = GrantTypes.Code,
+    //                RequirePkce = true,
+    //                RequireClientSecret = false,
+    //                RequireConsent = false,
+
+    //                AllowOfflineAccess = true,
+    //                AccessTokenLifetime = 3600, // 1.5 minutes
+    //                AbsoluteRefreshTokenLifetime = 0,
+    //                RefreshTokenUsage = TokenUsage.OneTimeOnly,
+    //                RefreshTokenExpiration = TokenExpiration.Sliding,
+    //                UpdateAccessTokenClaimsOnRefresh = true,
+    //                ClientClaimsPrefix = string.Empty,
+
+    //                RedirectUris =
+    //                {
+    //                  webClient + "/callback",
+    //                  webClient + "/static/silent-renew.html",
+    //                 },
+
+    //                PostLogoutRedirectUris = { webClient },
+    //                AllowedCorsOrigins = { webClient },
+    //                AllowedScopes = {  IdentityServerConstants.StandardScopes.OpenId,
+    //                                   IdentityServerConstants.StandardScopes.Profile,
+    //                                   "backend" }
+
+    //            }
+    //        };
+    //    }
+
+    //}
+
+    public static class Config
     {
-        private IConfiguration Configuration { get; }
-
-
-        public Config(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-
-        public IEnumerable<IdentityResource> GetIdentityResources()
+        public static IEnumerable<IdentityResource> GetIdentityResources()
         {
             return new IdentityResource[]
             {
@@ -31,60 +99,64 @@ namespace HomeCleaning.IdentityProvider
             };
         }
 
-        public IEnumerable<ApiResource> GetApiResources()
+        public static IEnumerable<ApiResource> GetApiResources()
         {
             return new ApiResource[]
             {
-                new ApiResource("backend", "MarketPlace REST API", new [] { JwtClaimTypes.Role,JwtClaimTypes.Name}),
+
+                new ApiResource("backend", "MarketPlace REST API"),
             };
         }
+        public static IEnumerable<ApiScope> ApiScopes =>
+                new ApiScope[]
+                {
+                    new ApiScope("backend", "My API"),
+                };
 
-        public IEnumerable<ApiScope> ApiScopes =>
-            new ApiScope[]
-            {
-                new ApiScope("backend",new [] { JwtClaimTypes.Role,JwtClaimTypes.Name}),
-            };
-
-        public IEnumerable<Client> GetClients()
+        public static IEnumerable<Client> GetClients()
         {
-            var webClient = Configuration["partner:webClient"];
             return new[]
             {
                 // SPA client using code flow + pkce
                 new Client
                 {
                     ClientId = "frontend",
-                    ClientName = "Home Cleaning JavaScript Client",
-                    ClientUri = webClient,
+                    ClientName = "MarketPlace JavaScript Client",
+                    ClientUri = "http://localhost:8080",
 
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     RequireClientSecret = false,
-                    RequireConsent = false,
 
                     AllowOfflineAccess = true,
-                    AccessTokenLifetime = 90, // 1.5 minutes
-                    AbsoluteRefreshTokenLifetime = 0,
+                    AccessTokenLifetime = 60 , // 1.5 minutes
+                    SlidingRefreshTokenLifetime=1296000,
+                    AbsoluteRefreshTokenLifetime = 2592000 ,
                     RefreshTokenUsage = TokenUsage.OneTimeOnly,
                     RefreshTokenExpiration = TokenExpiration.Sliding,
                     UpdateAccessTokenClaimsOnRefresh = true,
+                    RequireConsent = false,
                     ClientClaimsPrefix = string.Empty,
+
+                    AlwaysSendClientClaims = true,
+                    AlwaysIncludeUserClaimsInIdToken = true,
 
                     RedirectUris =
                     {
-                      webClient + "/callback",
-                      webClient + "/static/silent-renew.html",
-                     },
+                        "http://localhost:8080/callback",
+                        "http://localhost:8080/static/silent-renew.html"
+                    },
 
-                    PostLogoutRedirectUris = { webClient },
-                    AllowedCorsOrigins = { webClient },
-                    AllowedScopes = {  IdentityServerConstants.StandardScopes.OpenId,
-                                       IdentityServerConstants.StandardScopes.Profile, 
+                    PostLogoutRedirectUris = { "http://localhost:8080" },
+                    AllowedCorsOrigins = { "http://localhost:8080" },
+
+                    AllowedScopes = {
+                                       IdentityServerConstants.StandardScopes.OpenId,
+                                       IdentityServerConstants.StandardScopes.Profile,
+                                       IdentityServerConstants.StandardScopes.OfflineAccess,
                                        "backend" }
-                   
                 }
             };
         }
-
     }
 }

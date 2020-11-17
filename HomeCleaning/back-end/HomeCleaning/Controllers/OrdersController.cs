@@ -87,7 +87,7 @@ namespace HomeCleaning.Api.Controllers
         // POST: api/Orders
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        //  [Authorize(Roles = "customer")]
+          //[Authorize(Policy = "Customer")]
         //[Authorize(Policy = "ProductOwner")]
        // [Authorize]
         [HttpPost]
@@ -96,7 +96,7 @@ namespace HomeCleaning.Api.Controllers
             order.RegisterTime = DateTime.Now;
             order.ScheduledTime = DateTime.Now;
             var UserName = User.FindFirst(c => c.Type == JwtClaimTypes.Name && c.Issuer == "http://localhost:5000").Value;
-            var dd = _userContext.CurrentUserPrincipal.UserId;
+           // var dd = _userContext.CurrentUserPrincipal.UserId;
             order.ClientUserId = "8a1c5263-f8ad-405b-a25d-707ce4dd32b2"; // _userContext.CurrentUserPrincipal.UserId;
             _context.Order.Add(order);
             await _context.SaveChangesAsync();

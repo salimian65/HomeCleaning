@@ -181,7 +181,7 @@ export default {
           firstName: "",
           lastName: "",
           cellphone: "",
-          address:""
+          address: "",
         },
         cleaningCategorySelected: "",
         cleaningSpaceSizeSelected: "",
@@ -223,15 +223,15 @@ export default {
       this.loading = false;
     },
 
-   async submit() {
+    async submit() {
       this.order.cleaningCategorySelected = this.cleaningCategories[0];
       localStorage.setItem("order", JSON.stringify(this.order));
-      this.$router.push({
-        name: "orderRequest",
-        params: { order: this.order },
-      });
+      // this.$router.push({
+      //   name: "orderRequest",
+      //   params: { order: this.order },
+      // });
 
-         var response = await orderApi.add(this.order);
+      var response = await orderApi.add(this.order);
       if (response.status == 201) {
         this.$root.showSuccessToast("your order successfully registered");
       }

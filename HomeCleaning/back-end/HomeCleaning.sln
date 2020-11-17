@@ -31,6 +31,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCleaning.AdminPanel", "HomeCleaning.AdminPanel\HomeCleaning.AdminPanel.csproj", "{FDD7A3AD-D621-49FB-95A4-D01D7DA0A20D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityProvider", "IdentityProvider\IdentityProvider.csproj", "{A5459CDC-495C-4856-9371-E8BF24F83EC4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeCleaning.IdentityProvider2", "HomeCleaning.IdentityProvider2\HomeCleaning.IdentityProvider2.csproj", "{CA98A789-4572-40E2-AABD-6D3D8BC8DFD4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +77,14 @@ Global
 		{FDD7A3AD-D621-49FB-95A4-D01D7DA0A20D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDD7A3AD-D621-49FB-95A4-D01D7DA0A20D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDD7A3AD-D621-49FB-95A4-D01D7DA0A20D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5459CDC-495C-4856-9371-E8BF24F83EC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5459CDC-495C-4856-9371-E8BF24F83EC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5459CDC-495C-4856-9371-E8BF24F83EC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5459CDC-495C-4856-9371-E8BF24F83EC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA98A789-4572-40E2-AABD-6D3D8BC8DFD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA98A789-4572-40E2-AABD-6D3D8BC8DFD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA98A789-4572-40E2-AABD-6D3D8BC8DFD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA98A789-4572-40E2-AABD-6D3D8BC8DFD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,6 +99,8 @@ Global
 		{87CDF70B-073F-4B0A-8472-D8C2BC28DD22} = {BA89E169-90F4-4B23-B923-70777CE8AB5B}
 		{8C34DA12-B049-49ED-B178-0B182EF670D6} = {395319F3-F41C-4543-9424-16BA0AD083AB}
 		{FDD7A3AD-D621-49FB-95A4-D01D7DA0A20D} = {395319F3-F41C-4543-9424-16BA0AD083AB}
+		{A5459CDC-495C-4856-9371-E8BF24F83EC4} = {395319F3-F41C-4543-9424-16BA0AD083AB}
+		{CA98A789-4572-40E2-AABD-6D3D8BC8DFD4} = {395319F3-F41C-4543-9424-16BA0AD083AB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BF60695B-E035-4682-87BD-98CE513EA93A}

@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using HomeCleaning.Api.Authorization;
 using HomeCleaning.Domain;
 using HomeCleaning.Persistance;
@@ -46,10 +47,10 @@ namespace HomeCleaning.Api
                 options.UseSqlServer(Configuration.GetConnectionString("HomeCleaningContext")));
 
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddRoleManager<RoleManager<IdentityRole>>()
-                .AddEntityFrameworkStores<HomeCleaningContext>()
-                .AddDefaultTokenProviders();
+            //services.AddIdentity<ApplicationUser, IdentityRole>()
+            //    .AddRoleManager<RoleManager<IdentityRole>>()
+            //    .AddEntityFrameworkStores<HomeCleaningContext>()
+            //    .AddDefaultTokenProviders();
 
             //----------------------------------------------------------------------------
             //  (new JwtSecurityTokenHandler()).InboundClaimTypeMap.Clear();
@@ -57,8 +58,9 @@ namespace HomeCleaning.Api
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = Configuration["partner:authService"];
+                    options.Authority = "http://localhost:5000";
                     options.RequireHttpsMetadata = false;
+
                     options.Audience = "backend";
                 });
 
@@ -74,7 +76,7 @@ namespace HomeCleaning.Api
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("customer", policy => policy.RequireClaim("role", "customer"));
+                options.AddPolicy("Customer", policy => policy.RequireClaim(ClaimTypes.Role, "customer"));
                 // options.AddPolicy("server", policy => policy.RequireClaim("Role", "server"));
                 // options.AddPolicy("admin", policy => policy.RequireClaim("Role", "admin"));
                 options.AddPolicy("ProductOwner", policy => policy.Requirements.Add(new OrderOwnerAuthorizationRequirement()));
