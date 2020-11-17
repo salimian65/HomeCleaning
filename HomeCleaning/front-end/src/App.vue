@@ -2,7 +2,7 @@
   <v-app>
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">ANASAYFA</a>
+        <a class="navbar-brand js-scroll-trigger" href="/">ANASAYFA</a>
         <button
           class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
           type="button"
@@ -98,7 +98,7 @@
           </div>
           <!-- Footer About Text-->
           <div class="col-lg-4">
-            <h4 class="mb-4">ABOUT FREELANCER</h4>
+            <h4 class="mb-4">Technorob Yazılım</h4>
             <p class="pre-wrap lead mb-0">
               With the support of Yıldız Technical University, we want to
               increase and continue our struggle to be beneficial to both the
@@ -153,11 +153,11 @@ export default {
 };
 </script>
 <style scoped>
-.theme--light.v-btn {
+/* .theme--light.v-btn {
   color: rgba(0, 0, 0, 0.87);
 }
 
 .theme--light.v-btn {
   color: white !important;
-}
+} */
 </style>

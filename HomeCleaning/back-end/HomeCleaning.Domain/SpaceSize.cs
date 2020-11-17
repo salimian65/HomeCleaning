@@ -1,5 +1,6 @@
 ﻿
 
+using System.ComponentModel.DataAnnotations.Schema;
 using Framework.Domain;
 
 namespace HomeCleaning.Domain
@@ -11,7 +12,8 @@ namespace HomeCleaning.Domain
         public string Description { get; set; } 
 
         public int CleaningCategoryId { get; set; }
-
+     
+        [ForeignKey("CleaningCategoryId")]
         public CleaningCategory CleaningCategory { get; set; }
     }
 }

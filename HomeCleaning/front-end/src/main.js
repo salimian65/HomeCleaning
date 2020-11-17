@@ -35,9 +35,9 @@ Vue.use(vueAwesomeCountdown, "vac");
 // Vue.prototype.$baseApiUrl = "http://192.168.168.172:8087/api";
 // axios.defaults.baseURL = "http://192.168.168.172:8087/api";
 
-Vue.prototype.$baseUrl = "http://localhost:5000";
-Vue.prototype.$baseApiUrl = "http://localhost:5000/api";
-axios.defaults.baseURL = "http://localhost:5000/api";
+Vue.prototype.$baseUrl = "http://localhost:6003";
+Vue.prototype.$baseApiUrl = "http://localhost:6003/api";
+axios.defaults.baseURL = "http://localhost:6003/api";
 
 Vue.component("authorizedCustomer-layout", AuthorizedCustomerLayout);
 Vue.component("default-layout", DefaultLayout);

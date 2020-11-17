@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HomeCleaning.Persistance.Migrations
 {
     [DbContext(typeof(HomeCleaningContext))]
-    [Migration("20201030075907_AddforeignKey")]
-    partial class AddforeignKey
+    [Migration("20201102073240_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -319,6 +319,31 @@ namespace HomeCleaning.Persistance.Migrations
                     b.HasIndex("SpaceSizeId");
 
                     b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("HomeCleaning.Domain.ServerRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServerRequestStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ServerUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ServerUserId");
+
+                    b.ToTable("ServerRequest");
                 });
 
             modelBuilder.Entity("HomeCleaning.Domain.SpaceSize", b =>
@@ -674,6 +699,19 @@ namespace HomeCleaning.Persistance.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("OrderId");
                         });
+                });
+
+            modelBuilder.Entity("HomeCleaning.Domain.ServerRequest", b =>
+                {
+                    b.HasOne("HomeCleaning.Domain.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HomeCleaning.Domain.ApplicationUser", "ServerUser")
+                        .WithMany()
+                        .HasForeignKey("ServerUserId");
                 });
 
             modelBuilder.Entity("HomeCleaning.Domain.SpaceSize", b =>

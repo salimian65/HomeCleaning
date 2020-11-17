@@ -1,0 +1,65 @@
+﻿@model IEnumerable<HomeCleaning.Domain.ServerRequest>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Server request Management</h1>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ServerUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order.ClientUser.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order.ScheduledTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order.TotalPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ServerRequestStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServerUser.UserName)
+            </td>
+            <th>
+                @Html.DisplayFor(modelItem => item.Order.ClientUser.UserName)
+            </th>
+            <th>
+                @Html.DisplayFor(modelItem => item.Order.ScheduledTime)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order.Id)
+            </td>
+            <th>
+                @Html.DisplayFor(modelItem => item.Order.TotalPrice)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServerRequestStatus)
+            </td>
+            <td>
+                <a asp-action="Accept" asp-route-id="@item.Id">Accept</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                @*<a href="javascript:void(0);" class="anchorDetail" data-id="@item.Id">Details</a>*@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

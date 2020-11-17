@@ -39,7 +39,10 @@ namespace HomeCleaning.Persistance.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Cellphone = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -235,11 +238,11 @@ namespace HomeCleaning.Persistance.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<Guid>(nullable: false),
-                    UserId1 = table.Column<string>(nullable: true),
+                    ClientUserId = table.Column<string>(nullable: true),
                     SpaceSizeId = table.Column<int>(nullable: false),
                     CleaningPackageId = table.Column<int>(nullable: false),
                     CleaningExtraOptionId = table.Column<int>(nullable: false),
+                    Address_AddressStr = table.Column<string>(nullable: true),
                     Address_Street = table.Column<string>(nullable: true),
                     Address_Alley = table.Column<string>(nullable: true),
                     Address_Floor = table.Column<string>(nullable: true),
@@ -250,7 +253,6 @@ namespace HomeCleaning.Persistance.Migrations
                     Discount = table.Column<decimal>(nullable: false),
                     TotalPrice = table.Column<decimal>(nullable: false),
                     Tax = table.Column<decimal>(nullable: false),
-                    UserName = table.Column<string>(nullable: true),
                     OrderStatus = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -269,14 +271,41 @@ namespace HomeCleaning.Persistance.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Order_AspNetUsers_ClientUserId",
+                        column: x => x.ClientUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Order_SpaceSize_SpaceSizeId",
                         column: x => x.SpaceSizeId,
                         principalTable: "SpaceSize",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ServerRequest",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ServerUserId = table.Column<string>(nullable: true),
+                    OrderId = table.Column<int>(nullable: false),
+                    ServerRequestStatus = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServerRequest", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Order_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_ServerRequest_Order_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Order",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ServerRequest_AspNetUsers_ServerUserId",
+                        column: x => x.ServerUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -409,14 +438,24 @@ namespace HomeCleaning.Persistance.Migrations
                 column: "CleaningPackageId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Order_ClientUserId",
+                table: "Order",
+                column: "ClientUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Order_SpaceSizeId",
                 table: "Order",
                 column: "SpaceSizeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Order_UserId1",
-                table: "Order",
-                column: "UserId1");
+                name: "IX_ServerRequest_OrderId",
+                table: "ServerRequest",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ServerRequest_ServerUserId",
+                table: "ServerRequest",
+                column: "ServerUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SpaceSize_CleaningCategoryId",
@@ -442,10 +481,13 @@ namespace HomeCleaning.Persistance.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Order");
+                name: "ServerRequest");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Order");
 
             migrationBuilder.DropTable(
                 name: "CleaningExtraOption");
@@ -454,10 +496,10 @@ namespace HomeCleaning.Persistance.Migrations
                 name: "CleaningPackage");
 
             migrationBuilder.DropTable(
-                name: "SpaceSize");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "SpaceSize");
 
             migrationBuilder.DropTable(
                 name: "CleaningCategory");

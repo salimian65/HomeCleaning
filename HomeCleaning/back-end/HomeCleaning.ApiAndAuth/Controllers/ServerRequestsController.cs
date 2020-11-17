@@ -76,18 +76,21 @@ namespace HomeCleaning.ApiAndAuth.Controllers
             return NoContent();
         }
 
-        [Authorize(Roles = "server")]
-       // [Authorize]
-        [HttpPost]
-        public async Task<ActionResult<ServerRequest>> PostServerRequest(int orderId)
+        // [Authorize(Roles = "server")]
+        // [Authorize]
+        [HttpPost()]
+        public async Task<ActionResult<ServerRequest>> PostServerRequest([FromBody] int orderId)
         {
             var serverRequest = new ServerRequest
             {
                 OrderId = orderId,
-                ServerUserId = _userContext.CurrentUserPrincipal.UserId.ToString()
+                ServerUserId = "2311608c-3b69-4cad-8fe2-ea180caaff2d",// MAJID  //  "87b294fd-cb1a-4f13-b5bc-82fe745d663a", // elham
+                //      _userContext.CurrentUserPrincipal.UserId.ToString(),
+                ServerRequestStatus = ServerRequestStatus.ServerRequested
             };
 
             _context.ServerRequest.Add(serverRequest);
+            var order = await _context.Order.FindAsync(orderId);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetServerRequest", new { id = serverRequest.Id }, serverRequest);

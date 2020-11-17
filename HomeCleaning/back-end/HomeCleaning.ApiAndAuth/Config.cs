@@ -1,10 +1,9 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
-
-using IdentityServer4.Models;
+﻿using IdentityServer4.Models;
 using System.Collections.Generic;
+using System.Security.Claims;
+using IdentityModel;
 using Microsoft.Extensions.Configuration;
+using IdentityServer4;
 
 namespace HomeCleaning.ApiAndAuth
 {
@@ -18,21 +17,24 @@ namespace HomeCleaning.ApiAndAuth
             Configuration = configuration;
         }
 
-
-        public IEnumerable<ApiScope> ApiScopes =>
-            new ApiScope[]
-            {
-                new ApiScope("backend"),
-                new ApiScope("scope2"),
-            };
-
-
         public IEnumerable<IdentityResource> GetIdentityResources()
         {
             return new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                new IdentityResources.Email(),
+            };
+        }
+
+
+        public IEnumerable<ApiResource> GetApis()
+        {
+            return new ApiResource[]
+            {
+                new ApiResource("backend", "MarketPlace REST API"){ UserClaims = { JwtClaimTypes.Name,
+                                                                                   JwtClaimTypes.Role, 
+                                                                                   ClaimTypes.Role } }
             };
         }
 
@@ -46,41 +48,54 @@ namespace HomeCleaning.ApiAndAuth
                 {
                     ClientId = "frontend",
                     ClientName = "Home Cleaning JavaScript Client",
-                    ClientUri = Configuration["partner:webClient"],
+                    ClientUri = webClient,
 
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     RequireClientSecret = false,
                     RequireConsent = false,
+
+                    AllowOfflineAccess = true,
+                    AccessTokenLifetime = 90, // 1.5 minutes
+                    AbsoluteRefreshTokenLifetime = 0,
+                    RefreshTokenUsage = TokenUsage.OneTimeOnly,
+                    RefreshTokenExpiration = TokenExpiration.Sliding,
+                    UpdateAccessTokenClaimsOnRefresh = true,
+                    ClientClaimsPrefix = string.Empty,
+
                     RedirectUris =
                     {
-                      webClient,
                       webClient + "/callback",
-                      webClient + "/silent",
-                      webClient + "/popup",
+                      webClient + "/static/silent-renew.html",
                     },
+
                     FrontChannelLogoutUri = webClient,
                     PostLogoutRedirectUris = { webClient },
-                    AllowedCorsOrigins = {     webClient },
+                    AllowedCorsOrigins = { webClient },
 
-                    AllowedScopes = { "openid", "profile", "backend" }
+                    AllowedScopes = {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "backend" }
                 },
 
-                new Client
-                {
-                    ClientId = "client",
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                //new Client
+                //{
+                //    ClientId = "client",
+                //    AllowedGrantTypes = GrantTypes.ClientCredentials,
 
-                    ClientSecrets =
-                    {
-                        new Secret("sssss".Sha256())
-                    },
+                //    ClientSecrets =
+                //    {
+                //        new Secret("sssss".Sha256())
+                //    },
 
-                    AllowedScopes = { "backend" }
-                },
+                //    AllowedScopes = { "backend" }
+                //},
             };
         }
     }
+
+
     //public static class Config
     //{
     //    public static IEnumerable<IdentityResource> IdentityResources =>
@@ -126,6 +141,70 @@ namespace HomeCleaning.ApiAndAuth
 
     //                AllowOfflineAccess = true,
     //                AllowedScopes = { "openid", "profile", "scope2" }
+    //            },
+    //        };
+    //}
+
+    //........................................
+
+    //public IEnumerable<IdentityResource> GetIdentityResources()
+    //{
+    //    return new IdentityResource[]
+    //    {
+    //            new IdentityResources.OpenId(),
+    //            new IdentityResources.Profile(),
+    //            new IdentityResources.Email(),
+    //    };
+    //}
+
+
+    //public IEnumerable<ApiResource> Apis = new List<ApiResource>
+    //    {
+    //        // local API
+    //        new ApiResource(IdentityServerConstants.LocalApi.ScopeName),
+    //    };
+
+    //public IEnumerable<Client> GetClients()
+    //{
+    //    var webClient = Configuration["partner:webClient"];
+    //    return new[]
+    //    {
+    //            // SPA client using code flow + pkce
+    //            new Client
+    //            {
+    //                ClientId = "frontend",
+    //                ClientName = "Home Cleaning JavaScript Client",
+    //                ClientUri = webClient,
+
+    //                AllowedGrantTypes = GrantTypes.Code,
+    //                RequirePkce = true,
+    //                RequireClientSecret = false,
+    //                RequireConsent = false,
+    //                RedirectUris =
+    //                {
+    //                  webClient,
+    //                  webClient + "/callback",
+    //                  webClient + "/silent",
+    //                  webClient + "/popup",
+    //                },
+    //                FrontChannelLogoutUri = webClient,
+    //                PostLogoutRedirectUris = { webClient },
+    //                AllowedCorsOrigins = {     webClient },
+
+    //                AllowedScopes = { "openid", "profile", "backend" ,"email", IdentityServerConstants.LocalApi.ScopeName }
+    //            },
+
+    //            new Client
+    //            {
+    //                ClientId = "client",
+    //                AllowedGrantTypes = GrantTypes.ClientCredentials,
+
+    //                ClientSecrets =
+    //                {
+    //                    new Secret("sssss".Sha256())
+    //                },
+
+    //                AllowedScopes = { "backend" }
     //            },
     //        };
     //}
