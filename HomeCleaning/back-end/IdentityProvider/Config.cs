@@ -26,7 +26,7 @@ namespace IdentityProvider
         {
             return new ApiResource[]
             {
-             new ApiResource("backend", "MarketPlace REST API"),
+             new ApiResource("backend", "MarketPlace REST API",new [] { JwtClaimTypes.Role,JwtClaimTypes.Name}),
             };
         }
 
@@ -66,7 +66,7 @@ namespace IdentityProvider
 
                     PostLogoutRedirectUris = { "http://localhost:8080" },
                     AllowedCorsOrigins = { "http://localhost:8080" },
-                
+
                     AllowedScopes = {
                                        IdentityServerConstants.StandardScopes.OpenId,
                                        IdentityServerConstants.StandardScopes.Profile,

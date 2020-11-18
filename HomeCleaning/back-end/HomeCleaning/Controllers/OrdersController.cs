@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Framework.Domain;
 using HomeCleaning.Domain;
@@ -10,6 +11,7 @@ using IdentityModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using IdentityServer4.AccessTokenValidation;
 
 namespace HomeCleaning.Api.Controllers
 {
@@ -87,17 +89,17 @@ namespace HomeCleaning.Api.Controllers
         // POST: api/Orders
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-          //[Authorize(Policy = "Customer")]
-        //[Authorize(Policy = "ProductOwner")]
-       // [Authorize]
+       // [Authorize(Policy = "Customer")]
+        [Authorize(Policy = "ProductOwner")]
+        // [Authorize]
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {
             order.RegisterTime = DateTime.Now;
             order.ScheduledTime = DateTime.Now;
             var UserName = User.FindFirst(c => c.Type == JwtClaimTypes.Name && c.Issuer == "http://localhost:5000").Value;
-           // var dd = _userContext.CurrentUserPrincipal.UserId;
-            order.ClientUserId = "8a1c5263-f8ad-405b-a25d-707ce4dd32b2"; // _userContext.CurrentUserPrincipal.UserId;
+            order.ClientUserId = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier && c.Issuer == "http://localhost:5000").Value;
+            //  var dd = _userContext.CurrentUserPrincipal.UserId;
             _context.Order.Add(order);
             await _context.SaveChangesAsync();
 

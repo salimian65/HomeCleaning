@@ -56,7 +56,7 @@ namespace HomeCleaning.IdentityProvider
             })
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
-                .AddInMemoryApiScopes(Config.ApiScopes)
+               // .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.GetClients())
                 //.AddTestUsers(Config.GetUsers())
                 .AddAspNetIdentity<ApplicationUser>();

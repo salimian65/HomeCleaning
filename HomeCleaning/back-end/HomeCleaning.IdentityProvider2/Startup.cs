@@ -51,13 +51,16 @@ namespace HomeCleaning.IdentityProvider2
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseSuccessEvents = true;
+                options.EmitStaticAudienceClaim = true;
             })
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
-                .AddInMemoryApiScopes(Config.ApiScopes)
+                //.AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.GetClients())
                 //.AddTestUsers(Config.GetUsers())
-                .AddAspNetIdentity<ApplicationUser>();
+                .AddAspNetIdentity<ApplicationUser>()
+                //.AddJwtBearerClientAuthentication();
+            ;
 
             if (Environment.IsDevelopment())
             {

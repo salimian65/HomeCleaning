@@ -15,7 +15,7 @@ var mgr = new Oidc.UserManager({
   client_id: "frontend",
   redirect_uri: "http://localhost:8080/callback",
   response_type: "code",
-  scope: "openid profile offline_access backend",
+  scope: "openid profile offline_access",
   post_logout_redirect_uri: "http://localhost:8080",
   userStore: new Oidc.WebStorageStateStore({ store: window.localStorage }),
   automaticSilentRenew: true,

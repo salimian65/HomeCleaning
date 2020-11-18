@@ -17,7 +17,7 @@ namespace HomeCleaning.Api.Authorization {
                 return Task.CompletedTask;
 
             var role = context.User
-                .FindFirst(c => c.Type == JwtClaimTypes.Role && c.Issuer == "http://localhost:5000").Value;
+                .FindFirst(c => c.Type == ClaimTypes.Role && c.Issuer == "http://localhost:5000").Value;
 
             if (context.Resource is Endpoint endpoint)
             {

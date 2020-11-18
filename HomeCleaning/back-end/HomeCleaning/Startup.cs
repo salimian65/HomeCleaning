@@ -7,6 +7,7 @@ using HomeCleaning.Domain;
 using HomeCleaning.Persistance;
 using HomeCleaning.Persistance.DataAccess;
 using HomeCleaning.Persistance.IdentityPolicy;
+using IdentityModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -55,14 +56,35 @@ namespace HomeCleaning.Api
             //----------------------------------------------------------------------------
             //  (new JwtSecurityTokenHandler()).InboundClaimTypeMap.Clear();
 
-            services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options =>
+            //services.AddAuthentication("Bearer")
+            //    .AddJwtBearer("Bearer", options =>
+            //    {
+            //        options.Authority = "http://localhost:5000";
+            //        options.RequireHttpsMetadata = false;
+
+            //        options.Audience = "backend";
+            //    });
+
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(o =>
+            //{
+            //    o.Authority = "http://localhost:5000";
+            //    o.Audience = "backend";
+            //    o.RequireHttpsMetadata = false;
+            //});
+
+
+            services.AddAuthentication(options => options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
                 {
                     options.Authority = "http://localhost:5000";
                     options.RequireHttpsMetadata = false;
-
                     options.Audience = "backend";
                 });
+
 
             //----------------------------------------------------------------------------
             services.AddCors(options =>
