@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 using Framework.Domain;
 using HomeCleaning.Domain;
 using HomeCleaning.Persistance;
-using HomeCleaning.Persistance.DataAccess;
 using IdentityModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using IdentityServer4.AccessTokenValidation;
 
 namespace HomeCleaning.Api.Controllers
 {
@@ -89,7 +87,7 @@ namespace HomeCleaning.Api.Controllers
         // POST: api/Orders
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-       // [Authorize(Policy = "Customer")]
+        //[Authorize(Policy = "Customer")]
         [Authorize(Policy = "ProductOwner")]
         // [Authorize]
         [HttpPost]

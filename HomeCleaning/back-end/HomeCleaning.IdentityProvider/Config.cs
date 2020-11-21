@@ -1,13 +1,7 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
-
-using System.Collections.Generic;
-using System.Security.Claims;
+﻿using System.Collections.Generic;
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
-using Microsoft.Extensions.Configuration;
 
 namespace HomeCleaning.IdentityProvider
 {
@@ -30,15 +24,24 @@ namespace HomeCleaning.IdentityProvider
                 new ApiResource("backend", "MarketPlace REST API",
                     new [] {  JwtClaimTypes.Role,
                         JwtClaimTypes.Name,
-                        "backend"}),
+                        "backend"
+                    })
+                {
+                    Scopes = { "backend" }
+                },
             };
         }
-
-        //public static IEnumerable<ApiScope> ApiScopes =>
-        //        new ApiScope[]
-        //        {
-        //            new ApiScope("backend", "My API"),
-        //        };
+        public static IEnumerable<ApiScope> ApiScopes =>
+            new ApiScope[]
+            {
+                new ApiScope("backend", "My API",
+                    new []
+                    {
+                        JwtClaimTypes.Role,
+                        JwtClaimTypes.Name,
+                        "backend"
+                    })
+            };
 
         public static IEnumerable<Client> GetClients()
         {

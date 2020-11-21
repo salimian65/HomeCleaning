@@ -55,11 +55,11 @@ namespace HomeCleaning.IdentityProvider2
             })
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
-                //.AddInMemoryApiScopes(Config.ApiScopes)
+                .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.GetClients())
                 //.AddTestUsers(Config.GetUsers())
                 .AddAspNetIdentity<ApplicationUser>()
-                //.AddJwtBearerClientAuthentication();
+               // .AddJwtBearerClientAuthentication();
             ;
 
             if (Environment.IsDevelopment())

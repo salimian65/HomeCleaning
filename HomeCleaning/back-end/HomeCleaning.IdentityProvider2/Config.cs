@@ -27,17 +27,26 @@ namespace HomeCleaning.IdentityProvider2
 
                 new ApiResource("backend", "MarketPlace REST API",
                     new [] {  JwtClaimTypes.Role,
-                                        JwtClaimTypes.Name,})
+                                        JwtClaimTypes.Name,
+                                        "backend"
+                    })
                 {
                     Scopes = { "backend" }
                 },
             };
         }
-        //public static IEnumerable<ApiScope> ApiScopes =>
-        //        new ApiScope[]
-        //        {
-        //            new ApiScope("backend", "My API",new [] { JwtClaimTypes.Role,JwtClaimTypes.Name,"backend"}),
-        //        };
+        public static IEnumerable<ApiScope> ApiScopes =>
+                new ApiScope[]
+                {
+                    new ApiScope("backend", "My API",
+                        new []
+                        {
+                            JwtClaimTypes.Role,
+                            JwtClaimTypes.Name,
+                            "backend"
+                        })
+                };
+
 
         public static IEnumerable<Client> GetClients()
         {
@@ -55,7 +64,7 @@ namespace HomeCleaning.IdentityProvider2
                     RequireClientSecret = false,
 
                     AllowOfflineAccess = true,
-                    AccessTokenLifetime = 60 , // 1.5 minutes
+                    AccessTokenLifetime = 3600 , // 1.5 minutes
                     SlidingRefreshTokenLifetime=1296000,
                     AbsoluteRefreshTokenLifetime = 2592000 ,
                     RefreshTokenUsage = TokenUsage.OneTimeOnly,

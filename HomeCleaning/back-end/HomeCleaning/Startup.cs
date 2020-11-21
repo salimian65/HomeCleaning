@@ -41,6 +41,36 @@ namespace HomeCleaning.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var serilogLogger = new LoggerConfiguration()
+                .ReadFrom.Configuration(Configuration)
+                .CreateLogger();
+            services.AddSingleton(new LoggerFactory().AddSerilog(serilogLogger).CreateLogger("TseCamWebApi"));
+
+            services.AddLocalization();
+            services.Configure<RequestLocalizationOptions>(o =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("tr"),
+                    new CultureInfo("ar")
+                };
+
+                o.DefaultRequestCulture = new RequestCulture("en", "en");
+                o.SupportedCultures = supportedCultures;
+                o.SupportedUICultures = supportedCultures;
+
+                o.RequestCultureProviders.Insert(0, new AcceptLanguageHeaderRequestCultureProvider());
+            });
+
+            services.AddHealthChecks();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Home Cleaning Web API", Version = "v1" });
+                c.ResolveConflictingActions(d => d.First()); // until aspnetcore supports action resolver
+            });
+
+            //-----------------------------------------------------------------------
             services.AddControllers();
 
             //-----------------------------------------------------------------
@@ -48,34 +78,12 @@ namespace HomeCleaning.Api
                 options.UseSqlServer(Configuration.GetConnectionString("HomeCleaningContext")));
 
 
-            //services.AddIdentity<ApplicationUser, IdentityRole>()
-            //    .AddRoleManager<RoleManager<IdentityRole>>()
-            //    .AddEntityFrameworkStores<HomeCleaningContext>()
-            //    .AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddRoleManager<RoleManager<IdentityRole>>()
+                .AddEntityFrameworkStores<HomeCleaningContext>()
+                .AddDefaultTokenProviders();
 
             //----------------------------------------------------------------------------
-            //  (new JwtSecurityTokenHandler()).InboundClaimTypeMap.Clear();
-
-            //services.AddAuthentication("Bearer")
-            //    .AddJwtBearer("Bearer", options =>
-            //    {
-            //        options.Authority = "http://localhost:5000";
-            //        options.RequireHttpsMetadata = false;
-
-            //        options.Audience = "backend";
-            //    });
-
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //}).AddJwtBearer(o =>
-            //{
-            //    o.Authority = "http://localhost:5000";
-            //    o.Audience = "backend";
-            //    o.RequireHttpsMetadata = false;
-            //});
-
 
             services.AddAuthentication(options => options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
