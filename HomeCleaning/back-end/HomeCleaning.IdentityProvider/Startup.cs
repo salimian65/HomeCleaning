@@ -94,69 +94,7 @@ namespace HomeCleaning.IdentityProvider
                 options.Cookie.IsEssential = true;
                 options.Cookie.SameSite = (SameSiteMode)(-1); //SameSiteMode.Unspecified in .NET Core 3.1
             });
-            //    services.AddControllersWithViews();
 
-            //    services.Configure<IISOptions>(iis =>
-            //    {
-            //        iis.AuthenticationDisplayName = "Windows";
-            //        iis.AutomaticAuthentication = false;
-            //    });
-
-            //    services.AddDbContext<HomeCleaningContext>(options =>
-            //        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            //    services.AddIdentity<ApplicationUser, IdentityRole>()
-            //        .AddEntityFrameworkStores<HomeCleaningContext>()
-            //        .AddDefaultTokenProviders()
-            //        .AddClaimsPrincipalFactory<ClaimsFactory>();
-            ////    var config = new Config(Configuration);
-
-            //    var builder = services.AddIdentityServer(options =>
-            //        {
-            //            options.Events.RaiseErrorEvents = true;
-            //            options.Events.RaiseInformationEvents = true;
-            //            options.Events.RaiseFailureEvents = true;
-            //            options.Events.RaiseSuccessEvents = true;
-
-            //            options.EmitStaticAudienceClaim = true;
-            //        })
-            //        .AddDeveloperSigningCredential()
-            //        .AddInMemoryIdentityResources(Config.GetIdentityResources())
-            //        //.AddInMemoryApiResources(Config.GetApiResources())
-            //        .AddInMemoryApiScopes(Config.ApiScopes)
-            //        .AddInMemoryClients(Config.GetClients())
-            //        .AddAspNetIdentity<ApplicationUser>();
-            //       // .AddProfileService<ProfileService>();
-
-            //    //services.AddScoped<IProfileService, ProfileService>();
-            //    services.AddAuthentication();
-
-            //    //-----------------------------------------------------------------------
-            //    services.AddAuthentication()
-            //        .AddGoogle(options =>
-            //        {
-            //            // register your IdentityServer with Google at https://console.developers.google.com
-            //            // enable the Google+ API
-            //            // set the redirect URI to http://localhost:5000/signin-google
-            //            // options.ClientId = "copy client ID from Google here";
-            //            // options.ClientSecret = "copy client secret from Google here";
-            //            options.ClientId = "717469225962-3vk00r8tglnbts1cgc4j1afqb358o8nj.apps.googleusercontent.com";
-            //            options.ClientSecret = "babQzWPLGwfOQVi0EYR-7Fbb";
-            //            options.SignInScheme = IdentityConstants.ExternalScheme;
-            //        });
-
-            //    //----------------------------------------------------------------------------
-            //    services.ConfigureExternalCookie(options =>
-            //    {
-            //        options.Cookie.IsEssential = true;
-            //        options.Cookie.SameSite = (SameSiteMode)(-1); //SameSiteMode.Unspecified in .NET Core 3.1
-            //    });
-
-            //    services.ConfigureApplicationCookie(options =>
-            //    {
-            //        options.Cookie.IsEssential = true;
-            //        options.Cookie.SameSite = (SameSiteMode)(-1); //SameSiteMode.Unspecified in .NET Core 3.1
-            //    });
         }
 
 
