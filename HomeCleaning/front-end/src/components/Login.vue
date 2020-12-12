@@ -54,8 +54,10 @@ export default {
   color: #fff;
   padding: 25px 30px;
 }
-
-.theme--light.v-btn {
+.navbar .v-btn__content{
   color: white;
 }
+/* .theme--light.v-btn {
+  color: white;
+} */
 </style>

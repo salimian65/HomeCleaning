@@ -69,7 +69,7 @@
 
                 <v-card-title>todays's availability</v-card-title>
 
-                <v-card-text>
+                <!-- <v-card-text>
                   <v-chip-group
                     v-model="selection"
                     active-class="deep-purple accent-4 white--text"
@@ -80,7 +80,7 @@
                     <v-chip>8:00PM</v-chip>
                     <v-chip>9:00PM</v-chip>
                   </v-chip-group>
-                </v-card-text>
+                </v-card-text> -->
 
                 <v-card-actions>
                   <input
@@ -96,6 +96,63 @@
           </li>
         </ul>
       </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="6">
+        <h3>Schedule Your Time</h3>
+
+        <v-menu
+          v-model="dateMenu"
+          :close-on-content-click="false"
+          :nudge-right="40"
+          transition="scale-transition"
+          offset-y
+          min-width="290px"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="order.scheduledDate"
+              label="Pick your date"
+              prepend-icon="mdi-calendar"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker v-model="order.scheduledDate" @input="dateMenu = false"></v-date-picker>
+        </v-menu>
+     
+      <v-menu
+        ref="menu"
+        v-model="timeMenu"
+        :close-on-content-click="false"
+        :nudge-right="40"
+        :return-value.sync="order.scheduledTime"
+        transition="scale-transition"
+        offset-y
+        max-width="290px"
+        min-width="290px"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field
+            v-model="order.scheduledTime"
+            label="Pick your time"
+            prepend-icon="mdi-clock-time-four-outline"
+            readonly
+            v-bind="attrs"
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-time-picker
+          v-if="timeMenu"
+          scrollable
+           ampm-in-title
+          v-model="order.scheduledTime"
+          full-width
+          @click:minute="$refs.menu.save(order.scheduledTime)"
+        ></v-time-picker>
+      </v-menu>
+    </v-col>
     </v-row>
     <v-row>
       <v-col cols="6">
@@ -152,9 +209,7 @@ import cleaningCategoryApi from "../api/cleaningCategoryApi";
 import spaceSizeApi from "../api/spaceSizeApi";
 import cleaningPackageApi from "../api/cleaningPackageApi";
 import cleaningExtraOptionApi from "../api/cleaningExtraOptionApi";
-import orderApi from "../api/orderApi";
 import orderModel from "../models/orderModel";
-// import loginModal from "../views/Login";
 import CustomerInformation from "./CustomerInformation";
 
 export default {
@@ -162,11 +217,12 @@ export default {
     cartable: Number,
   },
   components: {
-    // loginModal,
     CustomerInformation,
   },
   data: function () {
     return {
+      dateMenu: false,
+      timeMenu: false,
       categoryId: this.$route.params["categoryId"],
       cleaningCategories: [],
       spaceSizes: [],
@@ -183,6 +239,8 @@ export default {
           cellphone: "",
           address: "",
         },
+        scheduledDate: new Date().toISOString().substr(0, 10),
+        scheduledTime:"",
         cleaningCategorySelected: "",
         cleaningSpaceSizeSelected: "",
         cleaningPackageSelected: "",
@@ -226,15 +284,10 @@ export default {
     async submit() {
       this.order.cleaningCategorySelected = this.cleaningCategories[0];
       localStorage.setItem("order", JSON.stringify(this.order));
-      // this.$router.push({
-      //   name: "orderRequest",
-      //   params: { order: this.order },
-      // });
-
-      var response = await orderApi.add(this.order);
-      if (response.status == 201) {
-        this.$root.showSuccessToast("your order successfully registered");
-      }
+      this.$router.push({
+        name: "orderRequest",
+        params: { order: this.order },
+      });
     },
 
     register: function () {},

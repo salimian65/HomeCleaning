@@ -43,7 +43,7 @@ namespace HomeCleaning.Domain
         public OrderStatus OrderStatus { get; set; }
     }
 
-    public class ServerRequest: Entity
+    public class ServerRequest : Entity
     {
         public string ServerUserId { get; set; }
 
@@ -61,8 +61,9 @@ namespace HomeCleaning.Domain
 
     public enum ServerRequestStatus
     {
-        Starting = 1,
+        ServerRequested = 1,
         Approved = 2,
+        Rejected = 3,
         InProcessed = 3,
         Ended = 4
     }
