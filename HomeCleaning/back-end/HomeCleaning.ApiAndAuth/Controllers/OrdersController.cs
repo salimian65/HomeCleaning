@@ -90,14 +90,14 @@ namespace HomeCleaning.ApiAndAuth.Controllers
         // [Authorize(Roles = "customer")]
         //[Authorize(IdentityServerConstants.LocalApi.PolicyName)]
         // [Authorize(Policy = "Customer")]
-        [Authorize(Policy = "ProductOwner")]
+       // [Authorize(Policy = "ProductOwner")]
         [HttpPost]
         public async Task<ActionResult<Order>> PostOrder(Order order)
         {
             order.RegisterTime = DateTime.Now;
             order.OrderStatus = OrderStatus.CoustomerRequested;
            // order.ScheduledTime = DateTime.Now;
-            order.ClientUserId = "c6a9acbc-a1a1-4c9b-a4e1-c63eebfc41ae"; // Mohammad  "34702bf7-2362-417a-b9c0-047e88210b38"; //mehrdad
+            order.ClientUserId = "418afdbb-b0c3-4843-b790-bfbc903aef1b"; // Mohammad  "34702bf7-2362-417a-b9c0-047e88210b38"; //mehrdad
            // product.UserName = User.FindFirst(c => c.Type == JwtClaimTypes.Name && c.Issuer == "http://localhost:5000").Value;
             // User.Claims.Select(c => new { c.Type, c.Value }).ToArray();
             // _userContext.CurrentUserPrincipal.UserId;

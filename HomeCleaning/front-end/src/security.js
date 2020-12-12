@@ -12,17 +12,17 @@ import Oidc from 'oidc-client';
 
 
 var mgr = new Oidc.UserManager({
-    authority: 'http://localhost:5000',
-    client_id: 'frontend',
-    redirect_uri: 'http://localhost:8080/callback',
-    response_type: 'code',
-    scope: 'openid profile backend',
-    post_logout_redirect_uri: 'http://localhost:8080',
+    authority: "http://localhost:5000",
+    client_id: "frontend",
+    redirect_uri: "http://localhost:8080/callback",
+    response_type: "code",
+    scope: "openid profile backend",
+    post_logout_redirect_uri: "http://localhost:8080",
     userStore: new Oidc.WebStorageStateStore({ store: window.localStorage }),
     automaticSilentRenew: true,
-    silent_redirect_uri: "https://localhost:5000/static/silent-renew.html",
-    accessTokenExpiringNotificationTime: 10
-})
+    silent_redirect_uri: "http://localhost:8080/static/silent-renew.html",
+    accessTokenExpiringNotificationTime: 10,
+});
 
 Oidc.Log.logger = console;
 Oidc.Log.level = Oidc.Log.INFO;

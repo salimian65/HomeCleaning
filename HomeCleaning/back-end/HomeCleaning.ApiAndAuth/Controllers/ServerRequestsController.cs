@@ -84,7 +84,7 @@ namespace HomeCleaning.ApiAndAuth.Controllers
             var serverRequest = new ServerRequest
             {
                 OrderId = orderId,
-                ServerUserId = "2311608c-3b69-4cad-8fe2-ea180caaff2d",// MAJID  //  "87b294fd-cb1a-4f13-b5bc-82fe745d663a", // elham
+                ServerUserId = "94ee900a-ee16-4f69-9070-e48b56b11823",// MAJID  //  "87b294fd-cb1a-4f13-b5bc-82fe745d663a", // elham
                 //      _userContext.CurrentUserPrincipal.UserId.ToString(),
                 ServerRequestStatus = ServerRequestStatus.ServerRequested
             };

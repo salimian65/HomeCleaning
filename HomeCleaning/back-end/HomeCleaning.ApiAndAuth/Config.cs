@@ -7,90 +7,124 @@ using IdentityServer4;
 
 namespace HomeCleaning.ApiAndAuth
 {
+
+    //public class Config
+    //{
+    //    public static IEnumerable<Client> Clients = new List<Client>
+    //    {
+    //        new Client
+    //        {
+    //            ClientId = "frontend",
+    //            AllowedGrantTypes = GrantTypes.Code,
+    //            RequireClientSecret = false,
+    //            RequirePkce = true,
+    //            RequireConsent = false,
+    //            RedirectUris = {
+    //                "http://localhost:8080/callback",
+    //                "http://localhost:8080/static/silent-renew.html"
+    //            },
+    //            PostLogoutRedirectUris = { "http://localhost:8080" },
+    //            AllowedScopes = { "openid", "profile", "email", IdentityServerConstants.LocalApi.ScopeName },
+    //            AllowedCorsOrigins = { "http://localhost:8080" }
+    //        },
+    //    };
+
+    //    public static IEnumerable<IdentityResource> IdentityResources = new List<IdentityResource>
+    //    {
+    //        new IdentityResources.OpenId(),
+    //        new IdentityResources.Profile(),
+    //        new IdentityResources.Email(),
+    //    };
+
+    //    public static IEnumerable<ApiResource> Apis = new List<ApiResource>
+    //    {
+    //        // local API
+    //        new ApiResource(IdentityServerConstants.LocalApi.ScopeName),
+    //    };
+    //}
+
+
     public class Config
     {
-        private IConfiguration Configuration { get; }
-
-
-        public Config(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IEnumerable<IdentityResource> GetIdentityResources()
+        public static IEnumerable<IdentityResource> GetIdentityResources()
         {
             return new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResources.Email(),
             };
         }
 
-
-        public IEnumerable<ApiResource> GetApis()
+        public static IEnumerable<ApiResource> GetApiResources()
         {
             return new ApiResource[]
             {
-                new ApiResource("backend", "MarketPlace REST API"){ UserClaims = { JwtClaimTypes.Name,
-                                                                                   JwtClaimTypes.Role, 
-                                                                                   ClaimTypes.Role } }
+
+                new ApiResource("backend", "MarketPlace REST API",
+                    new [] {  JwtClaimTypes.Role,
+                        JwtClaimTypes.Name,
+                        "backend"
+                    })
+                {
+                    Scopes = { "backend" }
+                },
             };
         }
+        public static IEnumerable<ApiScope> ApiScopes =>
+            new ApiScope[]
+            {
+                new ApiScope("backend", "My API",
+                    new []
+                    {
+                        JwtClaimTypes.Role,
+                        JwtClaimTypes.Name,
+                        "backend"
+                    })
+            };
 
-        public IEnumerable<Client> GetClients()
+        public static IEnumerable<Client> GetClients()
         {
-            var webClient = Configuration["partner:webClient"];
             return new[]
             {
                 // SPA client using code flow + pkce
                 new Client
                 {
                     ClientId = "frontend",
-                    ClientName = "Home Cleaning JavaScript Client",
-                    ClientUri = webClient,
+                    ClientName = "MarketPlace JavaScript Client",
+                    ClientUri = "http://localhost:8080",
 
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     RequireClientSecret = false,
-                    RequireConsent = false,
 
                     AllowOfflineAccess = true,
-                    AccessTokenLifetime = 90, // 1.5 minutes
-                    AbsoluteRefreshTokenLifetime = 0,
+                    AccessTokenLifetime = 3600 , // 1.5 minutes
+                    SlidingRefreshTokenLifetime=1296000,
+                    AbsoluteRefreshTokenLifetime = 2592000 ,
                     RefreshTokenUsage = TokenUsage.OneTimeOnly,
                     RefreshTokenExpiration = TokenExpiration.Sliding,
                     UpdateAccessTokenClaimsOnRefresh = true,
+                    RequireConsent = false,
                     ClientClaimsPrefix = string.Empty,
+
+                    AlwaysSendClientClaims = true,
+                    AlwaysIncludeUserClaimsInIdToken = true,
 
                     RedirectUris =
                     {
-                      webClient + "/callback",
-                      webClient + "/static/silent-renew.html",
+                        "http://localhost:8080/callback",
+                        "http://localhost:8080/static/silent-renew.html"
                     },
 
-                    FrontChannelLogoutUri = webClient,
-                    PostLogoutRedirectUris = { webClient },
-                    AllowedCorsOrigins = { webClient },
+                    PostLogoutRedirectUris = { "http://localhost:8080" },
+                    AllowedCorsOrigins = { "http://localhost:8080" },
 
                     AllowedScopes = {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        "backend" }
-                },
-
-                //new Client
-                //{
-                //    ClientId = "client",
-                //    AllowedGrantTypes = GrantTypes.ClientCredentials,
-
-                //    ClientSecrets =
-                //    {
-                //        new Secret("sssss".Sha256())
-                //    },
-
-                //    AllowedScopes = { "backend" }
-                //},
+                                       IdentityServerConstants.StandardScopes.OpenId,
+                                       IdentityServerConstants.StandardScopes.Profile,
+                                       IdentityServerConstants.StandardScopes.OfflineAccess,
+                                       "backend" }
+                }
             };
         }
     }

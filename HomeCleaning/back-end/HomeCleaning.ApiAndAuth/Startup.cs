@@ -4,12 +4,15 @@
 
 using System.Globalization;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using HomeCleaning.ApiAndAuth.Authorization;
 using IdentityServer4;
 using HomeCleaning.Domain;
 using HomeCleaning.Persistance;
 using HomeCleaning.Persistance.Services;
 using IdentityServer4.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -81,7 +84,7 @@ namespace HomeCleaning.ApiAndAuth
                 .AddEntityFrameworkStores<HomeCleaningContext>()
                 .AddDefaultTokenProviders();
 
-            var config = new Config(Configuration);
+            //var config = new Config(Configuration);
             var builder = services.AddIdentityServer(options =>
             {
                 options.Events.RaiseErrorEvents = true;
@@ -92,14 +95,29 @@ namespace HomeCleaning.ApiAndAuth
                 // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
                 options.EmitStaticAudienceClaim = true;
             })
-                .AddInMemoryIdentityResources(config.GetIdentityResources())
-                .AddInMemoryApiResources(config.GetApis())
-                .AddInMemoryClients(config.GetClients())
+                .AddInMemoryIdentityResources(Config.GetIdentityResources())
+                .AddInMemoryApiResources(Config.GetApiResources())
+                .AddInMemoryApiScopes(Config.ApiScopes)
+                .AddInMemoryClients(Config.GetClients())
                 .AddDeveloperSigningCredential()
                 .AddAspNetIdentity<ApplicationUser>();
 
-                 services.AddLocalApiAuthentication();
+            //var builder = services.AddIdentityServer()
+            //    .AddDeveloperSigningCredential()
+            //    .AddInMemoryIdentityResources(Config.IdentityResources)
+            //    .AddInMemoryClients(Config.Clients)
+            //    .AddInMemoryApiResources(Config.Apis)
+            //    .AddAspNetIdentity<ApplicationUser>();
 
+            services.AddLocalApiAuthentication();
+
+            //  services.AddLocalApiAuthentication();
+            //services.AddLocalApiAuthentication(principal =>
+            //{
+            //    principal.Identities.First().AddClaim(new Claim("additional_claim", "additional_value"));
+
+            //    return Task.FromResult(principal);
+            //});
             // services.AddScoped<IProfileService, ProfileService>();
 
             builder.Services.ConfigureExternalCookie(options =>
@@ -117,9 +135,10 @@ namespace HomeCleaning.ApiAndAuth
 
 
             // not recommended for production - you need to store your key material somewhere secure
-           // builder.AddDeveloperSigningCredential();
+            // builder.AddDeveloperSigningCredential();
 
             services.AddAuthentication()
+                .AddIdentityServerAuthentication()
                 .AddGoogle(options =>
                 {
                     options.ClientId = "717469225962-3vk00r8tglnbts1cgc4j1afqb358o8nj.apps.googleusercontent.com";
@@ -128,8 +147,18 @@ namespace HomeCleaning.ApiAndAuth
                 });
 
 
+            //----------------------------------------------------------------------------
 
-            //.............................................
+            //services.AddAuthentication(options => options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme)
+            //    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+            //    {
+            //        options.Authority = "http://localhost:5000";
+            //        options.RequireHttpsMetadata = false;
+            //        options.Audience = "backend";
+            //    });
+
+
+            //----------------------------------------------------------------------------
             services.AddCors(options =>
             {
                 options.AddPolicy(CorsAllowUIApp,
@@ -139,22 +168,18 @@ namespace HomeCleaning.ApiAndAuth
                     });
             });
 
-            //services.AddAuthentication("Bearer")
-            //    .AddJwtBearer("Bearer", options => {
-            //        options.Authority = Configuration["partner:authService"];
-            //        options.RequireHttpsMetadata = false;
-
-            //        options.Audience = "backend";
-            //    });
-
-            services.AddMvc(options => { options.Filters.Add<UnhandledExceptionFilterAttribute>(); })
-                .AddControllersAsServices();
-
-            services.AddAuthorization(options => {
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Customer", policy => policy.RequireClaim(ClaimTypes.Role, "customer"));
                 options.AddPolicy("ProductOwner", policy => policy.Requirements.Add(new OrderOwnerAuthorizationRequirement()));
             });
 
             services.AddSingleton<IAuthorizationHandler, OrderOwnerAuthorizationHandler>();
+
+
+            //------------------------------------------------------------
+            services.AddMvc(options => { options.Filters.Add<UnhandledExceptionFilterAttribute>(); })
+                .AddControllersAsServices();
 
             new Bootstrap(services, Configuration).WireUp();
         }
